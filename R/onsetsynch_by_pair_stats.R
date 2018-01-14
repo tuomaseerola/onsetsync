@@ -18,7 +18,7 @@ onsetsynch_by_pair_stats <-function(df,bybeat=FALSE){
     m<-reshape2::melt(df$asynch)
     m$value<-m$value*1000
     colnames(m)<-c('Instrument','ms')
-    head(m)
+   # head(m)
     
     # check whether instrument is different from 0
     L<-levels(m$Instrument)

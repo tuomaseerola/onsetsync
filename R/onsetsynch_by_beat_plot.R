@@ -22,7 +22,7 @@ DF<-NULL
 tmp<-NULL
 
 for(k in 1:length(instr)){
-  print(instr[k])
+  #print(instr[k])
   tmp <- select(df,c(instr[k],beat,virtual))
   head(tmp)
   colnames(tmp)<-c('instr','beat','virtual')

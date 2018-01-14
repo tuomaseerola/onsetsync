@@ -8,10 +8,11 @@
 #' @param N Number of samples to be drawn from the pool of joint onsets
 #' @param Bnum How many bootstraps are drawn
 #' @param beat Beat structure to be included
+#' @param verbose Display no. of shared onsets (default FALSE)
 #' @return List containing asynchronies and beat structures
 #' @export
 
-onsetsynch_sample_paired <- function(df,INSTR1,INSTR2, N=100,BNum=1,beat){
+onsetsynch_sample_paired <- function(df,INSTR1,INSTR2, N=100,BNum=1,beat,verbose=FALSE){
 # was sampled_paired_asynchrony
   
 # T. Eerola, Durham University, IEMP project
@@ -26,7 +27,9 @@ D <- NULL
 if(BNum==1){
   ind<-!is.na(instr1) & !is.na(instr2)
   len_joint<-length(which(ind))
-  print(paste('onsets in common:',len_joint))
+  if(verbose==TRUE){
+    print(paste('onsets in common:',len_joint))
+  }
   if(len_joint > N){
     sample_ind <- sample(which(ind),N)
     d<-instr1[sample_ind]-instr2[sample_ind]
@@ -47,7 +50,9 @@ if(BNum==1){
 if(BNum>1){
   ind<-!is.na(instr1) & !is.na(instr2)
   len_joint<-length(which(ind))
-  print(paste('onsets in common:',len_joint))
+  if(verbose==TRUE){
+    print(paste('onsets in common:',len_joint))
+  }
   if(len_joint>N){
   for(k in 1:BNum){
       ind<-!is.na(instr1) & !is.na(instr2)

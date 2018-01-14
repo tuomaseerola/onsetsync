@@ -28,8 +28,8 @@ onsetsynch_execute_pairs <- function(df,instruments,n_samp=100,bnum=1,beats){
   DF<-NULL
   BE<-NULL
   for(k in 1:N){
-    DF <- cbind(DF,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats)$asynch)
-    BE <- cbind(BE,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats)$beatL)
+    DF <- cbind(DF,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats)$asynch,TRUE)
+    BE <- cbind(BE,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats)$beatL,FALSE)
   }
   DF<-data.frame(DF)
   colnames(DF)<-COL_LABELS

@@ -16,7 +16,7 @@ onsetsynch_by_X_plot <-function(df,meta='empty',xlab='Tempo'){
   DF<-data.frame(asynch=df$asynch,beatL=df$beatL)  
   
   g1 <- ggplot2::ggplot(DF, aes(beatL, asynch*1000)) + 
-    geom_point(colour = "slateblue", size=2.5) + 
+    geom_point(colour = "slateblue", size=2.5,na.rm=TRUE) + 
     geom_smooth(method="lm", colour='dark blue', formula=(y~x)) + 
     labs (title = meta, x = xlab, y = "Asynchrony (ms)", colour = "slateblue")+
     theme_bw()

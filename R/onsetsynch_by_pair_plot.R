@@ -20,8 +20,8 @@ onsetsynch_by_pair_plot <-function(df,bybeat=FALSE){
   colnames(m)<-c('Instrument','ms')
   
   g1<-ggplot2::ggplot(m,aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=Instrument))+
-    geom_violin(scale = "width",show.legend = FALSE)+
-    geom_jitter(height = 0, width = 0.15,size=0.15,show.legend = FALSE)+
+    geom_violin(scale = "width",show.legend = FALSE,na.rm=TRUE)+
+    geom_jitter(height = 0, width = 0.15,size=0.15,show.legend = FALSE,na.rm=TRUE)+
     geom_hline(yintercept = 0,color='red')+
     coord_flip()+
     theme_bw()
@@ -38,7 +38,7 @@ onsetsynch_by_pair_plot <-function(df,bybeat=FALSE){
     str(m)
     m$beatL<-factor(m$beatL)
     g1<-ggplot2::ggplot(m,aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=beatL))+
-       geom_boxplot(outlier.shape = NA,varwidth = F)+
+       geom_boxplot(outlier.shape = NA,varwidth = F,na.rm=TRUE)+
        coord_flip()+
       geom_hline(yintercept = 0,color='red')+
        theme_bw()

@@ -2,14 +2,15 @@
 title: "onsetsynch"
 author: "Tuomas Eerola"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: pdf_document
+#output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{synchrony}
+  %\VignetteIndexEntry{onsetsynch}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-This is a simple package meant to facilitate the analysis of onset data. Made in the context of Interpersonal Entrainment Music Performance (IEMP).
+This is a simple package meant to facilitate the analysis of onset data extracted from audio. I've made this in the context of Interpersonal Entrainment Music Performance (IEMP, an AHRC-funded research project, Principal Investigator Martin Clayton), partially to create structures for analyses of materials from different sources, partially to see whether I can do a simple R extension myself. This extension is available at [https://github.com/tuomaseerola/onsetsynch](https://github.com/tuomaseerola/onsetsynch).
 
 ## Example
 
@@ -18,7 +19,7 @@ We will first read in data which consists of extracted onsets (done with MIR too
 ### Read data
 
 ```{r}
-asere <- read.csv(url('https://raw.githubusercontent.com/tuomaseerola/onsetsynch/master/data/Asere_OU_2.csv'))
+asere<-read.csv(url('https://raw.githubusercontent.com/tuomaseerola/onsetsynch/master/data/Asere_OU_2.csv'))
 head(asere)
 ```
 
@@ -45,7 +46,8 @@ OK. Load up the library and visualise the relative asynchrony to equal division 
 ```{r fig.width=7.5, fig.height=7.5}
 devtools::install_github("tuomaseerola/onsetsynch") # install the developmental package synchrony
 library(onsetsynch)
-p <- onsetsynch_by_beat_plot(asere,c('Bass','Clave','Guitar','Tres','Bongo','Bell'),'SD','Virtual.SD',pcols=2)
+p <- onsetsynch_by_beat_plot(asere,
+   c('Bass','Clave','Guitar','Tres','Bongo','Bell'),'SD','Virtual.SD',pcols=2)
 print(p)
 ```
 
@@ -57,19 +59,21 @@ How well are the pairs of instruments synced? Since the instrument play differen
 set.seed(1201) # set random seed before doing any sampling in order replicate results
 N <- 100 # Let's select 100 onsets
 d1 <- onsetsynch_sample_paired(asere,'Clave','Bass',N,1,'SD',TRUE) # Determine the instrument pair
-print(paste('Asynchrony mean=',round(mean(d1$asynch*1000),4),'ms & sd. dev=',round(sd(d1$asynch*1000),3)))
+print(paste('Asynchrony mean=',round(mean(d1$asynch*1000),4),
+            'ms & sd. dev=',round(sd(d1$asynch*1000),3)))
 ```
 The first example might still be in accurate since we now know that there are at least 241 shared onset times between the Clave and the Bass. Let's redo the random sampling 10 times so we get more observations whilst still always sampling 100 joint onsets.
 ```{r}
 d10 <- onsetsynch_sample_paired(asere,'Clave','Bass',N,10,'SD',TRUE) # New parameter 10 for 10 times
-print(paste('Asynchrony mean=',round(mean(d10$asynch*1000),4),'ms & sd. dev=',round(sd(d10$asynch*1000),3)))
+print(paste('Asynchrony mean=',round(mean(d10$asynch*1000),4),
+            'ms & sd. dev=',round(sd(d10$asynch*1000),3)))
 ```
 
 Carry this out for all possible pairings of the instruments and visualise the results.
 
-```{r fig.width=7.5, fig.height=7.5}
-inst<-c('Clave','Bass','Guitar','Tres','Bongo','Bell') # Define instrument for exhaustive pairwise comparison
-dn <- onsetsynch_execute_pairs(asere,inst,N,10,'SD')
+```{r fig.width=7.5, fig.height=7.5, warning=FALSE}
+inst<-c('Clave','Bass','Guitar','Tres','Bongo','Bell') # Define instruments 
+dn <- onsetsynch_execute_pairs(asere,inst,N,10,'SD')  # Carry out pairwise comparisons
 dim(dn$asynch)
 
 p2 <- onsetsynch_by_pair_plot(dn)  # plot

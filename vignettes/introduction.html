@@ -119,7 +119,7 @@ asere &lt;-<span class="st"> </span><span class="kw">select</span>(asere,SD,Sect
 <h3>Load <code>onsetsynch</code> library</h3>
 <p>OK. Load up the library and visualise the relative asynchrony to equal division for each instrument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;tuomaseerola/onsetsynch&quot;</span>) <span class="co"># install the developmental package synchrony</span></code></pre></div>
-<pre><code>## Skipping install of 'onsetsynch' from a github remote, the SHA1 (cea8a32d) has not changed since last install.
+<pre><code>## Skipping install of 'onsetsynch' from a github remote, the SHA1 (46043bb3) has not changed since last install.
 ##   Use `force = TRUE` to force installation</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(onsetsynch)
 p &lt;-<span class="st"> </span><span class="kw">onsetsynch_by_beat_plot</span>(asere,<span class="kw">c</span>(<span class="st">'Bass'</span>,<span class="st">'Clave'</span>,<span class="st">'Guitar'</span>,<span class="st">'Tres'</span>,<span class="st">'Bongo'</span>,<span class="st">'Bell'</span>),<span class="st">'SD'</span>,<span class="st">'Virtual.SD'</span>,<span class="dt">pcols=</span><span class="dv">2</span>)

@@ -29,10 +29,11 @@ onsetsynch_by_pair_plot <-function(df,bybeat=FALSE){
 
   }
   if(bybeat==TRUE){
+    head(df)
     m<-reshape2::melt(df$asynch)
     m$value<-m$value*1000
     colnames(m)<-c('Instrument','ms')
-    head(m)
+    #head(m)
     b<-reshape2::melt(df$beatL)
     m$beatL<-b$value
     str(m)

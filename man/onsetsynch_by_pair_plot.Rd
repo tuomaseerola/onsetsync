@@ -4,12 +4,14 @@
 \alias{onsetsynch_by_pair_plot}
 \title{plot synchronies by pairs}
 \usage{
-onsetsynch_by_pair_plot(df, bybeat = FALSE)
+onsetsynch_by_pair_plot(df, bybeat = FALSE, reference = 0)
 }
 \arguments{
 \item{df}{data frame to be processed}
 
-\item{bybeat}{Optional (FALSE by default) which addes the beats to the plot}
+\item{bybeat}{Optional (FALSE by default) which adds the beats to the plot}
+
+\item{reference}{Optional (0 by default) which adds the reference line to the plot}
 }
 \value{
 Graphic output

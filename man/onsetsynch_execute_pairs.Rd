@@ -2,7 +2,7 @@
 % Please edit documentation in R/onsetsynch_execute_pairs.R
 \name{onsetsynch_execute_pairs}
 \alias{onsetsynch_execute_pairs}
-\title{onsetsynch_execute_pairs}
+\title{Calculate asynchronies across all pairs of instruments.}
 \usage{
 onsetsynch_execute_pairs(df, instruments, n_samp = 100, bnum = 1, beats)
 }
@@ -21,7 +21,10 @@ onsetsynch_execute_pairs(df, instruments, n_samp = 100, bnum = 1, beats)
 Output contain asynchronies and beat levels
 }
 \description{
-Carry out calculations of asynchronies across all pairs of instruments
+\code{onsetsynch_execute_pairs} is a meta-function that
+executes calculations of asynchronies across all pairs of
+instruments. One can speficy the same options as in
+\code{onsetsynch_sample_paired}.
 }
 \seealso{
 \code{\link{onsetsynch_sample_paired}}

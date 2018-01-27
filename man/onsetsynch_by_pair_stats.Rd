@@ -12,7 +12,7 @@ onsetsynch_by_pair_stats(df, bybeat = FALSE)
 \item{bybeat}{logical value whether beat information is used}
 }
 \value{
-Statistics output
+Statistics output (Mean, Standard deviation, T-stat, P value)
 }
 \description{
 This function calculates simple t-test of the asynchronies of instruments (whether it differs from zero)

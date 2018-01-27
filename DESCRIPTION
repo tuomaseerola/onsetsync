@@ -1,6 +1,6 @@
 Package: onsetsynch
 Title: Analysis and Visualisation of Sychronisation of Music Onset Data
-Version: 0.0.1.1000
+Version: 0.0.1.2000
 Authors@R: person("Tuomas", "Eerola", email = "tuomas.eerola@durham.ac.uk", role = c("aut", "cre"))
 Description: This package contains simple routines to calculate and visualise onset data.
 Depends: R (>= 3.3.2)

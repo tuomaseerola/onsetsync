@@ -4,25 +4,23 @@
 #'
 #' @param df data frame to be processed
 #' @param bybeat logical value whether beat information is used
-#' @return Statistics output
+#' @return Statistics output (Mean, Standard deviation, T-stat, P value)
 #' @export
 
 onsetsynch_by_pair_stats <-function(df,bybeat=FALSE){
 
 # T. Eerola, Durham University, IEMP project
 # 14/1/2018  
-  
-  
+
   if(bybeat==FALSE){ # asynchronies
-    
-    m<-reshape2::melt(df$asynch)
-    m$value<-m$value*1000
-    colnames(m)<-c('Instrument','ms')
+    m<-suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+    m$ms<-m$ms*1000
+    #colnames(m)<-c('Instrument','ms')
    # head(m)
     
     # check whether instrument is different from 0
     L<-levels(m$Instrument)
-    L
+#    L
     T<-NULL
     for(k in 1:length(L)){
       tmp<-m$ms[m$Instrument==L[k]]
@@ -39,30 +37,44 @@ onsetsynch_by_pair_stats <-function(df,bybeat=FALSE){
   }
   
   if(bybeat==TRUE){
-    m<-reshape2::melt(df$asynch)
-    m$value<-m$value*1000
-    colnames(m)<-c('Instrument','ms')
-    head(m)
-    b<-reshape2::melt(df$beatL)
+ #   print('by beat')
+    m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+    m$ms<-m$ms*1000
+#    colnames(m)<-c('Instrument','ms')
+#    head(m)
+    b<-suppressMessages(reshape2::melt(df$beatL))
     m$beatL<-b$value
-    str(m)
+ #   str(m)
     m$beatL<-factor(m$beatL)
     
     
     L<-levels(m$Instrument)
-    L
+#    L
     T<-NULL
     for(k in 1:length(L)){
+      #print(k)
       tmp<-dplyr::filter(m, Instrument==L[k])
-      t<-summary(aov(ms~beatL,data=tmp))
-      T[k]<-t
+      if(sum(is.na(tmp$ms))==nrow(tmp)){
+        T$pval[k]<-NA
+        T$tval[k]<-NA
+      }
+      
+      if(sum(is.na(tmp$ms))<nrow(tmp)){
+        t<-summary(aov(ms~beatL,data=tmp))
+        T$pval[k]<-as.numeric(unlist(t)[9])
+        T$tval[k]<-as.numeric(unlist(t)[7])
+      }
     }
     
-    
+#    print(T)
     
   }   
   
-  
-  return<-T  
+  M=df$asynch %>% dplyr::summarise_all(funs(mean))
+  SD=df$asynch %>% dplyr::summarise_all(funs(sd))
+  T2 <- data.frame(M=t(M),SD=t(SD))
+  T2$T<-T$tval
+  T2$pval<-T$pval
+  return<-T2  
   
 }

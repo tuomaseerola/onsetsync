@@ -4,7 +4,8 @@
 \alias{onsetsynch_by_beat_plot}
 \title{plot synchronies by beat structures}
 \usage{
-onsetsynch_by_beat_plot(df, instr, beat, virtual, pcols)
+onsetsynch_by_beat_plot(df, instr, beat, virtual, pcols = 1,
+  griddeviations = FALSE, box = FALSE, colour = "lightblue")
 }
 \arguments{
 \item{df}{data frame to be processed}
@@ -15,7 +16,13 @@ onsetsynch_by_beat_plot(df, instr, beat, virtual, pcols)
 
 \item{virtual}{Variable name where the virtual beats are}
 
-\item{pcols}{Number of columns for multiple plots}
+\item{pcols}{Number of columns for multiple plots (default 1)}
+
+\item{griddeviations}{Add deviation from the virtual beats in %}
+
+\item{box}{Do the graphics by boxplot}
+
+\item{colour}{colour for the boxplot}
 }
 \value{
 Graphic output

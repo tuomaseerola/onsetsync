@@ -1,6 +1,9 @@
-#' onsetsynch_execute_pairs
+#' Calculate asynchronies across all pairs of instruments.
 #'
-#' Carry out calculations of asynchronies across all pairs of instruments
+#' \code{onsetsynch_execute_pairs} is a meta-function that
+#' executes calculations of asynchronies across all pairs of
+#' instruments. One can speficy the same options as in
+#' \code{onsetsynch_sample_paired}.
 #'
 #' @param df data frame to be processed
 #' @param instruments Instrument names to be processed
@@ -8,8 +11,8 @@
 #' @param b_num How many bootstraps are drawn
 #' @param beats Beat structure to be included
 #' @return Output contain asynchronies and beat levels
-#' @export
 #' @seealso \code{\link{onsetsynch_sample_paired}}
+#' @export
 
 onsetsynch_execute_pairs <- function(df,instruments,n_samp=100,bnum=1,beats){
 
@@ -28,7 +31,7 @@ onsetsynch_execute_pairs <- function(df,instruments,n_samp=100,bnum=1,beats){
   DF<-NULL
   BE<-NULL
   for(k in 1:N){
-    DF <- cbind(DF,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats,TRUE)$asynch)
+    DF <- cbind(DF,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats,FALSE)$asynch)
     BE <- cbind(BE,onsetsynch_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats,FALSE)$beatL)
   }
   DF<-data.frame(DF)

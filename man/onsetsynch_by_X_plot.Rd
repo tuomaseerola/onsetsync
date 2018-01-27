@@ -2,7 +2,7 @@
 % Please edit documentation in R/onsetsynch_by_X_plot.R
 \name{onsetsynch_by_X_plot}
 \alias{onsetsynch_by_X_plot}
-\title{plot synchronies by any other structure}
+\title{Plots synchronies by any other structure}
 \usage{
 onsetsynch_by_X_plot(df, meta = "empty", xlab = "Tempo")
 }
@@ -17,5 +17,11 @@ onsetsynch_by_X_plot(df, meta = "empty", xlab = "Tempo")
 Graphic output
 }
 \description{
-This function plots the calculated asynchronies of instruments across another variable
+\code{onsetsynch_by_X_plot} visualises the 
+calculated asynchronies of instruments across
+another variable.
+}
+\seealso{
+\code{\link{onsetsynch_sample_paired}} for synchronies between 
+instruments, \code{\link{onsetsynch_by_beat_plot}} for plotting.
 }

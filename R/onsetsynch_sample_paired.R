@@ -5,7 +5,7 @@
 #' @param df data frame to be processed
 #' @param instr1 Instrument 1 name to be processed
 #' @param instr2 Instrument 2 name to be processed
-#' @param N Number of samples to be drawn from the pool of joint onsets
+#' @param N Number of samples to be drawn from the pool of joint onsets. If 0, do not sample!
 #' @param Bnum How many bootstraps are drawn
 #' @param beat Beat structure to be included
 #' @param verbose Display no. of shared onsets (default FALSE)
@@ -30,8 +30,17 @@ onsetsynch_sample_paired <- function(df,INSTR1,INSTR2, N=100,BNum=1,beat,verbose
     if(verbose==TRUE){
       print(paste('onsets in common:',len_joint))
     }
+    
+    
+    
     if(len_joint > N){
-      sample_ind <- sample(which(ind),N)
+      if(N==0){
+        print(paste('take all onsets:',len_joint))
+        sample_ind <- which(ind)
+      }
+      if(N>0){
+        sample_ind <- sample(which(ind),N)
+      }
       d<-instr1[sample_ind]-instr2[sample_ind]
       D<-d
       beat_L<-beat[sample_ind]

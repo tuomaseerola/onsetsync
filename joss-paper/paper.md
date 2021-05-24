@@ -17,23 +17,6 @@ affiliations:
    index: 1
 date: 15 June 2021
 bibliography: paper.bib
-references:
-- id: fenner2012a
-  title: One-click science marketing
-  author:
-  - family: Fenner
-    given: Martin
-  container-title: Nature Materials
-  volume: 11
-  URL: 'http://dx.doi.org/10.1038/nmat3283'
-  DOI: 10.1038/nmat3283
-  issue: 4
-  publisher: Nature Publishing Group
-  page: 261-263
-  type: article-journal
-  issued:
-    year: 2012
-    month: 3
 ---
 
 # Summary
@@ -47,7 +30,7 @@ enables wrapping low-level languages (e.g., C) for speed without losing
 flexibility or ease-of-use in the user-interface. There are functions for  common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony, and periodicity, and visualising synchrony across cycles and time.
 
 `onsetsync` was designed to be used by both empirical music researchers and by
-students in courses on music and science and empirical musicology. It has already been used in a number of scientific publications [@fenner2012a]. Something more here
+students in courses on music and science and empirical musicology. It has already been used in a number of scientific publications [@Pearson:2017]. Something more here
 
 # Citations
 
@@ -64,13 +47,6 @@ For a quick reference, the following citation commands can be used:
 - `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
 
 # Figures
-
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
 
 # Acknowledgements
 

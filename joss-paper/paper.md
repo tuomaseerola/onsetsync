@@ -1,36 +1,85 @@
 ---
-title: 'onsetsync: An R library for music onset analysis'
+title: 'Gala: A Python package for galactic dynamics'
 tags:
-  - R
-  - music
-  - entrainment
-  - rhythm
-  - periodicity
+  - Python
+  - astronomy
+  - dynamics
+  - galactic dynamics
+  - milky way
 authors:
-  - name: Tuomas Eerola
-    orcid: 0000-0002-2896-929X
-    affiliation: 1
-  - name: Author Without ORCID
-    affiliation: 1
+  - name: Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
+    orcid: 0000-0003-0872-7098
+    affiliation: "1, 2" # (Multiple affiliations must be quoted)
+  - name: Author Without ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+    affiliation: 2
+  - name: Author with no affiliation^[corresponding author]
+    affiliation: 3
 affiliations:
- - name: XXXXXXX, Durham University
+ - name: Lyman Spitzer, Jr. Fellow, Princeton University
    index: 1
-date: 15 June 2021
+ - name: Institution Name
+   index: 2
+ - name: Independent Researcher
+   index: 3
+date: 13 August 2017
 bibliography: paper.bib
+
+# Optional fields if submitting to a AAS journal too, see this blog post:
+# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
+aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
+aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 # Summary
 
-Music performance relies on tight yet flexible timing between the performers. This entrainment between two or more performers can be analysed from the note onsets of recorded performances. The onset synchrony characterises the timing accuracy and dynamics within the performance. The synchrony between performers is influenced by various factors such as the genre of music, performer skills, and phrase and beat structures of the music. The analysis of the synchrony benefits from shared tools as several measures of synchrony will benefit from the same base code (e.g., comparing individual onsets to a virtual beat, or assessing the synchrony across other variables such as tempo, metrical hierarchy, or phrasing).
+The forces on stars, galaxies, and dark matter under external gravitational
+fields lead to the dynamical evolution of structures in the universe. The orbits
+of these bodies are therefore key to understanding the formation, history, and
+future state of galaxies. The field of "galactic dynamics," which aims to model
+the gravitating components of galaxies to study their structure and evolution,
+is now well-established, commonly taught, and frequently used in astronomy.
+Aside from toy problems and demonstrations, the majority of problems require
+efficient numerical tools, many of which require the same base code (e.g., for
+performing numerical orbit integration).
 
 # Statement of need
 
-`onsetsync` is a R package for musical dynamics. Python
+`Gala` is an Astropy-affiliated Python package for galactic dynamics. Python
 enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. There are functions for  common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony, and periodicity, and visualising synchrony across cycles and time.
+flexibility or ease-of-use in the user-interface. The API for `Gala` was
+designed to provide a class-based and user-friendly interface to fast (C or
+Cython-optimized) implementations of common operations such as gravitational
+potential and force evaluation, orbit integration, dynamical transformations,
+and chaos indicators for nonlinear dynamics. `Gala` also relies heavily on and
+interfaces well with the implementations of physical units and astronomical
+coordinate systems in the `Astropy` package [@astropy] (`astropy.units` and
+`astropy.coordinates`).
 
-`onsetsync` was designed to be used by both empirical music researchers and by
-students in courses on music and science and empirical musicology. It has already been used in a number of scientific publications [@Pearson:2017]. Something more here
+`Gala` was designed to be used by both astronomical researchers and by
+students in courses on gravitational dynamics or astronomy. It has already been
+used in a number of scientific publications [@Pearson:2017] and has also been
+used in graduate courses on Galactic dynamics to, e.g., provide interactive
+visualizations of textbook material [@Binney:2008]. The combination of speed,
+design, and support for Astropy functionality in `Gala` will enable exciting
+scientific explorations of forthcoming data releases from the *Gaia* mission
+[@gaia] by students and experts alike.
+
+# Mathematics
+
+Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+
+Double dollars make self-standing equations:
+
+$$\Theta(x) = \left\{\begin{array}{l}
+0\textrm{ if } x < 0\cr
+1\textrm{ else}
+\end{array}\right.$$
+
+You can also use plain \LaTeX for equations
+\begin{equation}\label{eq:fourier}
+\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
+\end{equation}
+and refer to \autoref{eq:fourier} from text.
 
 # Citations
 
@@ -48,8 +97,16 @@ For a quick reference, the following citation commands can be used:
 
 # Figures
 
+Figures can be included like this:
+![Caption for example figure.\label{fig:example}](figure.png)
+and referenced from text using \autoref{fig:example}.
+
+Figure sizes can be customized by adding an optional second parameter:
+![Caption for example figure.](figure.png){ width=20% }
+
 # Acknowledgements
 
-We acknowledge contributions from X, Y, and Z.
+We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
+Oh, and support from Kathryn Johnston during the genesis of this project.
 
 # References

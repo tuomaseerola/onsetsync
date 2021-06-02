@@ -1,19 +1,13 @@
-# onsetsynch
+# onsetsync
 
-The goal of onsetsynch is to ...
+The goal of onsetsync is to ...
 
 ## Installation
 
-You can install onsetsynch from github with:
+You can install onsetsync from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("tuomaseerola/onsetsynch")
+devtools::install_github("tuomaseerola/onsetsync")
 ```
 
-## Example
-
-
-``` r
-onsetsynch_
-```

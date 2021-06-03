@@ -1,0 +1,21 @@
+#' DebBh_Drut
+#'
+#' DebBh_Drut example, refer to IEMP collection for full details.
+#'
+#' @format A data frame with X rows and Y variables:
+#' \describe{
+#'   \item{Session}{Recording session}
+#'   \item{Tala}{Tala}
+#'   \item{Half.cycle}{Half cycle}
+#'   \item{Vibhag}{Vibhag}
+#'   \item{Beat.pos}{Beat pos}
+#'   \item{Half.beat}{Half beat}
+#'   \item{Cadence}{Cadence}
+#'   \item{Tabla.solo}{Tabla solo}
+#'   \item{Virtual.beat}{Virtual beat}
+#'   \item{Tactus}{Tactus}
+#'   \item{Tempo}{Tempo}
+#'   \item{Guitar}{Inst}
+#'   \item{Tabla}{Tabla}
+#' }
+"DebBh_Drut"

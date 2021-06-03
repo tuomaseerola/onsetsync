@@ -1,17 +1,28 @@
-Package: onsetsynch
-Title: Analysis and Visualisation of Sychronisation of Music Onset Data
-Version: 0.0.1.2000
+Package: onsetsync
+Title: Analysis and Visualisation of Synchronisation of Music Onset Data
+Version: 0.3.2
 Authors@R: person("Tuomas", "Eerola", email = "tuomas.eerola@durham.ac.uk", role = c("aut", "cre"))
-Description: This package contains simple routines to calculate and visualise onset data.
-Depends: R (>= 3.3.2)
-License: GPL-3
+Description: This package help to calculate and visualise onset data. The emphasis is on comparing onsets between performers in the same ensemble, in other words, how well the performers synchronise to each other. There are also some routines to estimate to periodicity of the onsets.
+Depends: 
+	R (>= 3.3.2),
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
     ggplot2,
-    reshape2
-RoxygenNote: 6.0.1
-Suggests: knitr,
-    rmarkdown
+    reshape2,
+    signal,
+    tidyr,
+    moments,
+    magrittr,
+    scales,
+    WaveletComp
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    devtools,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

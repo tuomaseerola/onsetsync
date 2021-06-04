@@ -101,7 +101,7 @@ this piece.
 tab1 <- summarise_onsets(df = CSS_Song2, 
                          instr = c('Clave','Bass','Guitar','Tres'))
 print(knitr::kable(tab1,digits = 1,
-     caption = 'Descriptives for the onset time differences (ms)'))
+     caption = 'Descriptives for the onset time differences (ms).'))
 ```
 
 |        |    N |    Md |     M |    SD |   Min |    Max |
@@ -111,7 +111,7 @@ print(knitr::kable(tab1,digits = 1,
 | Guitar | 1401 | 223.6 | 244.5 |  91.4 | 175.1 | 1694.9 |
 | Tres   |  906 | 245.0 | 371.4 | 234.6 | 147.1 | 1986.5 |
 
-Descriptives for the onset time differences (ms)
+Descriptives for the onset time differences (ms).
 
 As a broad overview, we can visualise the relative synchrony to equal
 division subdivision of the beat for each instrument across the time.
@@ -127,7 +127,8 @@ print(fig1)
 
 <img src="man/figures/README-synch2isochron-1.png" width="75%" />
 
-There are several variants of this summary, but let’s move on.
+There are several variants of this summary that create different
+summaries of the onsets across the beats, but let’s move on.
 
 To what degree are the pairs of instruments synchronised in this
 example? Since the instruments usually play widely different amounts of
@@ -159,5 +160,6 @@ print(fig2)
 
 <img src="man/figures/README-fig4-1.png" width="75%" />
 
-For more examples, see [vignette IN PROGRESS](http://) and associated
+For more examples, see [docs IN
+PROGRESS](https://tuomaseerola.github.io/onsetsync/) and associated
 [paper IN PROGRESS](http://).

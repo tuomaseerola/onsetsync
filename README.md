@@ -35,7 +35,7 @@ Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtool
 or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known
 onset detection algorithms. Here we take it as granted that we have
 extracted the onsets in some of these programs, probably checked them by
-hand, and we have the onset times recorded into the csv files.
+hand, and we have the onset times recorded into csv files.
 
 ``` r
 library(onsetsync)
@@ -146,6 +146,9 @@ print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
     'ms & standard deviation of',round(sd(d1$asynch*1000),1),'ms'))
 #> [1] "Mean asynchrony of 16.3 ms & standard deviation of 20.1 ms"
 ```
+
+Let’s visualise the synchrony of all pairings of the instruments in this
+example.
 
 ``` r
 inst<-c('Clave','Bass','Guitar','Tres') # Define instruments 

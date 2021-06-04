@@ -36,26 +36,19 @@ devtools::install_github("tuomaseerola/onsetsync")
 
 Note that `onsetsync` is not dedicated to extraction of onsets from audio as that can be done in other packages (e.g. Librosa and Python, or Matlab, or Sonic Visualiser) using well-known algorithms. Here we take it as granted that we have extracted the onsets elsewhere and we have the onset times recorded into the csv files. 
 
-```{r, results='hide', message=FALSE, warning=FALSE,echo=FALSE}
+```{r, message=FALSE, warning=FALSE,echo=TRUE}
+library(onsetsync)
+library(httr)
 library(dplyr)
 library(ggplot2)
-library(reshape2)
-library(httr)
-library(onsetsync)
 ```
 
-```{r message=FALSE,warning=FALSE,eval=TRUE}
-# Onsets
-invisible(GET("https://osf.io/8a347/?action=download", 
-              write_disk("CSS_Song2_Onsets_Selected.csv", overwrite = T)))
-CSS_Song2_Onset<-read.csv("CSS_Song2_Onsets_Selected.csv",header=T,sep=",")
+```{r message=FALSE,warning=FALSE,eval=TRUE,results='asis'}
+CSS_Song2_Onset <- get_OSF_csv('8a347') # Onsets
 knitr::kable(head(CSS_Song2_Onset[,1:8,]),format = "simple",
              caption = 'Onset data structure (see text for details).')
 
-# Annotations
-invisible(GET("https://osf.io/4cdpr/?action=download", 
-              write_disk("CSS_Song2_Metre.csv", overwrite = TRUE)))
-CSS_Song2_Metre <- read.csv("CSS_Song2_Metre.csv", header=T, sep=",")
+CSS_Song2_Metre <- get_OSF_csv('4cdpr') # Annotations
 knitr::kable(head(CSS_Song2_Metre[1:4,]),format = ,"simple")
 CSS_Song2_Onset <- dplyr::select(CSS_Song2_Onset,
                                  Label.SD,SD,Clave,Bass,Guitar,Tres) 

@@ -13,6 +13,7 @@
 #' @return Graphic output
 #' @import ggplot2
 #' @import dplyr
+#' @import hms
 
 plot_by_beat <-
   function(df = NULL,

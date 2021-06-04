@@ -17,6 +17,7 @@ Imports:
     moments,
     magrittr,
     scales,
+    hms,
     WaveletComp
 RoxygenNote: 7.1.1
 Suggests: 

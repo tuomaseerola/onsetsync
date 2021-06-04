@@ -10,6 +10,7 @@
 #' @return Graphic output
 #' @export
 #' @import ggplot2
+#' @import hms
 
 # T. Eerola, Durham University, IEMP project
 # 22/4/2021

@@ -11,7 +11,7 @@ periodicity(
   sampling_rate = 250,
   freq_range = c(0, 2),
   resolution = 0.01,
-  ignore_acf_lower = 0.2,
+  ignore_period_under = 0.2,
   colour = "navyblue",
   title = NULL
 )
@@ -29,7 +29,7 @@ periodicity(
 
 \item{resolution}{Resolution for some of the analyses (in seconds)}
 
-\item{ignore_acf_lower}{Ignore period lower than this (in seconds)}
+\item{ignore_period_under}{Ignore period lower than this (in seconds)}
 
 \item{colour}{Line colour for plotting}
 

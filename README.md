@@ -45,9 +45,7 @@ dataset at <https://osf.io/sfxa2/>. This song has the onsets and the
 annotations about the metric cycles already extracted and defined and
 **comes with the package**.
 
-<div>
-<iframe src="https://mfr.osf.io/render?url=https://osf.io/z9uxs/?direct%26mode=render%26action=download%26public_file=True&amp;initialWidth=700&amp;childId=mfrIframe&amp;parentTitle=OSF%20%7C%20CSS_Song2_StereoMix.wav&amp;parentUrl=https%3A%2F%2Fosf.io%2Fz9uxs%2F"></iframe>
-</div>
+Go and <A HREF="https://osf.io/z9uxs/" target="_blank">listen to the song at OSF</A>.
 
 ``` r
 CSS_Song2 <- onsetsync::CSS_IEMP[[2]]   # Read one song from internal data

@@ -5,6 +5,7 @@
 #' @param df data frame to be processed
 #' @param bybeat Optional (FALSE by default) which adds the beats to the plot
 #' @param reference Optional (0 by default) which adds the reference line to the plot
+#' @param colourpalette Optional colourpalette, Default
 #' @seealso \code{\link{plot_by_variable}}
 #' @return Graphic output
 #' @import ggplot2
@@ -13,12 +14,16 @@
 
 plot_by_pair <-function(df=NULL,
                         bybeat=FALSE,
-                        reference=0){
+                        reference=0,
+                        colourpalette='Pastel1'){
 
   # T. Eerola, Durham University, IEMP project
   # 14/1/2018  
   Instrument <- ms <- beatL <- NULL
   
+  palettetype <- 'qual'
+  if(colourpalette=='Greys' | colourpalette=='Blues'){palettetype <- 'seq'}
+
   if(bybeat==FALSE){ # asynchronies
   
   m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
@@ -26,9 +31,14 @@ plot_by_pair <-function(df=NULL,
 #  colnames(m)<-c('Instrument','ms')
   
   g1<-ggplot2::ggplot(m,ggplot2::aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=Instrument))+
-    ggplot2::geom_violin(scale = "width",show.legend = FALSE,na.rm=TRUE)+
-    ggplot2::geom_jitter(height = 0, width = 0.15,size=0.15,show.legend = FALSE,na.rm=TRUE)+
-    ggplot2::geom_hline(yintercept = reference,color='red')+
+    ggplot2::geom_violin(scale = "width",show.legend = FALSE,na.rm=TRUE,alpha=0.7)+
+    ggplot2::geom_jitter(height = 0, width = 0.15,size=0.15,show.legend = FALSE,na.rm=TRUE,colour='grey50')+
+    ggplot2::stat_summary(fun = "mean",
+                 geom = "crossbar",
+                 width = 0.4,
+                 color = "black",show.legend = FALSE)+
+    ggplot2::geom_hline(yintercept = reference,color='black',linetype='dashed')+
+    ggplot2::scale_fill_brewer(palette = colourpalette,type = palettetype)+
     ggplot2::coord_flip()+
     ggplot2::xlab('Instrument pairs')+
     ggplot2::ylab('Synchrony (ms)')+
@@ -44,10 +54,13 @@ plot_by_pair <-function(df=NULL,
     b<-suppressMessages(reshape2::melt(df$beatL))
     m$beatL<-b$value
     m$beatL<-factor(m$beatL)
+    
     g1<-ggplot2::ggplot(m,ggplot2::aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=beatL))+
       ggplot2::geom_boxplot(outlier.shape = NA,varwidth = F,na.rm=TRUE)+
+      ggplot2::scale_fill_brewer()+
+#      ggplot2::scale_y_continuous(breaks = seq(-50,50,by=10))+
       ggplot2::coord_flip()+
-      ggplot2::geom_hline(yintercept = reference,color='red')+
+      ggplot2::geom_hline(yintercept = reference,color='black',linetype='dashed')+
       ggplot2::xlab('Instrument pairs')+
       ggplot2::ylab('Synchrony (ms)')+
       ggplot2::theme_linedraw()

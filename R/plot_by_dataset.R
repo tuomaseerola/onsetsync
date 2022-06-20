@@ -65,7 +65,7 @@ plot_by_dataset <-
                                     palette = 'Set1',
                                     type = "div") +
         ggplot2::scale_fill_brewer(palette = "Accent") +
-        ggplot2::xlab('Dataset') +
+        ggplot2::xlab('Performance') +
         ggplot2::ylab('Asynchrony (ms)') +
         ggplot2::annotate(
           "text",

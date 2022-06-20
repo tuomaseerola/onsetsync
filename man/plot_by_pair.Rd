@@ -4,7 +4,12 @@
 \alias{plot_by_pair}
 \title{Plot synchronies by instrument pairs}
 \usage{
-plot_by_pair(df = NULL, bybeat = FALSE, reference = 0)
+plot_by_pair(
+  df = NULL,
+  bybeat = FALSE,
+  reference = 0,
+  colourpalette = "Pastel1"
+)
 }
 \arguments{
 \item{df}{data frame to be processed}
@@ -12,6 +17,8 @@ plot_by_pair(df = NULL, bybeat = FALSE, reference = 0)
 \item{bybeat}{Optional (FALSE by default) which adds the beats to the plot}
 
 \item{reference}{Optional (0 by default) which adds the reference line to the plot}
+
+\item{colourpalette}{Optional colourpalette, Default}
 }
 \value{
 Graphic output

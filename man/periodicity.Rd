@@ -12,6 +12,7 @@ periodicity(
   freq_range = c(0, 2),
   resolution = 0.01,
   ignore_period_under = 0.2,
+  ignore_period_above = 5,
   colour = "navyblue",
   title = NULL
 )
@@ -30,6 +31,8 @@ periodicity(
 \item{resolution}{Resolution for some of the analyses (in seconds)}
 
 \item{ignore_period_under}{Ignore period lower than this (in seconds)}
+
+\item{ignore_period_above}{Ignore period above than this (in seconds)}
 
 \item{colour}{Line colour for plotting}
 

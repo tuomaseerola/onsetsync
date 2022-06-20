@@ -23,6 +23,9 @@ sync_sample_paired <- function(df = NULL,
   
   # T. Eerola, Durham University, IEMP project
   # 14/1/2018  
+  # Updated 18/6/2022 to incorporate corpus structure
+
+  if(is.data.frame(df)==TRUE){
   
   instr1 <- as.matrix(df[,which(colnames(df)==INSTR1)])  
   instr2 <- as.matrix(df[,which(colnames(df)==INSTR2)])  
@@ -84,5 +87,28 @@ sync_sample_paired <- function(df = NULL,
     }    
   }
   
-  return<-list(asynch=D,beatL=beat_L)
+  } # ends normal single df processing
+  
+  if(is.data.frame(df)==FALSE){
+    print('Calculating across the corpora') # This is not very effective, but  
+    NAMES<-names(df)
+    D<-list()
+    L<-NULL
+    for (i in 1:length(df)) {
+      tmp_df <- df[[i]]
+      D[[i]] <- sync_sample_paired(df = tmp_df,INSTR1,INSTR2,N,BNum,beat)
+      beat_L<-NULL
+      L[i] <- length(D[[i]]$asynch)
+    }
+    R3<-dplyr::bind_rows(D)
+    NAME_INDEX<-NULL
+    for (x in 1:length(L)) {
+      V<-rep(NAMES[x],L[x])
+      NAME_INDEX<-c(NAME_INDEX,V)
+    }
+    R3$name<-NAME_INDEX
+    D<-R3
+  }
+  
+  return<-list(asynch=D,beatL=beat_L)  
 }

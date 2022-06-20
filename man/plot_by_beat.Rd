@@ -12,7 +12,8 @@ plot_by_beat(
   pcols = 1,
   griddeviations = FALSE,
   boxplot = FALSE,
-  colour = "lightblue"
+  colour = "lightblue",
+  colourpalette = "Set1"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ plot_by_beat(
 \item{boxplot}{Do the graphics by boxplot}
 
 \item{colour}{colour for the boxplot}
+
+\item{colourpalette}{colors for dots in the timeline, use 'grey' for bw}
 }
 \value{
 Graphic output

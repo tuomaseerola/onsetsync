@@ -3,8 +3,8 @@ citHeader("To cite onsetsync in publications use:")
 citEntry(
   entry    = "Manual",
   title    = "onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data",
-  author   = personList(as.person("Tuomas Eerola")),
-  year     = 2021,
+  author   = personList(as.person("Tuomas Eerola"),as.person("Martin Clayton")),
+  year     = 2022,
   url      = "https://github.com/tuomaseerola/onsetsync",
-  textVersion = "Eerola, T. (2021). onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data. https://github.com/tuomaseerola/onsetsync"
+  textVersion = "Eerola, T. & Clayton, M. (2022). onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data. https://github.com/tuomaseerola/onsetsync"
   )

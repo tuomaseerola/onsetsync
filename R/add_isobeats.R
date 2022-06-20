@@ -24,7 +24,7 @@ add_isobeats <- function(df = NULL,
   mean_onset <- all_of <- NULL
   
   #_ beat<-'SD'
-  beat_N <- max(as.matrix(df[,which(colnames(df)==beat)]))  
+  beat_N <- max(as.matrix(df[,which(colnames(df)==beat)]),na.rm = T)  # fix to avoid NAs
   
   # Optional, recode new number for each cycle
   L <- round(nrow(df)/beat_N)

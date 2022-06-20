@@ -29,7 +29,7 @@ add_annotation <-
     
     if(reference=='Label.SD'){
       tmp <- df$Label.SD
-      ind <- grep(pattern = ":1$", x=tmp) # gets the cycle beginnings
+      ind <- grep(pattern = ":1$|\\|1$", x=tmp) # gets the cycle beginnings (fixed to include | in June 2022)
       if(length(ind)!=length(annotation)){
         stop('Error:Cycle beginnings and the annotation cycle data are of different lengths!')
       }
@@ -37,7 +37,7 @@ add_annotation <-
 #    df$Cycle[ind]<-annotation
     df$CycleTime<-NA
     df$CycleTime[ind]<-time
-    df$Cycle <- as.numeric(gsub(pattern = ":[0-9]+$", replacement = '', x = tmp)) # converts the cycles into numeric
+    df$Cycle <- as.numeric(gsub(pattern = ":[0-9]+$|\\|[0-9]+$", replacement = '', x = tmp)) # converts the cycles into numeric, (fixed to include | in June 2022)
     }
     
     if(reference!='Label.SD'){

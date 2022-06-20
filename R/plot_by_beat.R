@@ -10,6 +10,7 @@
 #' @param griddeviations Add deviation from the virtual beats in 
 #' @param boxplot Do the graphics by boxplot
 #' @param colour colour for the boxplot
+#' @param colourpalette colors for dots in the timeline, use 'grey' for bw
 #' @return Graphic output
 #' @import ggplot2
 #' @import dplyr
@@ -23,7 +24,8 @@ plot_by_beat <-
            pcols = 1,
            griddeviations = FALSE,
            boxplot = FALSE,
-           colour = 'lightblue') {
+           colour = 'lightblue',
+           colourpalette = 'Set1') {
     # T. Eerola, Durham University, IEMP project
     # 23/1/2018
     # needs work
@@ -85,10 +87,10 @@ plot_by_beat <-
         y = instr,
         colour = name
       )) +
-        ggplot2::geom_point(size = 1, na.rm = TRUE,show.legend = FALSE,alpha=0.85) +
+        ggplot2::geom_point(size = 1, na.rm = TRUE,show.legend = FALSE,alpha=0.85) + # colour='black'
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instrument",
-                           palette = 'Set1',
+                           palette = colourpalette,
                            type = "div") +
         ggplot2::facet_wrap( ~ name, ncol = pcols) +
         ggplot2::xlab(paste('Beat (', beat, ')', sep = '')) +
@@ -96,6 +98,9 @@ plot_by_beat <-
         ggplot2::ylab('Time (s)') +
         ggplot2::theme_linedraw()
       g1
+      if(colourpalette=='Greys'){
+        g1$layers[[1]]$aes_params$colour <-  "gray20"
+      }
     }
     
     ## PLOT with metrical grid deviations
@@ -112,23 +117,26 @@ plot_by_beat <-
         ggplot2::geom_point(size = 1, na.rm = TRUE,show.legend = FALSE,alpha=0.85) +
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instr.",
-                           palette = 'Set1',
-                           type = "div") + # was Spectral
+                           palette = colourpalette,
+                           type = "div") + 
         ggplot2::facet_wrap( ~ name, ncol = pcols) +
         ggplot2::xlab(paste('Beat (', beat, ')', sep = '')) +
         ggplot2::ylab('Time (s)') +
         ggplot2::scale_y_time()+
         ggplot2::theme_linedraw()+
-        ggplot2::geom_text(
+        ggplot2::geom_label(
           data    = S,
           mapping = ggplot2::aes(x = beat, y = 5, label = label),
           hjust   = 0.5,
-          size = 2.5,
+          size = 4.0,
           angle = 0,
+          fill = 'white',
           color = "black",
           vjust   = -1
         )
-      
+      if(colourpalette=='Greys'){
+        g1$layers[[1]]$aes_params$colour <-  "gray20"
+      }
     #  g1
       
     }

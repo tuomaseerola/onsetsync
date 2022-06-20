@@ -9,6 +9,7 @@
 #' @param freq_range Frequency range to be included in the periodicity analysis (in seconds)
 #' @param resolution Resolution for some of the analyses (in seconds)
 #' @param ignore_period_under Ignore period lower than this (in seconds)
+#' @param ignore_period_above Ignore period above than this (in seconds)
 #' @param colour Line colour for plotting
 #' @param title Title for plotting
 #' @seealso \code{\link{periodicity_moments}}
@@ -28,6 +29,7 @@ periodicity <-
            freq_range = c(0, 2),
            resolution = 0.01,
            ignore_period_under = 0.2,
+           ignore_period_above = 5,
            colour = 'navyblue',
            title = NULL) {
     # T. Eerola, Durham University, IEMP project
@@ -53,7 +55,7 @@ periodicity <-
     
     onset <- Diff <- Ampl <- Time <- NULL
         
-    tmp <- dplyr::select(df, instr)
+    tmp <- dplyr::select(df, tidyr::all_of(instr)) # added all_of
     colnames(tmp) <- 'onset'
     tmp <- tidyr::drop_na(tmp)    # drop NAs
 
@@ -76,11 +78,11 @@ periodicity <-
        #  forced_max_ampl <- NA
        #  }
        # 
-      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl)) +
+      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl/max(Ampl))) +
         ggplot2::geom_line(colour=colour) +
         ggplot2::xlab('Time (s)') +
+        ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(limits = c(freq_range[1], freq_range[2]),breaks=seq(freq_range[1],freq_range[2],by=0.2)) +
-#        ggplot2::scale_y_continuous(limits = c(NA,forced_max_ampl))+
         ggplot2::ggtitle(title)+
         ggplot2::theme_linedraw()+
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
@@ -99,11 +101,11 @@ periodicity <-
                    Time = AC$lag / sampling_rate)
       # filter zero lag or close
       Per <- dplyr::filter(Per, Time >= ignore_period_under)
-      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl)) +
+      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl/max(Ampl))) +
         ggplot2::geom_line(colour=colour) +
         ggplot2::xlab('Time (s)') +
+        ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(limits = c(freq_range[1], freq_range[2]),breaks=seq(freq_range[1],freq_range[2],by=0.2)) +
-        #ggplot2::scale_y_continuous(limits = c(NA,forced_max_ampl))+
         ggplot2::ggtitle(title)+
         ggplot2::theme_linedraw()+
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
@@ -119,19 +121,21 @@ periodicity <-
       }
       #tmp_g$onsetcurve
       ### revised using seewave
-      plot(tmp_g$time,tmp_g$onsetcurve,type = 'l',col='blue')
-      Per = seewave::spec(tmp_g$onsetcurve,f=sampling_rate,plot = FALSE)
-      Per<-data.frame(Per)
-      Per$x <- Per$x*sampling_rate #   (KHz to Hz)
-      #plot(Per$x,Per$y,type='l',xlim = c(0,3))
+#      plot(tmp_g$time,tmp_g$onsetcurve,type = 'l',col='blue')
+      Per <- seewave::spec(tmp_g$onsetcurve,f=sampling_rate,plot = FALSE,flim = c(0.002,0.004))
+      Per <- data.frame(Per)
+      Per$x <- 1/(Per$x*1000)#sampling_rate #   (KHz to Hz) #Added 1/ to fix an error! 19/6/2022
       colnames(Per)<-c('Time','Ampl')
-      Per <- dplyr::filter(Per, Time >= ignore_period_under)
       
-        fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl)) +
+      Per <- dplyr::filter(Per, Time >= ignore_period_under & Time < ignore_period_above)
+      Per <- dplyr::filter(Per, Time != 'Inf')
+      Per <- dplyr::arrange(Per, Time)
+
+        fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl/max(Ampl))) +
         ggplot2::geom_line(colour=colour) +
         ggplot2::xlab('Time (s)') +
+        ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(limits = c(freq_range[1], freq_range[2]),breaks=seq(freq_range[1],freq_range[2],by=0.2)) +
-        #ggplot2::scale_y_continuous(limits = c(NA,forced_max_ampl))+
         ggplot2::ggtitle(title)+
         ggplot2::theme_linedraw()+
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
@@ -165,11 +169,11 @@ periodicity <-
       Per <- data.frame(Time = W$Period / sampling_rate,
                         Ampl = W$Power.avg)
       
-      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl)) +
+      fig <- ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl/max(Ampl))) +
         ggplot2::geom_line(colour=colour) +
         ggplot2::xlab('Time (s)') +
+        ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(limits = c(freq_range[1], freq_range[2]),breaks=seq(freq_range[1],freq_range[2],by=0.2)) +
-        #ggplot2::scale_y_continuous(limits = c(NA,forced_max_ampl))+
         ggplot2::ggtitle(title)+
         ggplot2::theme_linedraw()+
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))

@@ -9,6 +9,7 @@
 #' @param var2 Variable 2
 #' @param var3 Variable 3 (optional)
 #' @param colour Colour option
+#' @param smoothline_colour Colour option
 #' @param xlabel label for X axis
 #' @param ylabel label for Y axis
 #' @param zlabel label for Z axis
@@ -22,25 +23,26 @@ plot_by_var_time <- function(df,
                              var2 = 'Synchrony',
                              var3 = NULL,
                              colour = 'orange',
+                             smoothline_colour = 'navyblue',
                              xlabel = NULL,
                              ylabel = NULL,
                              zlabel = NULL) {
   # T. Eerola, Durham University, IEMP project
-  # 1/6/2022
+  # 20/6/2022
 
-    var1 <- var2 <- var3 <- Time <- VAR2 <- VAR3 <- NULL
-#  lm <- NULL
+ .data <- NULL # <- var2 <- var3 <- Time <- VAR2 <- VAR3 <- NULL
+
   if(is.null(xlabel)){xlabel <- var1}
   if(is.null(ylabel)){ylabel <- var2}
   if(is.null(zlabel)){zlabel <- var3}
 
   if(is.null(var3)){
-    DF<-df %>% dplyr::select(tidyr::all_of(c(var1, var2)))
-    colnames(DF) <- c('Time', 'VAR2')
+#    DF <- df %>% dplyr::select(tidyr::all_of(c(var1, var2)))
+#    colnames(DF) <- c('Time', 'VAR2')
     g1 <-
-      ggplot2::ggplot(DF, ggplot2::aes(x = Time, y = VAR2)) +
+      ggplot2::ggplot(df, ggplot2::aes(x = .data[[var1]], y = .data[[var2]])) +
       ggplot2::geom_point(colour=colour) +
-      ggplot2::geom_smooth(ggplot2::aes(x = Time, y = VAR2),method = lm,formula = y ~ splines::bs(x, 12), se = FALSE, colour=colour) +
+      ggplot2::geom_smooth(ggplot2::aes(x = .data[[var1]], y = .data[[var2]]),method = lm,formula = y ~ splines::bs(x, 12), se = FALSE, colour=smoothline_colour) +
       ggplot2::xlab(xlabel)+
       ggplot2::ylab(ylabel)+
       #   ggplot2::scale_x_time()+
@@ -48,12 +50,12 @@ plot_by_var_time <- function(df,
   }
   
   if(!is.null(var3)){
-    DF<-df %>% dplyr::select(tidyr::all_of(c(var1, var2, var3)))
-    colnames(DF) <- c('Time', 'VAR2','VAR3')
+  #  DF<-df %>% dplyr::select(tidyr::all_of(c(var1, var2, var3)))
+  #  colnames(DF) <- c('Time', 'VAR2','VAR3')
     g1 <-
-      ggplot2::ggplot(DF, ggplot2::aes(x = Time, y = VAR2, colour = VAR3)) +
+      ggplot2::ggplot(df, ggplot2::aes(x = .data[[var1]], y = .data[[var2]], colour = .data[[var3]])) +
       ggplot2::geom_point() +
-      ggplot2::geom_smooth(ggplot2::aes(x = Time, y = VAR2),method = lm,formula = y ~ splines::bs(x, 12), se = FALSE, colour=colour) +
+      ggplot2::geom_smooth(ggplot2::aes(x = .data[[var1]], y = .data[[var2]]),method = lm,formula = y ~ splines::bs(x, 12), se = FALSE, colour=smoothline_colour) +
       ggplot2::xlab(xlabel)+
       ggplot2::ylab(ylabel)+
       ggplot2::scale_x_time()+

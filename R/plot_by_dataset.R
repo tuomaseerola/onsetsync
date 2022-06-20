@@ -43,7 +43,7 @@ plot_by_dataset <-
     
     g1 <-
       ggplot2::ggplot(DF, ggplot2::aes(asynch, fill = data), colour = 'black') +
-      ggplot2::geom_density(alpha = 1) +
+      ggplot2::geom_density(alpha = 1, show.legend = FALSE) +
       ggplot2::scale_color_brewer(name = "Dataset",
                                   palette = 'Set1',
                                   type = "div") +
@@ -54,26 +54,30 @@ plot_by_dataset <-
     #g1
     
     if (box == TRUE) {
-      m <-
-        dplyr::summarise(dplyr::group_by(DF, data),
-                         m = median(asynch),
-                         count = n())
+
+      # for N
+        meds <- c(by(DF$asynch, DF$data, median))
+        nlabels <- table(DF$data)
       
-      g1 <- ggplot2::ggplot(DF, ggplot2::aes(data, asynch, fill = data)) +
-        ggplot2::geom_boxplot(outlier.colour = "gray80", outlier.size = 0.25, show.legend = FALSE) +
-        ggplot2::scale_color_brewer(name = "Dataset",
-                                    palette = 'Set1',
-                                    type = "div") +
-        ggplot2::scale_fill_brewer(palette = "Accent") +
+        g1 <- ggplot2::ggplot(DF, ggplot2::aes(data,asynch,fill=data)) +
+        ggplot2::geom_violin(show.legend = FALSE) +
+        ggplot2::stat_summary(fun=median, geom="crossbar", size=.3, color="black",show.legend = FALSE)+
+        ggplot2::geom_text(data = data.frame(), ggplot2::aes(x = names(meds) , y = meds + 2, 
+                                             label = paste0("n=", nlabels)), hjust = 0, size = 3)+
+                  # ggplot2::scale_color_brewer(name = "Dataset",
+        #                             palette = 'Set1',
+        #                             type = "div") +
+        ggplot2::scale_fill_brewer(palette = "Set1") +
         ggplot2::xlab('Performance') +
         ggplot2::ylab('Asynchrony (ms)') +
-        ggplot2::annotate(
-          "text",
-          x = as.numeric(m$data),
-          y = m$m + m$m * 0.1,
-          label = paste("N=", m$count, sep = ""),
-          size = 5
-        ) +
+        ggplot2::coord_flip()+
+        # ggplot2::annotate(
+        #   "text",
+        #   x = as.numeric(DF$data),
+        #   y = m$m + m$m * 0.0,
+        #   label = paste("N=", m$count, sep = ""),
+        #   size = 5
+        # ) +
         ggplot2::theme_linedraw()
       #g1
     }

@@ -10,6 +10,7 @@ plot_by_var_time(
   var2 = "Synchrony",
   var3 = NULL,
   colour = "orange",
+  smoothline_colour = "navyblue",
   xlabel = NULL,
   ylabel = NULL,
   zlabel = NULL
@@ -25,6 +26,8 @@ plot_by_var_time(
 \item{var3}{Variable 3 (optional)}
 
 \item{colour}{Colour option}
+
+\item{smoothline_colour}{Colour option}
 
 \item{xlabel}{label for X axis}
 

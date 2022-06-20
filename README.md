@@ -9,11 +9,12 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-`onsetsync` is a R package for musical dynamics involving synchrony.
+`onsetsync` is a R package for musical assessing synchrony between
+onsets in music.
 <img src="man/figures/logo.png" align="right" height="139"/> There are
 functions for common operations such as adding isochronous beats based
 on metrical structure, adding annotations, calculating classic measures
-of synchrony between two performers, and assessing periodicity of the
+of synchrony between performers, and assessing periodicity of the
 onsets, and visualising synchrony across cycles, time, or another
 property.
 
@@ -29,70 +30,25 @@ devtools::install_github("tuomaseerola/onsetsync")
 
 ## Usage
 
-Note that `onsetsync` is not dedicated to extraction of onsets from
-audio as that should be done using other tools
-(e.g. [Librosa](https://librosa.org), or [MIR Toolbox for
-Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox),
-or [Sonic Visualiser](https://www.sonicvisualiser.org) using established
-onset detection algorithms). Here we take it as granted that we have
-extracted the onsets of the music from a recording in some of these
-tools, probably checked them by hand, and we have the onset times
-recorded into csv files.
-
 ``` r
 library(onsetsync)
-library(httr)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.0'
+#> [1] '0.4.1'
 ```
+
+### Reading in data
 
 Read onsets of one Cuban Son performance titled *Palo Santo* from *IEMP*
-dataset about *Cuban Son and Salsa* at <https://osf.io/sfxa2/>:
-
-Add annotations of the metric cycles to the data, also obtained from OSF
-dataset:
-
-``` r
-CSS_Song2_Onset <- get_OSF_csv('8a347') # Onsets
-knitr::kable(head(CSS_Song2_Onset[,1:8,]),format = "simple")
-```
-
-| Piece  | Label.SD |  SD | Clave\_. | Section | Clave |     Bass |   Guitar |
-|:-------|:---------|----:|:---------|:--------|------:|---------:|---------:|
-| Song_2 | 1:1      |   1 | 1        | Son     |    NA |       NA |       NA |
-| Song_2 | 1:2      |   2 | N        | Son     |    NA |       NA | 5.281932 |
-| Song_2 | 1:3      |   3 | N        | Son     |    NA |       NA | 5.480643 |
-| Song_2 | 1:4      |   4 | 2        | Son     |    NA | 5.714555 | 5.707537 |
-| Song_2 | 1:5      |   5 | N        | Son     |    NA | 5.927078 | 5.939071 |
-| Song_2 | 1:6      |   6 | N        | Son     |    NA |       NA | 6.153243 |
+dataset at <https://osf.io/sfxa2/>. This song has the onsets and the
+annotations about the metric cycles already extracted and defined and
+**comes with the package**.
 
 ``` r
-
-CSS_Song2_Metre <- get_OSF_csv('4cdpr') # Annotations
-CSS_Song2_Onset <- dplyr::select(CSS_Song2_Onset,
-                                 Label.SD,SD,Clave,Bass,Guitar,Tres) 
-```
-
-As the onsets and annotations are in different files, let’s first
-combine the raw onset and annotation with `onsetsync`. Here we first add
-annotations (using `add_annotation` function) about the cycles into the
-onset data. We then add isochronous beat times to the data frame using
-`add_isobeats`, since these are useful reference points for synchrony
-calculations.
-
-``` r
-# Add annotations about the cycle to the data frame
-CSS_Song2 <- add_annotation(df = CSS_Song2_Onset,
-                            annotation = CSS_Song2_Metre$Cycle,
-                            time = CSS_Song2_Metre$Time,
-                            reference = 'Label.SD')
-# Add isochronous beats to the data frame
-CSS_Song2 <- add_isobeats(df = CSS_Song2, 
-                          instr = 'CycleTime', 
-                          beat = 'SD')
-
+CSS_Song2 <- onsetsync::CSS_IEMP[[2]]   # Read one song from internal data
+CSS_Song2 <- dplyr::select(CSS_Song2,Label.SD,SD,Clave,Bass,Guitar,Tres,
+                           CycleTime,Cycle,Isochronous.SD.Time) # Select some columns
 print(knitr::kable(head(CSS_Song2),format = "simple",digits = 2))
 ```
 
@@ -105,27 +61,14 @@ print(knitr::kable(head(CSS_Song2),format = "simple",digits = 2))
 | 1:5      |   5 |    NA | 5.93 |   5.94 | 5.92 |        NA |     1 |                5.93 |
 | 1:6      |   6 |    NA |   NA |   6.15 | 6.14 |        NA |     1 |                6.15 |
 
-Before moving onto the analysis, let’s summarise the onset structures in
-this piece.
+Reading data from is easy either from CSV files in your computer or
+directly from OSF using `get_OSF_csv` function.
 
-``` r
-tab1 <- summarise_onsets(df = CSS_Song2, 
-                         instr = c('Clave','Bass','Guitar','Tres'))
-print(knitr::kable(tab1,digits = 1,
-     caption = 'Descriptives for the onset time differences (ms).'))
-```
+### Visualise onsets structures
 
-|        |    N |    Md |     M |    SD |   Min |    Max |
-|:-------|-----:|------:|------:|------:|------:|-------:|
-| Clave  |  486 | 666.4 | 703.6 | 173.9 | 192.0 | 1558.1 |
-| Bass   |  486 | 471.4 | 708.1 | 432.0 | 180.0 | 1985.2 |
-| Guitar | 1401 | 223.6 | 244.5 |  91.4 | 175.1 | 1694.9 |
-| Tres   |  906 | 245.0 | 371.4 | 234.6 | 147.1 | 1986.5 |
-
-Descriptives for the onset time differences (ms).
-
-As a broad overview, we can visualise the relative synchrony to equal
-division subdivision of the beat for each instrument across the time.
+As an overview, we can visualise the onsets across the beat
+sub-divisions for each instrument and do this across the time. Note that
+time run vertically (from bottom to up) here.
 
 ``` r
 fig1 <- plot_by_beat(df = CSS_Song2, 
@@ -138,39 +81,77 @@ print(fig1)
 
 <img src="man/figures/README-synch2isochron-1.png" width="75%" />
 
-There are several variants of this visualisation that create alternative
-summaries of the onsets across the beats, but let’s move on.
+### Calculate asynchronies
 
-To what degree are the pairs of instruments synchronised to each other
-in this example? Since the instruments usually play widely different
-amounts of onsets in a piece, and these are bound to be at different
-beats sub-divisions, the mutual amount of comparable onsets for each
-pair varies often dramatically. In order to keep the mean and standard
-deviations comparable, we will randomly sample joint onsets for both
-instruments.
-
-``` r
-set.seed(1201) # set random seed
-N <- 200 # Let's select 200 onsets
-d1 <- sync_sample_paired(CSS_Song2,'Clave','Bass',N,1,'SD',TRUE)
-#> [1] "onsets in common: 241"
-print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
-    'ms & standard deviation of',round(sd(d1$asynch*1000),1),'ms'))
-#> [1] "Mean asynchrony of 16.3 ms & standard deviation of 20.1 ms"
-```
-
+To what degree are the pairs of instruments synchronised to each other?
 Let’s visualise the synchrony of all pairings of the instruments in this
 example.
 
 ``` r
-inst<-c('Clave','Bass','Guitar','Tres') # Define instruments 
-dn <- sync_execute_pairs(CSS_Song2,inst,N,10,'SD')
+inst <- c('Clave','Bass','Guitar','Tres') # Define instruments 
+dn <- sync_execute_pairs(CSS_Song2,inst,0,1,'SD')
 fig2 <- plot_by_pair(dn)  # plot
 print(fig2)  
 ```
 
-<img src="man/figures/README-fig4-1.png" width="75%" />
+<img src="man/figures/README-fig2-1.png" width="75%" />
 
-For more examples, see [docs IN
-PROGRESS](https://tuomaseerola.github.io/onsetsync/) and associated
-[paper IN PROGRESS](http://).
+As we saw in the first figure, the instruments usually play widely
+different amounts of onsets in a piece, and these are bound to be at
+different beats sub-divisions, the mutual amount of comparable onsets
+for each pair often varies dramatically. Comparison of mean asynchronies
+across sub-divisions can be facilitated by taking random samples of the
+joint onsets. Here we choose a random 200 matching onsets and
+re-calculate the comparison of asynchrony with this subset 1000 times.
+
+``` r
+set.seed(1234) # set random seed
+N <- 200 # Let's select 200 onsets
+Bootstrap <- 1000
+d1 <- sync_sample_paired(CSS_Song2,'Clave','Bass',N,Bootstrap,'SD',TRUE)
+#> [1] "onsets in common: 241"
+print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
+    'ms & standard deviation of',round(sd(d1$asynch*1000),1),'ms'))
+#> [1] "Mean asynchrony of 16.2 ms & standard deviation of 19.5 ms"
+```
+
+There are other measures to summarise the asynchronies and visualise
+them.
+
+### Calculate synchrony across performances
+
+We can apply the measures to a corpus of performances. Here we load five
+Cuban Son and Salsa performances and run the same analysis as above
+across the performances.
+
+``` r
+corpus <- onsetsync::CSS_IEMP
+D <- sync_sample_paired(corpus,'Tres','Bass',N=0,beat='SD')
+#> [1] "Calculating across the corpora"
+D <- D$asynch
+D$asynch_abs <- abs(D$asynch)*1000
+fig3 <- plot_by_dataset(D,'asynch_abs','name', box = TRUE)
+print(fig3)
+```
+
+<img src="man/figures/README-corpus-1.png" width="75%" />
+
+For more examples, see
+[documentation](https://tuomaseerola.github.io/onsetsync/) and
+associated [paper IN PROGRESS](http://).
+
+#### Note: How do I get onsets from my music?
+
+Note that `onsetsync` is not dedicated to extraction of onsets from
+audio as that should be done using other tools
+(e.g. [Librosa](https://librosa.org), or [MIR Toolbox for
+Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox),
+or [Sonic Visualiser](https://www.sonicvisualiser.org) using established
+onset detection algorithms). Here we assume that you have extracted the
+onsets of the music from a recording already in one of these tools, and
+preferably checked them by hand. It is already more meaningful to carry
+out analyses of synchrony when you have the metrical information (cycles
+and beats) identified. If your starting point is MIDI, getting the
+onsets is just a conversion operation away (I would recommend
+[music21](https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html)
+for this purpose), although annotation might still be required.

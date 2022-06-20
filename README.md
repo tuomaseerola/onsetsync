@@ -10,11 +10,12 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 `onsetsync` is a R package for musical dynamics involving synchrony.
-There are functions for common operations such as adding isochronous
-beats based on metrical structure, adding annotations, calculating
-classic measures of synchrony between two performers, and assessing
-periodicity of the onsets, and visualising synchrony across cycles,
-time, or another property.
+<img src="man/figures/logo.png" align="right" height="139"/> There are
+functions for common operations such as adding isochronous beats based
+on metrical structure, adding annotations, calculating classic measures
+of synchrony between two performers, and assessing periodicity of the
+onsets, and visualising synchrony across cycles, time, or another
+property.
 
 ## Installation
 
@@ -29,36 +30,46 @@ devtools::install_github("tuomaseerola/onsetsync")
 ## Usage
 
 Note that `onsetsync` is not dedicated to extraction of onsets from
-audio as that can be done in other packages
-(e.g. [Librosa](https://librosa.org), or [Mir Toolbox for
+audio as that should be done using other tools
+(e.g. [Librosa](https://librosa.org), or [MIR Toolbox for
 Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox),
-or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known
-onset detection algorithms. Here we take it as granted that we have
-extracted the onsets in some of these programs, probably checked them by
-hand, and we have the onset times recorded into csv files.
+or [Sonic Visualiser](https://www.sonicvisualiser.org) using established
+onset detection algorithms). Here we take it as granted that we have
+extracted the onsets of the music from a recording in some of these
+tools, probably checked them by hand, and we have the onset times
+recorded into csv files.
 
 ``` r
 library(onsetsync)
 library(httr)
 library(dplyr)
 library(ggplot2)
+packageVersion("onsetsync")
+#> [1] '0.4.0'
 ```
+
+Read onsets of one Cuban Son performance titled *Palo Santo* from *IEMP*
+dataset about *Cuban Son and Salsa* at <https://osf.io/sfxa2/>:
+
+Add annotations of the metric cycles to the data, also obtained from OSF
+dataset:
 
 ``` r
 CSS_Song2_Onset <- get_OSF_csv('8a347') # Onsets
 knitr::kable(head(CSS_Song2_Onset[,1:8,]),format = "simple")
 ```
 
-| Piece   | Label.SD |  SD | Clave\_. | Section | Clave |     Bass |   Guitar |
-|:--------|:---------|----:|:---------|:--------|------:|---------:|---------:|
-| Song\_2 | 1:1      |   1 | 1        | Son     |    NA |       NA |       NA |
-| Song\_2 | 1:2      |   2 | N        | Son     |    NA |       NA | 5.281932 |
-| Song\_2 | 1:3      |   3 | N        | Son     |    NA |       NA | 5.480643 |
-| Song\_2 | 1:4      |   4 | 2        | Son     |    NA | 5.714555 | 5.707537 |
-| Song\_2 | 1:5      |   5 | N        | Son     |    NA | 5.927078 | 5.939071 |
-| Song\_2 | 1:6      |   6 | N        | Son     |    NA |       NA | 6.153243 |
+| Piece  | Label.SD |  SD | Clave\_. | Section | Clave |     Bass |   Guitar |
+|:-------|:---------|----:|:---------|:--------|------:|---------:|---------:|
+| Song_2 | 1:1      |   1 | 1        | Son     |    NA |       NA |       NA |
+| Song_2 | 1:2      |   2 | N        | Son     |    NA |       NA | 5.281932 |
+| Song_2 | 1:3      |   3 | N        | Son     |    NA |       NA | 5.480643 |
+| Song_2 | 1:4      |   4 | 2        | Son     |    NA | 5.714555 | 5.707537 |
+| Song_2 | 1:5      |   5 | N        | Son     |    NA | 5.927078 | 5.939071 |
+| Song_2 | 1:6      |   6 | N        | Son     |    NA |       NA | 6.153243 |
 
 ``` r
+
 CSS_Song2_Metre <- get_OSF_csv('4cdpr') # Annotations
 CSS_Song2_Onset <- dplyr::select(CSS_Song2_Onset,
                                  Label.SD,SD,Clave,Bass,Guitar,Tres) 
@@ -127,14 +138,14 @@ print(fig1)
 
 <img src="man/figures/README-synch2isochron-1.png" width="75%" />
 
-There are several variants of this summary that create different
+There are several variants of this visualisation that create alternative
 summaries of the onsets across the beats, but let’s move on.
 
-To what degree are the pairs of instruments synchronised in this
-example? Since the instruments usually play widely different amounts of
-onsets in a piece, and these are bound to be at different beats
-sub-divisions, the mutual amount of comparable onsets for each pair
-varies often dramatically. In order to keep the mean and standard
+To what degree are the pairs of instruments synchronised to each other
+in this example? Since the instruments usually play widely different
+amounts of onsets in a piece, and these are bound to be at different
+beats sub-divisions, the mutual amount of comparable onsets for each
+pair varies often dramatically. In order to keep the mean and standard
 deviations comparable, we will randomly sample joint onsets for both
 instruments.
 

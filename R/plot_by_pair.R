@@ -57,8 +57,6 @@ plot_by_pair <-function(df=NULL,
     
     g1<-ggplot2::ggplot(m,ggplot2::aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=beatL))+
       ggplot2::geom_boxplot(outlier.shape = NA,varwidth = F,na.rm=TRUE)+
-      ggplot2::scale_fill_brewer()+
-#      ggplot2::scale_y_continuous(breaks = seq(-50,50,by=10))+
       ggplot2::coord_flip()+
       ggplot2::geom_hline(yintercept = reference,color='black',linetype='dashed')+
       ggplot2::xlab('Instrument pairs')+

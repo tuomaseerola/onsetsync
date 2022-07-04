@@ -76,12 +76,17 @@ gaussify_onsets <- function(data = NULL,
       ggplot2::xlab('Time') +
       ggplot2::ylab('Onset Density') +
       ggplot2::theme_linedraw()
-    print(g1)
   }
   # if only signal is needed
   if (time == FALSE) {
     signalf_crop_time <- signalf_crop
   }
+ 
+  if (plot == TRUE) {
+    return <- list(signal = signalf_crop_time,fig=g1)
+  }
   
-  return <- signalf_crop_time
+  if (plot == FALSE) {
+    return <- signalf_crop_time
+  }
 }

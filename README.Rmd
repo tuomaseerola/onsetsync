@@ -34,7 +34,6 @@ devtools::install_github("tuomaseerola/onsetsync")
 
 ## Usage
 
-
 ```{r, message=FALSE, warning=FALSE,echo=TRUE}
 library(onsetsync)
 library(dplyr)

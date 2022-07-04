@@ -35,7 +35,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.1'
+#> [1] '0.4.2'
 ```
 
 ### Reading in data
@@ -45,7 +45,8 @@ dataset at <https://osf.io/sfxa2/>. This song has the onsets and the
 annotations about the metric cycles already extracted and defined and
 **comes with the package**.
 
-Go and <A HREF="https://osf.io/z9uxs/" target="_blank">listen to the song at OSF</A>.
+Go and <A HREF="https://osf.io/z9uxs/" target="_blank">listen to the
+song at OSF</A>.
 
 ``` r
 CSS_Song2 <- onsetsync::CSS_IEMP[[2]]   # Read one song from internal data

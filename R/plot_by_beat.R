@@ -11,6 +11,7 @@
 #' @param boxplot Do the graphics by boxplot
 #' @param colour colour for the boxplot
 #' @param colourpalette colors for dots in the timeline, use 'grey' for bw
+#' @param pointsize size of the dots (defaults 1)
 #' @return Graphic output
 #' @import ggplot2
 #' @import dplyr
@@ -25,7 +26,8 @@ plot_by_beat <-
            griddeviations = FALSE,
            boxplot = FALSE,
            colour = 'lightblue',
-           colourpalette = 'Set1') {
+           colourpalette = 'Set1',
+           pointsize = 1) {
     # T. Eerola, Durham University, IEMP project
     # 23/1/2018
     # needs work
@@ -87,7 +89,7 @@ plot_by_beat <-
         y = instr,
         colour = name
       )) +
-        ggplot2::geom_point(size = 1, na.rm = TRUE,show.legend = FALSE,alpha=0.85) + # colour='black'
+        ggplot2::geom_point(size = pointsize, na.rm = TRUE,show.legend = FALSE,alpha=0.85) + # colour='black'
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instrument",
                            palette = colourpalette,
@@ -114,7 +116,7 @@ plot_by_beat <-
         y = instr,
         colour = name
       )) +
-        ggplot2::geom_point(size = 1, na.rm = TRUE,show.legend = FALSE,alpha=0.85) +
+        ggplot2::geom_point(size = pointsize, na.rm = TRUE,show.legend = FALSE,alpha=0.85) +
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instr.",
                            palette = colourpalette,

@@ -8,7 +8,7 @@
 #' @import tidyr
 #' @import magrittr
 
-summary_measures <-function(df=NULL,relative=FALSE){
+summary_measures <- function(df=NULL,relative=FALSE){
 
   # T. Eerola, Durham University, IEMP project
   # 20/6/2022

@@ -13,7 +13,8 @@ plot_by_beat(
   griddeviations = FALSE,
   boxplot = FALSE,
   colour = "lightblue",
-  colourpalette = "Set1"
+  colourpalette = "Set1",
+  pointsize = 1
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ plot_by_beat(
 \item{colour}{colour for the boxplot}
 
 \item{colourpalette}{colors for dots in the timeline, use 'grey' for bw}
+
+\item{pointsize}{size of the dots (defaults 1)}
 }
 \value{
 Graphic output

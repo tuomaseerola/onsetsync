@@ -22,7 +22,7 @@ periodicity(
 
 \item{instr}{Instrument name to be processed}
 
-\item{method}{Periodicity analysis method (diff, acf, fft, wavelet)}
+\item{method}{Periodicity analysis method (diff, acf, fft, per)}
 
 \item{sampling_rate}{Sampling rate (Hz)}
 

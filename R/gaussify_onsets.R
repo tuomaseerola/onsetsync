@@ -83,10 +83,8 @@ gaussify_onsets <- function(data = NULL,
   }
  
   if (plot == TRUE) {
-    return <- list(signal = signalf_crop_time,fig=g1)
+    signalf_crop_time <- g1
   }
   
-  if (plot == FALSE) {
     return <- signalf_crop_time
-  }
 }

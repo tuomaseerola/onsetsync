@@ -8,8 +8,6 @@
 #' @param sampling_rate Sampling rate (Hz)
 #' @param freq_range Frequency range to be included in the periodicity analysis (in seconds)
 #' @param resolution Resolution for some of the analyses (in seconds)
-#' @param ignore_period_under Ignore period lower than this (in seconds)
-#' @param ignore_period_above Ignore period above than this (in seconds)
 #' @param colour Line colour for plotting
 #' @param title Title for plotting
 #' @seealso \code{\link{periodicity_moments}}
@@ -24,11 +22,9 @@ periodicity <-
   function(df = NULL,
            instr = NULL,
            method = 'acf',
-           sampling_rate = 250,
+           sampling_rate = 500,
            freq_range = c(0, 2),
            resolution = 0.01,
-           ignore_period_under = 0.2,
-           ignore_period_above = 5,
            colour = 'navyblue',
            title = NULL) {
     # T. Eerola, Durham University, IEMP project
@@ -97,6 +93,7 @@ periodicity <-
         gaussify_onsets(tmp$onset,
                              sr = sampling_rate,
                              time = TRUE,
+                             wlen = 0.04,
                              plot = FALSE)
       
       if (tmp_g$onsetcurve[1] == 0) {
@@ -113,7 +110,9 @@ periodicity <-
                         Time = (AC$lag + 1) / sampling_rate)
       #ggplot(Per,aes(Time,Ampl))+ geom_line(colour='blue')+ theme_light()
       # filter zero lag or close
-      Per <- dplyr::filter(Per, Time >= ignore_period_under)
+      Per <-
+        dplyr::filter(Per, Time >= freq_range[1] & Time <= freq_range[2])
+      
       fig <-
         ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl / max(Ampl))) +
         ggplot2::geom_line(colour = colour) +
@@ -133,6 +132,7 @@ periodicity <-
         gaussify_onsets(tmp$onset,
                              sr = sampling_rate,
                              time = TRUE,
+                             wlen = 0.04,
                              plot = FALSE)
       #      plot(tmp_g$time[400:800],tmp_g$onsetcurve[400:800],type='l')
       if (tmp_g$onsetcurve[1] == 0) {
@@ -152,8 +152,7 @@ periodicity <-
       colnames(Per) <- c('Time', 'Ampl')
       
       Per <-
-        dplyr::filter(Per, Time >= ignore_period_under &
-                        Time < ignore_period_above)
+        dplyr::filter(Per, Time >= freq_range[1] & Time <= freq_range[2])
       Per <- dplyr::filter(Per, Time != 'Inf')
       Per <- dplyr::arrange(Per, Time)
       
@@ -178,6 +177,7 @@ periodicity <-
         gaussify_onsets(tmp$onset,
                              sr = sampling_rate,
                              time = TRUE,
+                             wlen = 0.04,
                              plot = FALSE)
       
       if (tmp_g$onsetcurve[1] == 0) {
@@ -216,6 +216,9 @@ periodicity <-
         ggplot2::theme_linedraw() +
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
     }
+    
+    Per <-
+      dplyr::filter(Per, Time >= freq_range[1] & Time <= freq_range[2])
     
     return <- list(Curve = Per, Figure = fig)
   }

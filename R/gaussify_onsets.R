@@ -13,8 +13,8 @@
 #' @import tidyr
 
 gaussify_onsets <- function(data = NULL,
-                                 sr = 250,
-                                 wlen = 0.3,
+                                 sr = 500,
+                                 wlen = 0.04,
                                  plot = FALSE,
                                  time = TRUE) {
   onsetcurve <- NULL
@@ -76,15 +76,24 @@ gaussify_onsets <- function(data = NULL,
       ggplot2::xlab('Time') +
       ggplot2::ylab('Onset Density') +
       ggplot2::theme_linedraw()
+    output <- list(signal = signalf_crop_time, fig = g1)
   }
+  
+  
   # if only signal is needed
   if (time == FALSE) {
-    signalf_crop_time <- signalf_crop
+#    signalf_crop_time <- signalf_crop
+    output <- signalf_crop
   }
  
   if (plot == TRUE) {
-    signalf_crop_time <- g1
+    return <- output
+  } else {
+    return <- signalf_crop_time
   }
   
-    return <- signalf_crop_time
+#  if (plot == FALSE) {
+  #  return <- signalf_crop_time
+#    return <- output$signalf_crop_time
+#  }
 }

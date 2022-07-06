@@ -4,7 +4,7 @@
 \alias{gaussify_onsets}
 \title{Create a continuous vector of onsets with a sampling in Hz}
 \usage{
-gaussify_onsets(data = NULL, sr = 250, wlen = 0.3, plot = FALSE, time = TRUE)
+gaussify_onsets(data = NULL, sr = 500, wlen = 0.04, plot = FALSE, time = TRUE)
 }
 \arguments{
 \item{data}{Data frame to be processed with discrete time points (onsets)}

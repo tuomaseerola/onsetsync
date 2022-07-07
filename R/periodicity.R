@@ -4,11 +4,11 @@
 #'
 #' @param df data frame to be processed
 #' @param instr Instrument name to be processed
-#' @param method Periodicity analysis method (diff, acf, fft, per)
+#' @param method Periodicity analysis method: per (default), diff, acf, or fft
 #' @param sampling_rate Sampling rate (Hz)
 #' @param freq_range Frequency range to be included in the periodicity analysis (in seconds)
 #' @param resolution Resolution for some of the analyses (in seconds)
-#' @param colour Line colour for plotting
+#' @param colour Line colour for plotting 
 #' @param title Title for plotting
 #' @seealso \code{\link{periodicity_moments}}
 #' @return Graphic output
@@ -21,7 +21,7 @@
 periodicity <-
   function(df = NULL,
            instr = NULL,
-           method = 'acf',
+           method = 'per',
            sampling_rate = 500,
            freq_range = c(0, 2),
            resolution = 0.01,

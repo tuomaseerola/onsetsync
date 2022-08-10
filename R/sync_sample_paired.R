@@ -90,7 +90,7 @@ sync_sample_paired <- function(df = NULL,
   } # ends normal single df processing
   
   if(is.data.frame(df)==FALSE){
-    print('Calculating across the corpora') # This is not very effective, but  
+#    print('Calculating across the corpora') # This is not very effective, but  
     NAMES<-names(df)
     D<-list()
     L<-NULL

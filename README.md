@@ -10,13 +10,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 `onsetsync` is a R package for musical assessing synchrony between
-onsets in music.
-<img src="man/figures/logo.png" align="right" height="139"/> There are
-functions for common operations such as adding isochronous beats based
-on metrical structure, adding annotations, calculating classic measures
-of synchrony between performers, and assessing periodicity of the
-onsets, and visualising synchrony across cycles, time, or another
-property.
+onsets in music. There are functions for common operations such as
+adding isochronous beats based on metrical structure, adding
+annotations, calculating classic measures of synchrony between
+performers, and assessing periodicity of the onsets, and visualising
+synchrony across cycles, time, or another property.
 
 ## Installation
 
@@ -35,7 +33,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.2'
+#> [1] '0.4.4'
 ```
 
 ### Reading in data
@@ -121,40 +119,4 @@ print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
 There are other measures to summarise the asynchronies and visualise
 them.
 
-### Calculate synchrony across performances
-
-We can apply the measures to a corpus of performances. Here we load five
-Cuban Son and Salsa performances and run the same analysis as above
-across the performances.
-
-``` r
-corpus <- onsetsync::CSS_IEMP
-D <- sync_sample_paired(corpus,'Tres','Bass',N=0,beat='SD')
-#> [1] "Calculating across the corpora"
-D <- D$asynch
-D$asynch_abs <- abs(D$asynch)*1000
-fig3 <- plot_by_dataset(D,'asynch_abs','name', box = TRUE)
-print(fig3)
-```
-
-<img src="man/figures/README-corpus-1.png" width="75%" />
-
-For more examples, see
-[documentation](https://tuomaseerola.github.io/onsetsync/) and
-associated [paper IN PROGRESS](http://).
-
-#### Note: How do I get onsets from my music?
-
-Note that `onsetsync` is not dedicated to extraction of onsets from
-audio as that should be done using other tools
-(e.g. [Librosa](https://librosa.org), or [MIR Toolbox for
-Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox),
-or [Sonic Visualiser](https://www.sonicvisualiser.org) using established
-onset detection algorithms). Here we assume that you have extracted the
-onsets of the music from a recording already in one of these tools, and
-preferably checked them by hand. It is already more meaningful to carry
-out analyses of synchrony when you have the metrical information (cycles
-and beats) identified. If your starting point is MIDI, getting the
-onsets is just a conversion operation away (I would recommend
-[music21](https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html)
-for this purpose), although annotation might still be required.
+For more examples, see [Get started](docs/articles/onsetsync.html).

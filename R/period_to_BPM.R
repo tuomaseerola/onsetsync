@@ -4,7 +4,7 @@
 #'
 #' @param period data frame to be processed
 #' @param beats_per_minute baseline assumption of how many beats there are in min.
-#' @seealso \code{\link{periodicity_moments}},\code{\link{periodicity}}
+#' @seealso \code{\link{summarise_periodicity}},\code{\link{periodicity}}
 #' @return Numeric output
 #' @export
 #' @examples

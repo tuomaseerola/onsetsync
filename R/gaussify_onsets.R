@@ -4,7 +4,7 @@
 #'
 #' @param data Data frame to be processed with discrete time points (onsets)
 #' @param sr Sampling rate (default 500 Hz)
-#' @param wlen Window length of percentage of the sr (default 4%)
+#' @param wlen Window length of percentage of the sr (default 4)
 #' @param plot If a plot is needed
 #' @param time Time samples to be included in the output
 #' @return Output contain vector of onset times

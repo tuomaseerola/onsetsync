@@ -7,7 +7,7 @@
 periodicity(
   df = NULL,
   instr = NULL,
-  method = "acf",
+  method = "per",
   sampling_rate = 500,
   freq_range = c(0, 2),
   resolution = 0.01,
@@ -20,7 +20,7 @@ periodicity(
 
 \item{instr}{Instrument name to be processed}
 
-\item{method}{Periodicity analysis method (diff, acf, fft, per)}
+\item{method}{Periodicity analysis method: per (default), diff, acf, or fft}
 
 \item{sampling_rate}{Sampling rate (Hz)}
 
@@ -39,7 +39,7 @@ Graphic output
 This function plots the calculated asynchronies of instruments and labels these by instruments.
 }
 \seealso{
-\code{\link{periodicity_moments}}
+\code{\link{summarise_periodicity}}
 
-\code{\link{periodicity_moments}} for summary function.
+\code{\link{summarise_periodicity}} for summary function.
 }

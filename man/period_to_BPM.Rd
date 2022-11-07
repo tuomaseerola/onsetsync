@@ -22,5 +22,5 @@ bpm <- period_to_BPM(0.666)
 print(bpm)
 }
 \seealso{
-\code{\link{periodicity_moments}},\code{\link{periodicity}}
+\code{\link{summarise_periodicity}},\code{\link{periodicity}}
 }

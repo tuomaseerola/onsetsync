@@ -10,13 +10,13 @@
 #' @param resolution Resolution for some of the analyses (in seconds)
 #' @param colour Line colour for plotting 
 #' @param title Title for plotting
-#' @seealso \code{\link{periodicity_moments}}
+#' @seealso \code{\link{summarise_periodicity}}
 #' @return Graphic output
 #' @export
 #' @import ggplot2
 #' @import tidyr
 #' @import seewave
-#' @seealso \code{\link{periodicity_moments}} for summary function.
+#' @seealso \code{\link{summarise_periodicity}} for summary function.
 
 periodicity <-
   function(df = NULL,

@@ -1,0 +1,37 @@
+url: https://github.com/tuomaseerola/onsetsync
+template:
+  bootstrap: 5
+reference:
+- title: "Input functions"
+  desc: >
+    Functions for loading data from OSF
+  contents: 
+  - get_OSF_csv
+- title: "Annotation functions"
+  desc: "Functions for adding extra annotations to onset data."
+  contents:
+  - starts_with("add_")
+- title: "Visualising functions"
+  desc: "Functions for visualising onset data."
+  contents:
+  - starts_with("plot_")
+- title: "Synchrony functions"
+  desc: "Functions for calculating synchrony from onset data."
+  contents:
+  - starts_with("sync_")
+- title: "Periodicity functions"
+  desc: "Functions for calculating periodicity from onset data."
+  contents:
+  - starts_with("period_")
+  - matches("periodicity")
+  - matches("gaussify_onsets")
+- title: "Summary functions"
+  desc: "Functions for summarising onset data."
+  contents:
+  - starts_with("summarise_")
+- title: "Datasets"
+  desc: "Datasets that come with onsetsync."
+  contents:
+  - matches("Asere_OU_2")
+  - matches("DebBh_Drut")
+  - matches("CSS_IEMP")

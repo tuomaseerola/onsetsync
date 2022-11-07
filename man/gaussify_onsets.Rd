@@ -9,9 +9,9 @@ gaussify_onsets(data = NULL, sr = 500, wlen = 0.04, plot = FALSE, time = TRUE)
 \arguments{
 \item{data}{Data frame to be processed with discrete time points (onsets)}
 
-\item{sr}{Sampling rate (default 50 Hz)}
+\item{sr}{Sampling rate (default 500 Hz)}
 
-\item{wlen}{Window length of percentage of the sr}
+\item{wlen}{Window length of percentage of the sr (default 4)}
 
 \item{plot}{If a plot is needed}
 

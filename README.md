@@ -138,3 +138,4 @@ reference](https://tuomaseerola.github.io/onsetsync/reference/index.html).
 -   [Tutorial as a Jupyter
     notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.ipynb)
     which allows you to run the code in Colab (in your browser).
+

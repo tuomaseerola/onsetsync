@@ -1,0 +1,262 @@
+---
+title: "onsetsync demo"
+author: "Tuomas Eerola"
+date: "2022-11-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Onsetsync demo as Rmd notebook**
+
+A Rmarkdown notebook with code examples in R for [onsetsync](https://github.com/tuomaseerola/onsetsync) by [Tuomas Eerola](https://www.durham.ac.uk/staff/tuomas-eerola/), [Music and Science Lab]() at [Durham University](https://www.durham.ac.uk) and [Music and Science Lab](https://musicscience.net).
+
+To run the code in your RStudio, download the Rmd file and open it in your Studio. Here's the link: [https://github.com/tuomaseerola/onsetsync/onsetsync.Rmd](https://github.com/tuomaseerola/onsetsync/onsetsync.Rmd). It assumes that you have `devtools` package installed to be able to install packages from github.
+
+File `onsetsync.Rmd` | Version `9/11/2022` | [Back to Index](https://github.com/tuomaseerola/onsetsync/)
+
+# Load libraries
+
+```{r}
+library(ggplot2,quietly = TRUE)
+library(tidyverse,quietly = TRUE)
+require(devtools)
+devtools::install_github("tuomaseerola/onsetsync")
+library(onsetsync,quietly = TRUE)
+ver <- packageVersion('onsetsync')
+print(ver)
+```
+
+## Load data (internal)
+
+Here we take a Cuban Son performance titled *Palo Santo* from *IEMP* dataset [@Clayton2020emr] at [https://osf.io/sfxa2/](https://osf.io/sfxa2/):
+
+```{r}
+CSS_Song2 <- onsetsync::CSS_IEMP[[2]]   # Read one song from internal data
+CSS_Song2 <- dplyr::select(CSS_Song2,Label.SD,SD,Clave,Bass,Guitar,Tres,
+                           Cycle,Isochronous.SD.Time) # Select some columns
+print(head(CSS_Song2))
+```
+
+## Load Data -- From OSF (optional)
+
+```{r}
+require(httr)                           # Additional library needed
+CSS_Song2_Onset <- get_OSF_csv('8a347') # Get onsets
+print(head(CSS_Song2_Onset[,1:8,]))
+```
+
+## Summarise Raw Data
+
+```{r}
+tab1 <- summarise_onsets(df = CSS_Song2, 
+                         instr = c('Clave','Bass','Guitar','Tres'))
+print(knitr::kable(tab1,format = "markdown", digits = 1,
+     caption = 'Onsets counts (N) and mean IOIs in ms.'))
+```
+
+## Visualisation
+
+## Visualise Onset Structures
+
+```{r}
+fig1 <- plot_by_beat(df = CSS_Song2, 
+                     instr = c('Bass','Clave','Guitar','Tres'), 
+                     beat = 'SD', 
+                     virtual = 'Isochronous.SD.Time',
+                     pcols = 2)
+print(fig1)
+```
+
+## Visualise Deviations from Isochrony
+
+```{r}
+fig2 <- plot_by_beat(df = CSS_Song2,
+                     instr = c('Bass','Tres'),
+                     beat = 'SD',
+                     virtual = 'Isochronous.SD.Time', 
+                     pcols=1,
+                     griddeviations = TRUE)
+print(fig2)
+```
+
+## Visualise Across Sub-beats
+
+```{r}
+fig2 <- plot_by_beat(df = CSS_Song2,
+                     instr = c('Tres'),
+                     beat = 'SD',
+                     virtual = 'Isochronous.SD.Time', 
+                     pcols=1,
+                     griddeviations = TRUE, box = TRUE)
+print(fig2)
+```
+
+# Synchrony
+
+## Classic Measures of Synchrony
+
+See definitions in classic literature (Rasch, Wing, Clayton).
+
+```{r}
+d <- sync_sample_paired(CSS_Song2,'Clave','Bass',N=0,beat = 'SD')
+s <- summarise_sync(d)
+S <- data.frame(s); St<-t(S); colnames(St) <- 'ms'
+knitr::kable(St,digits = 1,caption = 'Classic asynchrony measures.')
+```
+
+## Synchrony Between Instruments
+
+Number of _shared onsets_ may vary across instruments/beats. Comparisons with `sampling` and `bootstrapping`.
+
+```{r}
+set.seed(1201) # set random seed
+N <- 100       # Let's select random 100 onsets from both
+Boot <- 1      # No multiple bootstraps
+d1 <- sync_sample_paired(CSS_Song2,'Clave','Bass', N, Boot,'SD',TRUE)
+print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
+    'ms & standard deviation of',round(sd(d1$asynch*1000),1),'ms'))
+```
+
+## Synchrony Between Instruments (plot)
+
+```{r}
+inst <- c('Clave','Bass','Guitar','Tres') # Define instruments 
+dn <- sync_execute_pairs(CSS_Song2,inst,N,10,'SD')
+print(plot_by_pair(dn))  # plot
+```
+
+## Descriptive Statistics
+
+```{r}
+table3 <- data.frame(summarise_sync_by_pair(dn))
+print(knitr::kable(table3,
+                   digits = 1,
+                   caption = 'Descriptives, t-test and p-value.'))
+```
+
+
+## Synchrony with other Variables
+
+Is there a link between beat durations and synchrony?
+
+```{r}
+CSS_Song2 <- CSS_Song2 %>% 
+  group_by(Cycle) %>%
+  mutate(Duration = max(Isochronous.SD.Time) - min(Isochronous.SD.Time))
+CSS_Song2 <- ungroup(CSS_Song2) # drop grouping structure
+d1 <- sync_sample_paired(df = CSS_Song2,
+                         INSTR1 = 'Clave', INSTR2 = 'Bass',
+                         N = 200, BNum = 1, beat = 'Duration')
+fig6 <- plot_by_variable(d1,meta = 'Clave-Bass Synchrony',xlab = 'Cycle duration (in s)')
+print(fig6)
+```
+
+## Synchrony with other Variables
+
+Are there specific trends in synchrony across the performance?
+
+```{r}
+d2 <- sync_sample_paired(CSS_Song2,'Tres','Bass',N=0,beat='Duration')
+d3 <- sync_sample_paired(CSS_Song2,'Tres','Bass',N=0,beat='Isochronous.SD.Time')
+tmp <- data.frame(asynch=d2$asynch*1000,Duration=d2$beatL,Time=d3$beatL)
+fig9 <- plot_by_var_time(df = tmp,
+                          var1 = 'Time',
+                          var2 = 'asynch',
+                          var3 = 'Duration',
+                          ylabel = 'Asynchrony (ms)')
+fig9
+```
+
+
+## Synchrony across Several Performances (corpus)
+
+```{r}
+corpus <- onsetsync::CSS_IEMP                              # This is a small corpus
+D <- sync_sample_paired(corpus,'Tres','Bass',N=0,beat='SD')
+D <- D$asynch
+D$asynch_abs <- abs(D$asynch)*1000                         # Convert to ms
+fig7 <- plot_by_dataset(D,'asynch_abs','name', box = TRUE)
+print(fig7)
+```
+
+# Periodicity
+
+## Periodicity of Guitar Onsets
+
+```{r}
+extract <- dplyr::filter(CSS_Song2, Guitar >= 60 & Guitar < 65)
+fig10 <- gaussify_onsets(extract$Guitar, wlen = 0.2, plot = TRUE)
+print(fig10$fig)
+```
+
+## Estimate Periodicity
+
+Four methods to estimate periodicity (autocorrelation, FFT, smoothed FFT, or difference)
+
+```{r, warning=FALSE}
+per <- periodicity(extract,instr='Guitar',freq_range=c(0.1,0.6))
+print(per$Figure)
+```
+
+## Summarise Periodicity 
+
+Convenience functions to extract peak of periodicity curve. 
+
+```{r}
+psumm <- summarise_periodicity(per$Curve)
+print(paste('Period is:', round(psumm$Per,3), 'seconds'))
+```
+
+Or convert to BPM
+
+```{r}
+print(paste('In BPM:',period_to_BPM(psumm$Per*2))) # knowing these are sub-beats
+```
+
+## Estimate Periodicity
+
+Use **autocorrelation** this time...
+
+```{r}
+per2 <- periodicity(extract,instr='Guitar',method='acf',freq_range=c(0.1,0.6))
+print(per2$Figure)
+```
+
+
+## Other Sources of Onset Data {.smaller}
+
+### Real performances
+
+  - [CompMusic datasets at UPF: Hindustani (North India), Carnatic (South India), Turkish-makam (Turkey), Arab-Andalusian (Maghreb), and Beijing Opera (China)](https://compmusic.upf.edu/datasets)
+  - [Tap & Fiddle: Scandinavian Fiddle Tunes with Accompanying Foot-Tapping](https://zenodo.org/record/4308731)
+  - [The MAESTRO (MIDI and Audio Edited for Synchronous Tracks and Organisation)](https://magenta.tensorflow.org/datasets/maestro)
+    
+    - 200 hours of real recordings with MIDI and audio (Piano competition)
+  
+  - [University of Rochester Multi-Modal Musical Performance](http://www2.ece.rochester.edu/projects/air/projects/URMP.html) 
+  - [Carnatic Music Rhythm Dataset](http://compmusic.upf.edu/carnatic-varnam-dataset)
+  
+
+## Credits
+
+::: callout-note
+Thanks for **Adrian Poole** and **Simone Tarsitani** for preparing [IEMP Cuban](10.17605/osf.io/s437t) data included here.
+:::
+
+
+# References
+
+Clayton, M., K. Jakubowski, T. Eerola, P. Keller, A. Camurri, G. Volpe, and P. Alborno. (2020). Interpersonal Entrainment in Music Performance: Theory, Method and Model. _Music Perception 38 (2)_, 136–94.
+
+Clayton, M., S. Tarsitani, R. Jankowsky, L. Jure, L. Leante, R. Polak, A. Poole, et al. (2021). The Interpersonal Entrainment in Music Performance Data Collection. _Empirical Musicology Review 16 (1),_ 65–84. [http://dx.doi.org/10.18061/emr.v16i1.7555](http://dx.doi.org/10.18061/emr.v16i1.7555)
+
+Rasch, Rudolf A. (1979). Synchronization in Performed Ensemble Music. _Acta Acustica United with Acustica 43 (2)_, 121–31.
+
+Repp, Bruno H, and Yi-Huang Su. (2013). Sensorimotor Synchronization: A Review of Recent Research (2006–2012). _Psychonomic Bulletin & Review 20 (3)_, 403–52.
+
+Wilkinson, Mark D, Michel Dumontier, IJsbrand Jan Aalbersberg, Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, et al. (2016). The FAIR Guiding Principles for Scientific Data Management and Stewardship. _Scientific Data 3 (1)_, 1–9.
+
+Wing, Alan M, Satoshi Endo, Adrian Bradbury, & Dirk Vorberg. (2014). Optimal Feedback Correction in String Quartet Synchronization. _Journal of The Royal Society Interface 11 (93)_, 20131125.

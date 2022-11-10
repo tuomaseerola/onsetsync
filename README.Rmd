@@ -91,4 +91,11 @@ print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
 
 There are other measures to summarise the asynchronies and visualise them. 
 
-For more examples, see [Get started](docs/articles/onsetsync.html).
+## More information
+
+For more examples, see [Get started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
+
+- [Tutorial in Rmarkdown](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.Rmd) which requires you to run the code in RStudio.
+
+- [Tutorial as Jupyter notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.ipynb) which allows you to run the code in Colab (in your browser).
+

@@ -4,12 +4,10 @@
 \alias{summarise_sync}
 \title{Summarise synchronies}
 \usage{
-summarise_sync(df = NULL, relative = FALSE)
+summarise_sync(df = NULL)
 }
 \arguments{
 \item{df}{data frame to be processed}
-
-\item{relative}{Whether calculation is relative measure}
 }
 \value{
 Integer output

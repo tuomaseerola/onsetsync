@@ -12,93 +12,110 @@
 #' @import magrittr
 #' @import scales
 
-summarise_sync_by_pair <-function(df,
-                         bybeat=FALSE,
-                         adjust='bonferroni'){
-
-# T. Eerola, Durham University, IEMP project
-# 14/1/2018  
-  Instrument <- summarise <- across <- NULL
-
-  if(bybeat==FALSE){ # asynchronies
-    m<-suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
-    m$ms<-m$ms*1000
-    #colnames(m)<-c('Instrument','ms')
-   # head(m)
-    
+summarise_sync_by_pair <- function(df,
+                                   bybeat = FALSE,
+                                   adjust = 'bonferroni') {
+  # T. Eerola, Durham University, IEMP project
+  # 14/1/2018
+  Instrument <- summarise <- across <- beatL <- Subdivision <- Asynchrony <- NULL
+  
+  if (bybeat == FALSE) {
+    # asynchronies
+    # m <-
+    #   suppressMessages(reshape2::melt(
+    #     df$asynch,
+    #     variable.name = 'Instrument',
+    #     value.name = 'ms'
+    #   ))
+    m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
+    m$ms <- m$ms * 1000
     # check whether instrument is different from 0
-    L<-levels(m$Instrument)
-#    L
-    T<-NULL
-    for(k in 1:length(L)){
-      tmp<-m$ms[m$Instrument==L[k]]
-      if(sum(is.na(tmp))<length(tmp)){
-        t<-t.test(tmp,mu=0)
-        T$tval[k]<-as.numeric(t$statistic)
-        T$pval[k]<-as.numeric(t$p.value)
+    L <- levels(m$Instrument)
+    #    L
+    T <- NULL
+    for (k in 1:length(L)) {
+      tmp <- m$ms[m$Instrument == L[k]]
+      if (sum(is.na(tmp)) < length(tmp)) {
+        tt <- t.test(tmp, mu = 0)
+        T$tval[k] <- as.numeric(tt$statistic)
+        T$pval[k] <- as.numeric(tt$p.value)
       }
-      if(sum(is.na(tmp))==length(tmp)){
-        T$tval[k]<-NA
-        T$pval[k]<-NA
+      if (sum(is.na(tmp)) == length(tmp)) {
+        T$tval[k] <- NA
+        T$pval[k] <- NA
       }
     }
+    n <- names(df$asynch)
+    M <- df$asynch %>%
+      summarise(across(n, mean))
+    SD <- df$asynch %>%
+      summarise(across(n, sd))
+    
+    T2 <- data.frame(M = t(M), SD = t(SD))
+    T2$T <- T$tval
+    T2$pval <- T$pval
+    ## Make the table look prettier
+    T2$pval <-
+      stats::p.adjust(T2$pval, method = adjust) # adjustment for multiple tests
+    T2$M <- T2$M * 1000                            # milliseconds
+    T2$SD <- T2$SD * 1000                          # milliseconds
+    T2$pval <- scales::pvalue(T2$pval)            # prettify
   }
   
-  if(bybeat==TRUE){
- #   print('by beat')
-    m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
-    m$ms<-m$ms*1000
-#    colnames(m)<-c('Instrument','ms')
-#    head(m)
-    b<-suppressMessages(reshape2::melt(df$beatL))
-    m$beatL<-b$value
- #   str(m)
-    m$beatL<-factor(m$beatL)
+  
+  if (bybeat == TRUE) {
+    #  print('by beat')
+    # m <-
+    #   suppressMessages(reshape2::melt(
+    #     df$asynch,
+    #     variable.name = 'Instrument',
+    #     value.name = 'ms'
+    #   ))
+    m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
     
-    
-    L<-levels(m$Instrument)
-#    L
-    T<-NULL
-    for(k in 1:length(L)){
-      #print(k)
-      tmp<-dplyr::filter(m, Instrument==L[k])
-      if(sum(is.na(tmp$ms))==nrow(tmp)){
-        T$pval[k]<-NA
-        T$tval[k]<-NA
+    m$ms <- m$ms * 1000
+    b <- tidyr::pivot_longer(data=df$beatL,cols=c(1:dim(df$beatL)[2]),names_to = 'variable', values_to = 'value')
+    m$beatL <- b$value
+    m$beatL <- factor(m$beatL)
+    subdivisions <- levels(m$beatL)
+    T <- NULL
+    for (k in 1:length(subdivisions)) {
+      tmp <- dplyr::filter(m, beatL == as.numeric(subdivisions[k]))
+      if (sum(is.na(tmp$ms)) == nrow(tmp)) {
+        T$pval[k] <- NA
+        T$tval[k] <- NA
       }
-      
-      if(sum(is.na(tmp$ms))<nrow(tmp)){
-        t<-summary(aov(ms~beatL,data=tmp))
-        T$pval[k]<-as.numeric(unlist(t)[9])
-        T$tval[k]<-as.numeric(unlist(t)[7])
+      if (sum(is.na(tmp$ms)) < nrow(tmp)) {
+        tt <- t.test(tmp$ms, mu = 0)
+        T$tval[k] <- as.numeric(tt$statistic)
+        T$pval[k] <- as.numeric(tt$p.value)
       }
     }
     
-#    print(T)
     
-  }   
+    x <- data.frame(df)
+    colnames(x) <- c('Asynchrony', 'Subdivision')
+    
+    
+    T2 <-
+      dplyr::summarise(
+        dplyr::group_by(x,Subdivision),
+        N = n(),
+        M = mean(Asynchrony),
+        SD = sd(Asynchrony)
+      )
+    T2$T <- T$tval
+    T2$pval <- T$pval
+    
+    ## Make the table look prettier
+    T2$pval <-
+      stats::p.adjust(T2$pval, method = adjust) # adjustment for multiple tests
+    T2$M <- T2$M * 1000                            # milliseconds
+    T2$SD <- T2$SD * 1000                          # milliseconds
+    T2$pval <- scales::pvalue(T2$pval)            # prettify
+    
+  }
   
-#  M <- df$asynch %>% dplyr::summarise_all(funs(mean))
-#  SD <- df$asynch %>% dplyr::summarise_all(funs(sd))
-#  M <- df$asynch %>% dplyr::summarise(mean)
-#  SD <- df$asynch %>% dplyr::summarise(sd)
-
-  n<-names(df$asynch)
-  M <- df$asynch %>% 
-    summarise(across(n,mean))
-  SD <- df$asynch %>% 
-    summarise(across(n,sd))
-
-  T2 <- data.frame(M=t(M),SD=t(SD))
-  T2$T<-T$tval
-  T2$pval<-T$pval
-  
-  ## Make the table look prettier
-  T2$pval <- stats::p.adjust(T2$pval, method = adjust) # adjustment for multiple tests 
-  T2$M <- T2$M * 1000                            # milliseconds
-  T2$SD <- T2$SD * 1000                          # milliseconds
-  T2$pval <- scales::pvalue(T2$pval)            # prettify
-  
-  return <- T2  
+  return <- T2
   
 }

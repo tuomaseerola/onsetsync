@@ -20,7 +20,7 @@ sync_sample_paired <- function(df = NULL,
   BNum = 1,
   beat = NULL,
   verbose = FALSE){
-  
+
   # T. Eerola, Durham University, IEMP project
   # 14/1/2018  
   # Updated 18/6/2022 to incorporate corpus structure

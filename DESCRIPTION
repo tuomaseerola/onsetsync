@@ -1,6 +1,6 @@
 Package: onsetsync
 Title: Analysis and Visualisation of Synchronisation of Music Onset Data
-Version: 0.4.5
+Version: 0.4.6
 Authors@R: person("Tuomas", "Eerola", email = "tuomas.eerola@durham.ac.uk", role = c("aut", "cre"))
 Description: This package help to calculate and visualise onset data. The emphasis is on comparing onsets between performers in the same ensemble, in other words, how well the performers synchronise to each other. There are also some routines to estimate to periodicity of the onsets.
 Depends: 
@@ -11,14 +11,14 @@ LazyData: true
 Imports:
     dplyr,
     ggplot2,
-    reshape2,
+    RColorBrewer,
     signal,
     tidyr,
     moments,
     magrittr,
     scales,
     seewave,
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Suggests: 
     knitr,
     rmarkdown,

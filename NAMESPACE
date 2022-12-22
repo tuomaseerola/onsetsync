@@ -4,6 +4,7 @@
 importFrom(magrittr,"%>%")
 importFrom("graphics", "hist", "lines")
 importFrom("seewave", "spec")
+importFrom("grDevices", "colorRampPalette")
 importFrom("stats", "acf", "aov", "cycle", "lag", "median", "reorder", "sd", "spectrum", "t.test","p.adjust","lm")
 importFrom("utils", "combn", "head", "read.csv")
 importFrom("signal", "hanning", "filter")

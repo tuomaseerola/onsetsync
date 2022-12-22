@@ -5,7 +5,7 @@
 #' @param df data frame to be processed
 #' @param bybeat Optional (FALSE by default) which adds the beats to the plot
 #' @param reference Optional (0 by default) which adds the reference line to the plot
-#' @param colourpalette Optional colourpalette, Default
+#' @param colourpalette Optional colourpalette, Default 'PuOr' (Purple to Orange)
 #' @seealso \code{\link{plot_by_variable}}
 #' @return Graphic output
 #' @import ggplot2
@@ -15,7 +15,7 @@
 plot_by_pair <-function(df=NULL,
                         bybeat=FALSE,
                         reference=0,
-                        colourpalette='Pastel1'){
+                        colourpalette='PuOr'){
 
   # T. Eerola, Durham University, IEMP project
   # 14/1/2018  
@@ -26,7 +26,8 @@ plot_by_pair <-function(df=NULL,
 
   if(bybeat==FALSE){ # asynchronies
   
-  m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+#  m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+  m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
   m$ms <- m$ms*1000
 #  colnames(m)<-c('Instrument','ms')
   
@@ -37,7 +38,7 @@ plot_by_pair <-function(df=NULL,
                  geom = "crossbar",
                  width = 0.4,
                  color = "black",show.legend = FALSE)+
-    ggplot2::geom_hline(yintercept = reference,color='black',linetype='dashed')+
+    ggplot2::geom_hline(yintercept = reference,color='orange4',linetype='dashed')+
     ggplot2::scale_fill_brewer(palette = colourpalette,type = palettetype)+
     ggplot2::coord_flip()+
     ggplot2::xlab('Instrument pairs')+
@@ -47,18 +48,30 @@ plot_by_pair <-function(df=NULL,
 
   }
   if(bybeat==TRUE){
-    m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+    #m <- suppressMessages(reshape2::melt(df$asynch,variable.name='Instrument',value.name='ms'))
+    m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
+    
     m$ms<-m$ms*1000
+    
     #colnames(m)<-c('Instrument','ms')
     #head(m)
-    b<-suppressMessages(reshape2::melt(df$beatL))
+    #b<-suppressMessages(reshape2::melt(df$beatL))
+    b <- tidyr::pivot_longer(data=df$beatL,cols=c(1:dim(df$beatL)[2]),names_to = 'variable', values_to = 'value')
+    
+    
     m$beatL<-b$value
     m$beatL<-factor(m$beatL)
-    
-    g1<-ggplot2::ggplot(m,ggplot2::aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=beatL))+
+
+    # Make sure there are sufficient number of colour palette categories for subdivs
+    colpal <- RColorBrewer::brewer.pal(4,colourpalette)
+    number_of_beats <- length(unique(m$beatL))
+    colourpalette <- colorRampPalette(colpal)(number_of_beats)
+
+    g1<-ggplot2::ggplot(m,ggplot2::aes(x=reorder(x=Instrument,-ms,mean),y=ms,fill=beatL,label=beatL))+
       ggplot2::geom_boxplot(outlier.shape = NA,varwidth = F,na.rm=TRUE)+
-      ggplot2::coord_flip()+
-      ggplot2::geom_hline(yintercept = reference,color='black',linetype='dashed')+
+#      ggplot2::coord_flip()+
+      ggplot2::geom_hline(yintercept = reference,color='orange4',linetype='dashed')+
+      ggplot2::scale_fill_manual(name='Subdiv.',values = colourpalette)+
       ggplot2::xlab('Instrument pairs')+
       ggplot2::ylab('Synchrony (ms)')+
       ggplot2::theme_linedraw()

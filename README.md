@@ -36,7 +36,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.5'
+#> [1] '0.4.6'
 ```
 
 ### Reading in data
@@ -131,11 +131,10 @@ started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html)
 or see the [function
 reference](https://tuomaseerola.github.io/onsetsync/reference/index.html).
 
--   [Tutorial as a Rmarkdown
-    notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.Rmd)
-    which requires you to run the code in RStudio.
+- [Tutorial as a Rmarkdown
+  notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.Rmd)
+  which requires you to run the code in RStudio.
 
--   [Tutorial as a Jupyter
-    notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.ipynb)
-    which allows you to run the code in Colab (in your browser).
-
+- [Tutorial as a Jupyter
+  notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.ipynb)
+  which allows you to run the code in Colab (in your browser).

@@ -16,9 +16,6 @@ annotations, calculating classic measures of synchrony between
 performers, and assessing periodicity of the onsets, and visualising
 synchrony across cycles, time, or another property.
 
-For trying the package with notebooks, jump to <A HREF="#more">more
-information</A>.
-
 ## Installation
 
 You can install the current version of `onsetsync` from Github by
@@ -122,19 +119,4 @@ print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
 There are other measures to summarise the asynchronies and visualise
 them.
 
-## More information
-
-<a id="more">
-
-For more examples, see [Get
-started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html)
-or see the [function
-reference](https://tuomaseerola.github.io/onsetsync/reference/index.html).
-
-- [Tutorial as a Rmarkdown
-  notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.Rmd)
-  which requires you to run the code in RStudio.
-
-- [Tutorial as a Jupyter
-  notebook](https://github.com/tuomaseerola/onsetsync/blob/master/onsetsync.ipynb)
-  which allows you to run the code in Colab (in your browser).
+For more examples, see [Get started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).

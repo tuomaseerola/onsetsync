@@ -20,8 +20,5 @@ summarise_sync <- function(df=NULL){
 #   asynch$groupwise_asynchronization <- sqrt(mean(d_in_ms))
   asynch$`Mean pairwise asynchrony` <- mean(d_in_ms)
   asynch <- data.frame(asynch, check.names = FALSE)
-  print(colnames(asynch))
-#  colnames(asynch)<-c('Pairwise asynchronization','Mean absolute asynchrony','Mean pairwise asynchrony') # Prettify
 return <- asynch
-  
 }

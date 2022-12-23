@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   adding_annotations: adding_annotations.html
   onsetsync: onsetsync.html
-last_built: 2022-12-23T15:38Z
+last_built: 2022-12-23T16:17Z
 urls:
   reference: https://github.com/tuomaseerola/onsetsync/reference
   article: https://github.com/tuomaseerola/onsetsync/articles

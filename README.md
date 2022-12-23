@@ -16,6 +16,9 @@ annotations, calculating classic measures of synchrony between
 performers, and assessing periodicity of the onsets, and visualising
 synchrony across cycles, time, or another property.
 
+For documentation, see [Quick
+Guide](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
+
 ## Installation
 
 You can install the current version of `onsetsync` from Github by
@@ -33,7 +36,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.6'
+#> [1] '0.4.7'
 ```
 
 ### Reading in data
@@ -47,7 +50,7 @@ Go and <A HREF="https://osf.io/z9uxs/" target="_blank">listen to the
 song at OSF</A>.
 
 ``` r
-CSS_Song2 <- onsetsync::CSS_IEMP[[2]]   # Read one song from internal data
+CSS_Song2 <- onsetsync::CSS_IEMP[[2]]  # Read one song from internal data
 CSS_Song2 <- dplyr::select(CSS_Song2,Label.SD,SD,Clave,Bass,Guitar,Tres,
                            CycleTime,Cycle,Isochronous.SD.Time) # Select some columns
 print(knitr::kable(head(CSS_Song2),format = "simple",digits = 2))
@@ -89,9 +92,9 @@ Let’s visualise the synchrony of all pairings of the instruments in this
 example.
 
 ``` r
-inst <- c('Clave','Bass','Guitar','Tres') # Define instruments 
-dn <- sync_execute_pairs(CSS_Song2,inst,0,1,'SD')
-fig2 <- plot_by_pair(dn)  # plot
+inst <- c('Clave','Bass','Guitar','Tres')              # Define instruments 
+dn <- sync_execute_pairs(CSS_Song2, inst, beat = 'SD') # Calculate ansychr.
+fig2 <- plot_by_pair(dn)                               # Plot
 print(fig2)  
 ```
 
@@ -108,15 +111,20 @@ re-calculate the comparison of asynchrony with this subset 1000 times.
 ``` r
 set.seed(1234) # set random seed
 N <- 200 # Let's select 200 onsets
-Bootstrap <- 1000
-d1 <- sync_sample_paired(CSS_Song2,'Clave','Bass',N,Bootstrap,'SD',TRUE)
-#> [1] "onsets in common: 241"
-print(paste('Mean asynchrony of',round(mean(d1$asynch*1000),1),
-    'ms & standard deviation of',round(sd(d1$asynch*1000),1),'ms'))
-#> [1] "Mean asynchrony of 16.2 ms & standard deviation of 19.5 ms"
+Bootstrap <- 100 # Let's bootstrap this 100 times
+d1 <- sync_sample_paired(df=CSS_Song2,
+                         instr1 = 'Clave',
+                         instr2 = 'Bass',
+                         n = N,
+                         bootn = Bootstrap,
+                         beat = 'SD')
+dplyr::summarise(data.frame(d1), N=n(), M = mean(asynch*1000), SD = sd(asynch*1000))
+#>       N        M       SD
+#> 1 20000 16.26593 19.54912
 ```
 
 There are other measures to summarise the asynchronies and visualise
 them.
 
-For more examples, see [Get started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
+For more examples, see [Get
+started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).

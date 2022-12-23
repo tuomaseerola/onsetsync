@@ -7,27 +7,33 @@
 #'
 #' @param df data frame to be processed
 #' @param instruments Instrument names to be processed
-#' @param n_samp Number of samples to be drawn from the pool of joint onsets
-#' @param bnum How many bootstraps are drawn
-#' @param beats Beat structure to be included
+#' @param n Number of samples to be drawn from the pool of joint onsets
+#' @param bootn How many bootstraps are drawn (NULL default)
+#' @param beat Beat structure (subdivisions) to be included
 #' @return Output contain asynchronies and beat levels
 #' @seealso \code{\link{sync_sample_paired}}
 #' @import ggplot2
 #' @import tidyr
 #' @import magrittr
 
-sync_execute_pairs <- function(df=NULL,
-                               instruments=NULL,
-                               n_samp=100,
-                               bnum=1,
-                               beats=NULL){
+sync_execute_pairs <- function(df = NULL,
+                               instruments = NULL,
+                               n = 0,
+                               bootn = NULL,
+                               beat = NULL){
 
 # T. Eerola, Durham University, IEMP project
 # 14/1/2018  
-
+  
+  if(is.null(bootn)==TRUE){
+    bootn <- 1
+  }
+  
   # Get all combinations
-  c<-combn(instruments,2)
-  N<-dim(c)[2]
+  c <- combn(instruments,2)
+#  print(c)
+  N <- dim(c)[2]
+#  print(N)
   col_labels <- t(c)
   COL_LABELS<-NULL
   for(k in 1:N){
@@ -37,14 +43,15 @@ sync_execute_pairs <- function(df=NULL,
   DF<-NULL
   BE<-NULL
   for(k in 1:N){
-    DF <- cbind(DF,sync_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats,FALSE)$asynch)
-    BE <- cbind(BE,sync_sample_paired(df,c[,k][1],c[,k][2],n_samp,bnum,beats,FALSE)$beatL)
+#    print(paste('k:',k,'1:',c[,k][1],'2:',c[,k][2],'3:',n,'4:',bootn,'5:',beat))
+    DF <- cbind(DF,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$asynch)
+    BE <- cbind(BE,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$beatL)
   }
-  DF<-data.frame(DF)
-  colnames(DF)<-COL_LABELS
+  DF <- data.frame(DF)
+  colnames(DF) <- COL_LABELS
   
-  BE<-data.frame(BE)
-  colnames(BE)<-COL_LABELS
+  BE <- data.frame(BE)
+  colnames(BE) <- COL_LABELS
   
-return<-list(asynch=DF,beatL=BE)
+return <- list(asynch=DF,beatL=BE)
 }

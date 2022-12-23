@@ -16,7 +16,7 @@ sync_sample_paired."><meta property="og:image" content="https://github.com/tuoma
     
     <a class="navbar-brand me-2" href="../index.html">onsetsync</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,12 @@ sync_sample_paired."><meta property="og:image" content="https://github.com/tuoma
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -60,9 +66,9 @@ instruments. One can specify the same options as in
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sync_execute_pairs</span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  instruments <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  n_samp <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  bnum <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  beats <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  n <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  bootn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beat <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -76,16 +82,16 @@ instruments. One can specify the same options as in
 <dd><p>Instrument names to be processed</p></dd>
 
 
-<dt>n_samp</dt>
+<dt>n</dt>
 <dd><p>Number of samples to be drawn from the pool of joint onsets</p></dd>
 
 
-<dt>bnum</dt>
-<dd><p>How many bootstraps are drawn</p></dd>
+<dt>bootn</dt>
+<dd><p>How many bootstraps are drawn (NULL default)</p></dd>
 
 
-<dt>beats</dt>
-<dd><p>Beat structure to be included</p></dd>
+<dt>beat</dt>
+<dd><p>Beat structure (subdivisions) to be included</p></dd>
 
 </dl></div>
     <div class="section level2">

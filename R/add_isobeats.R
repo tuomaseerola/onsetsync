@@ -42,15 +42,7 @@ add_isobeats <- function(df = NULL,
   df$mean_onset<-df2$mean_onset
   df$mean_onset[df$mean_onset=='NaN']<-NA
   
-  # df3<-df2 %>%
-  #   mutate(
-  #     iso = case_when(
-  #       iso>1 ~ seq(iso,lag(iso,16)),
-  #       TRUE                      ~  0
-  #     )
-  #   )
-  
-  DF<-NULL
+  DF <- NULL
   for(k in 1:(max(df$cycle,na.rm = TRUE)-1)){
   #    print(k)
     tmp<-dplyr::filter(df,cycle==k)
@@ -66,6 +58,6 @@ add_isobeats <- function(df = NULL,
   }
   # relabel output iso
   names(DF)[which(names(DF)=='iso')]<-beatlabel
-  DF<-dplyr::select(DF,-cycle,-mean_onset)    # drop unless needed explicitly
-  return<-DF
+  DF <- dplyr::select(DF,-cycle,-mean_onset)    # drop unless needed explicitly
+  return <- DF
 }

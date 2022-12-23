@@ -18,15 +18,7 @@ add_annotation <-
     # T. Eerola, Durham University, IEMP project
     # 18/5/2021
     # New function to integrate annotations of cycles with onsets
-    
-    #### DEBUG ----------------------------------------
-    # print('debugging')
-    # df <- asereOnset
-    # annotation <- 'Cycle'
-    # reference <- 'Label.SD'
 
-    # match first Subdivision
-    
     if(reference=='Label.SD'){
       tmp <- df$Label.SD
       ind <- grep(pattern = ":1$|\\|1$", x=tmp) # gets the cycle beginnings (fixed to include | in June 2022)

@@ -158,7 +158,7 @@ periodicity <-
       
       fig <-
         ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl / max(Ampl))) +
-        ggplot2::geom_line(colour = colour) +
+        ggplot2::geom_line(colour = colour, na.rm = TRUE) +
         ggplot2::xlab('Time (s)') +
         ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(
@@ -205,7 +205,7 @@ periodicity <-
       
       fig <-
         ggplot2::ggplot(Per, ggplot2::aes(x = Time, y = Ampl / max(Ampl))) +
-        ggplot2::geom_line(colour = colour) +
+        ggplot2::geom_line(colour = colour,na.rm = TRUE) +
         ggplot2::xlab('Time (s)') +
         ggplot2::ylab('Normalised Ampl.') +
         ggplot2::scale_x_continuous(

@@ -14,7 +14,7 @@
 #' @import tidyr
 #' @import magrittr
 
-plot_by_variable <-function(df,
+plot_by_variable <- function(df,
                             meta='empty',
                             xlab='Tempo'){
 

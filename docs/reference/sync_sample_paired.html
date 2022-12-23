@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">onsetsync</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,12 @@
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -50,10 +56,10 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sync_sample_paired</span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  INSTR1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  INSTR2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  N <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  BNum <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  instr1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  instr2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  bootn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  beat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -65,24 +71,24 @@
 <dd><p>data frame to be processed</p></dd>
 
 
-<dt>INSTR1</dt>
+<dt>instr1</dt>
 <dd><p>Instrument 1 name to be processed</p></dd>
 
 
-<dt>INSTR2</dt>
+<dt>instr2</dt>
 <dd><p>Instrument 2 name to be processed</p></dd>
 
 
-<dt>N</dt>
-<dd><p>Number of samples to be drawn from the pool of joint onsets. If 0, do not sample!</p></dd>
+<dt>n</dt>
+<dd><p>Number of samples to be drawn from the pool of joint onsets. If 0, do not sample (default)</p></dd>
 
 
-<dt>BNum</dt>
-<dd><p>How many bootstraps are drawn</p></dd>
+<dt>bootn</dt>
+<dd><p>How many bootstraps are drawn (default none, which is 1)</p></dd>
 
 
 <dt>beat</dt>
-<dd><p>Beat structure to be included</p></dd>
+<dd><p>Beat structure (subdivisions) to be included</p></dd>
 
 
 <dt>verbose</dt>

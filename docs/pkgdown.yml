@@ -2,8 +2,9 @@ pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
+  adding_annotations: adding_annotations.html
   onsetsync: onsetsync.html
-last_built: 2022-12-22T11:17Z
+last_built: 2022-12-23T15:38Z
 urls:
   reference: https://github.com/tuomaseerola/onsetsync/reference
   article: https://github.com/tuomaseerola/onsetsync/articles

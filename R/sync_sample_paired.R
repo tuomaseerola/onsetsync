@@ -3,21 +3,21 @@
 #' taken N samples of two instruments (where they both have onsets)
 #'
 #' @param df data frame to be processed
-#' @param INSTR1 Instrument 1 name to be processed
-#' @param INSTR2 Instrument 2 name to be processed
-#' @param N Number of samples to be drawn from the pool of joint onsets. If 0, do not sample!
-#' @param BNum How many bootstraps are drawn
-#' @param beat Beat structure to be included
+#' @param instr1 Instrument 1 name to be processed
+#' @param instr2 Instrument 2 name to be processed
+#' @param n Number of samples to be drawn from the pool of joint onsets. If 0, do not sample (default)
+#' @param bootn How many bootstraps are drawn (default none, which is 1)
+#' @param beat Beat structure (subdivisions) to be included
 #' @param verbose Display no. of shared onsets (default FALSE)
 #' @seealso \code{\link{sync_execute_pairs}}
 #' @return List containing asynchronies and beat structures
 #' @export
 
 sync_sample_paired <- function(df = NULL,
-  INSTR1 = NULL,
-  INSTR2 = NULL, 
-  N = 100,
-  BNum = 1,
+  instr1 = NULL,
+  instr2 = NULL, 
+  n = 0,
+  bootn = NULL,
   beat = NULL,
   verbose = FALSE){
 
@@ -27,13 +27,17 @@ sync_sample_paired <- function(df = NULL,
 
   if(is.data.frame(df)==TRUE){
   
-  instr1 <- as.matrix(df[,which(colnames(df)==INSTR1)])  
-  instr2 <- as.matrix(df[,which(colnames(df)==INSTR2)])  
-  beat <- as.matrix(df[,which(colnames(df)==beat)])  
+  inst1 <- as.matrix(df[,which(colnames(df)==instr1)])  
+  inst2 <- as.matrix(df[,which(colnames(df)==instr2)])  
+  beat <- as.matrix(df[,which(colnames(df)==beat)])
+
+    if(is.null(bootn)==TRUE){
+      bootn <- 1
+    }
   
   D <- NULL
-  if(BNum==1){
-    ind<-!is.na(instr1) & !is.na(instr2)
+  if(bootn==1){
+    ind<-!is.na(inst1) & !is.na(inst2)
     len_joint<-length(which(ind))
     if(verbose==TRUE){
       print(paste('onsets in common:',len_joint))
@@ -41,47 +45,43 @@ sync_sample_paired <- function(df = NULL,
     
     
     
-    if(len_joint > N){
-      if(N==0){
+    if(len_joint > n){
+      if(n==0){
         if(verbose==TRUE){
           print(paste('take all onsets:',len_joint))
         }
         sample_ind <- which(ind)
       }
-      if(N>0){
-        sample_ind <- sample(which(ind),N)
+      if(n>0){
+        sample_ind <- sample(which(ind),n)
       }
-      d<-instr1[sample_ind]-instr2[sample_ind]
+      d<-inst1[sample_ind]-inst2[sample_ind]
       D<-d
       beat_L<-beat[sample_ind]
       
-      ## STATS START
-      #s<-data.frame(v1=instr1[sample_ind] - instr2[sample_ind],beat=beat_L)
-      #a1<-t.test(s$v1)
-      #a2<-summary(aov(v1~beat,data=s))
-      ## STATS END
+
     }
-    if(len_joint <= N){
+    if(len_joint <= n){
       D<-NA
       beat_L<-NA
     }
   }
-  if(BNum>1){
-    ind<-!is.na(instr1) & !is.na(instr2)
+  if(bootn>1){
+    ind<-!is.na(inst1) & !is.na(inst2)
     len_joint<-length(which(ind))
     if(verbose==TRUE){
       print(paste('onsets in common:',len_joint))
     }
-    if(len_joint>N){
-      for(k in 1:BNum){
-        ind<-!is.na(instr1) & !is.na(instr2)
-        sample_ind <- sample(which(ind),N)
-        d <- instr1[sample_ind]-instr2[sample_ind]
+    if(len_joint>n){
+      for(k in 1:bootn){
+        ind<-!is.na(inst1) & !is.na(inst2)
+        sample_ind <- sample(which(ind),n)
+        d <- inst1[sample_ind]-inst2[sample_ind]
         D <-c(D,d)
         beat_L<-beat[sample_ind]
       }
     }
-    if(len_joint<=N){
+    if(len_joint<=n){
       D<-NA
       beat_L<-NA
     }    
@@ -96,7 +96,7 @@ sync_sample_paired <- function(df = NULL,
     L<-NULL
     for (i in 1:length(df)) {
       tmp_df <- df[[i]]
-      D[[i]] <- sync_sample_paired(df = tmp_df,INSTR1,INSTR2,N,BNum,beat)
+      D[[i]] <- sync_sample_paired(df = tmp_df,instr1,instr2,n,bootn,beat)
       beat_L<-NULL
       L[i] <- length(D[[i]]$asynch)
     }
@@ -110,5 +110,5 @@ sync_sample_paired <- function(df = NULL,
     D<-R3
   }
   
-  return<-list(asynch=D,beatL=beat_L)  
+  return <- list(asynch=D,beatL=beat_L)  
 }

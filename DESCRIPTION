@@ -15,6 +15,7 @@ Imports:
     signal,
     tidyr,
     moments,
+    httr,
     magrittr,
     scales,
     seewave,

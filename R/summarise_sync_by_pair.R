@@ -17,7 +17,7 @@ summarise_sync_by_pair <- function(df,
                                    adjust = 'bonferroni') {
   # T. Eerola, Durham University, IEMP project
   # 14/1/2018
-  Instrument <- summarise <- across <- beatL <- Subdivision <- Asynchrony <- NULL
+  Instrument <- summarise <- across <- beatL <- Subdivision <- Asynchrony <- dn <- NULL
   
   if (bybeat == FALSE) {
     m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
@@ -44,9 +44,9 @@ summarise_sync_by_pair <- function(df,
     }
     n <- names(df$asynch)
     M <- df$asynch %>%
-      summarise(across(n, mean))
+      summarise(across(n, mean,na.rm=TRUE))
     SD <- df$asynch %>%
-      summarise(across(n, sd))
+      summarise(across(n, sd,na.rm=TRUE))
 
     T2 <- data.frame(M = t(M), SD = t(SD))
     T2$T <- T$tval
@@ -60,17 +60,21 @@ summarise_sync_by_pair <- function(df,
   #  print(T2)
   }
   
-  
   if (bybeat == TRUE) {
+    # warn if attempted for multiple instruments!
+    if(ncol(dn$asynch) > 1){
+      print('Warning: Apply bybeat option to 1 pair of instruments, not to multiple instruments')
+      T2 <- NULL
+    }
+    else {
     m <- tidyr::pivot_longer(data=df$asynch,cols=c(1:dim(df$asynch)[2]),names_to = 'Instrument', values_to = 'ms')
-    
     m$ms <- m$ms * 1000
     #print(head(m))
     b <- tidyr::pivot_longer(data=df$beatL,cols=c(1:dim(df$beatL)[2]),names_to = 'variable', values_to = 'value')
     m$beatL <- b$value
     m$beatL <- factor(m$beatL)
     subdivisions <- levels(m$beatL)
-    #print(subdivisions)
+   # print(subdivisions)
     T <- NULL
     for (k in 1:length(subdivisions)) {
       #print(paste(k,'-',as.numeric(subdivisions[k])))
@@ -91,24 +95,24 @@ summarise_sync_by_pair <- function(df,
     }
 
     x <- data.frame(Asynchrony=m$ms,Subdivision=m$beatL)
-
+    #print(head(x))
     T2 <-
       dplyr::summarise(
         dplyr::group_by(x,Subdivision),
         N = n(),
-        M = mean(Asynchrony),
-        SD = sd(Asynchrony)
+        M = mean(Asynchrony,na.rm=TRUE),
+        SD = sd(Asynchrony,na.rm=TRUE)
       )
+    print(head(T2))
     T2$T <- T$tval
     T2$pval <- T$pval
-    
     ## Make the table look prettier
     T2$pval <-
       stats::p.adjust(T2$pval, method = adjust) # adjustment for multiple tests
-    T2$M <- T2$M * 1000                            # milliseconds
-    T2$SD <- T2$SD * 1000                          # milliseconds
+    T2$M <- T2$M #* 1000                            # milliseconds
+    T2$SD <- T2$SD #* 1000                          # milliseconds
     T2$pval <- scales::pvalue(T2$pval)            # prettify
-    
+    }    
   }
   
   return <- data.frame(T2)

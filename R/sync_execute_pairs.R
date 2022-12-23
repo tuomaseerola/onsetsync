@@ -24,29 +24,52 @@ sync_execute_pairs <- function(df = NULL,
 
 # T. Eerola, Durham University, IEMP project
 # 14/1/2018  
-  
+
   if(is.null(bootn)==TRUE){
     bootn <- 1
   }
   
   # Get all combinations
   c <- combn(instruments,2)
-#  print(c)
+  #print(c)
   N <- dim(c)[2]
-#  print(N)
+  #print(N)
   col_labels <- t(c)
   COL_LABELS<-NULL
   for(k in 1:N){
     COL_LABELS[k] <- paste(col_labels[k,1],'-',col_labels[k,2])
   }
   
-  DF<-NULL
-  BE<-NULL
+  DF <- NULL
+  BE <- NULL
+  DF2 <- list()
+  BE2 <- list()
   for(k in 1:N){
-#    print(paste('k:',k,'1:',c[,k][1],'2:',c[,k][2],'3:',n,'4:',bootn,'5:',beat))
-    DF <- cbind(DF,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$asynch)
-    BE <- cbind(BE,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$beatL)
+    if(n == 0){
+      n_joint <- sync_joint_onsets(df,c[,k][1],c[,k][2])
+#      print(paste('k:',k,'in1:',c[,k][1],'in2:',c[,k][2],'n:',n_joint,'bootn:',bootn,'beat:',beat))
+      DF2[[k]] <- sync_sample_paired(df,c[,k][1],c[,k][2],n_joint,bootn,beat,FALSE)$asynch
+      BE2[[k]] <- sync_sample_paired(df,c[,k][1],c[,k][2],n_joint,bootn,beat,FALSE)$beatL
+    }
+    else {
+#      print(paste('k:',k,'in1:',c[,k][1],'in2:',c[,k][2],'n:',n,'bootn:',bootn,'beat:',beat))
+      DF2[[k]] <- sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$asynch
+      BE2[[k]] <- sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$beatL
+      #DF <- cbind(DF,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$asynch)
+      #BE <- cbind(BE,sync_sample_paired(df,c[,k][1],c[,k][2],n,bootn,beat,FALSE)$beatL)
+    }
   }
+
+  # collapse the pairs which are different lengths into the same data.frame with NAs
+  if(n == 0){
+    DF<-sapply(DF2, "length<-", max(lengths(DF2)))
+    BE<-sapply(BE2, "length<-", max(lengths(BE2)))
+  }
+  else {
+    DF<-sapply(DF2, "length<-", max(lengths(DF2)))
+    BE<-sapply(BE2, "length<-", max(lengths(BE2)))
+  }
+  
   DF <- data.frame(DF)
   colnames(DF) <- COL_LABELS
   

@@ -26,11 +26,14 @@ sync_sample_paired <- function(df = NULL,
   # Updated 18/6/2022 to incorporate corpus structure
 
   if(is.data.frame(df)==TRUE){
-  
+
   inst1 <- as.matrix(df[,which(colnames(df)==instr1)])  
   inst2 <- as.matrix(df[,which(colnames(df)==instr2)])  
   beat <- as.matrix(df[,which(colnames(df)==beat)])
 
+  joint_n <- sync_joint_onsets(df,instr1 = instr1,instr2 = instr2)
+  #print(paste("joint onsets:",joint_n))  
+  
     if(is.null(bootn)==TRUE){
       bootn <- 1
     }
@@ -38,32 +41,38 @@ sync_sample_paired <- function(df = NULL,
   D <- NULL
   if(bootn==1){
     ind<-!is.na(inst1) & !is.na(inst2)
-    len_joint<-length(which(ind))
+#    len_joint <- length(which(ind))-1
     if(verbose==TRUE){
-      print(paste('onsets in common:',len_joint))
+      print(paste('onsets in common:',joint_n))
     }
     
+# 1. if there are more joint onsets than requested sample    
     
-    
-    if(len_joint > n){
+    if(joint_n >= n){
       if(n==0){
         if(verbose==TRUE){
-          print(paste('take all onsets:',len_joint))
+          print(paste('take all onsets:',joint_n))
         }
         sample_ind <- which(ind)
       }
-      if(n>0){
+      if(n > 0){
         sample_ind <- sample(which(ind),n)
       }
-      d<-inst1[sample_ind]-inst2[sample_ind]
+      d<-inst1[sample_ind] - inst2[sample_ind]
       D<-d
       beat_L<-beat[sample_ind]
       
-
+# 2. if joint onsets is smaller than the requested sample, take the max joint!
+      
     }
-    if(len_joint <= n){
-      D<-NA
-      beat_L<-NA
+    if(joint_n <= n){
+      sample_ind <- which(ind)
+      d<-inst1[sample_ind] - inst2[sample_ind]
+      D<-d
+      beat_L<-beat[sample_ind]
+      
+      #D<-NA
+      #beat_L<-NA
     }
   }
   if(bootn>1){
@@ -72,7 +81,18 @@ sync_sample_paired <- function(df = NULL,
     if(verbose==TRUE){
       print(paste('onsets in common:',len_joint))
     }
-    if(len_joint>n){
+    if(len_joint >= n){
+      for(k in 1:bootn){
+        ind<-!is.na(inst1) & !is.na(inst2)
+        sample_ind <- sample(which(ind),n)
+        d <- inst1[sample_ind]-inst2[sample_ind]
+#        print(dim(d))
+#        print(dim(D))
+        D <-c(D,d)
+        beat_L<-beat[sample_ind]
+      }
+    }
+    if(len_joint <= n){
       for(k in 1:bootn){
         ind<-!is.na(inst1) & !is.na(inst2)
         sample_ind <- sample(which(ind),n)
@@ -80,10 +100,8 @@ sync_sample_paired <- function(df = NULL,
         D <-c(D,d)
         beat_L<-beat[sample_ind]
       }
-    }
-    if(len_joint<=n){
-      D<-NA
-      beat_L<-NA
+#      D<-NA
+#      beat_L<-NA
     }    
   }
   

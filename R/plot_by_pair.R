@@ -35,7 +35,7 @@ plot_by_pair <-function(df = NULL,
     ggplot2::stat_summary(fun = "mean",
                  geom = "crossbar",
                  width = 0.4,
-                 color = "black",show.legend = FALSE)+
+                 color = "black", show.legend = FALSE, na.rm=TRUE)+
     ggplot2::geom_hline(yintercept = reference,color='orange4',linetype='dashed')+
     ggplot2::scale_fill_brewer(palette = colourpalette,type = palettetype)+
     ggplot2::coord_flip()+

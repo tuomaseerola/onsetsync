@@ -5,6 +5,7 @@
 * all input parameters to lowercase letters and coordinated them across functions (`n` = number of samples, `bootn` = number of bootstraps, `beat` and not `beats`, etc.)
 * default option to set sampling 0 and bootstrapping to NULL in `sync_sample_paired` and related functions. 
 * removed warnings from missing observations from plotting section of `periodicity`
+* Allow sampling to cope with different N between instrument pairs
 
 # onsetsync 0.4.6
 

@@ -1,0 +1,83 @@
+---
+title: "Adding Annotations"
+output: rmarkdown::html_vignette
+description: >
+  Learn how to add annotations to onsets.
+vignette: >
+  %\VignetteIndexEntry{Adding Annotations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Typically you have raw onset data when loading files with `onsetsync` which might not any other information within them (beat subdivisions, etc.). Here is an example of how you can add reference beat subdivisions and calculate reference beats such as mean of all onsets in a sub-division.
+
+## Load raw onsets from OSF
+
+```{r load, warning=FALSE,message=FALSE}
+library(onsetsync)
+require(httr)
+CSS_Song2_Onset <- get_OSF_csv('8a347') # Get onsets
+print(head(CSS_Song2_Onset[,1:8,]))
+```
+
+The data frame shows a portion of the onset data structure where the last three columns refer to the onset times of the specific instruments (`Clave`, `Bass`, and `Guitar`). Note that we only show the first eight columns and 6 rows. The first five columns are **meta-data**, referring to the piece, beats and cycles and sections. `Label.SD` combines cycle and beat information (first integer refers to cycle and the second integer refers to beat sub-division). `SD` represents the _sub-division_ explicitly. In this music there are 16 subdivisions per cycle (which can be felt as 4 beats $\times$ 4 subdivisions). `Section` indicates the specific part of the piece. Finally, in this example we have `Clave_` column, which is a reference to a clave pattern: strokes of the clave (woodblocks), whether sounded or not, are noted here; there are normally 5 strokes per cycle. The onset times for the instruments are recorded in seconds, although we prefer to use milliseconds (ms) in the analyses of synchrony to avoid reporting unnecessarily many digits. The onset times of the instruments are the result of an automatic onset detection (that has been subjected manual check) and the exact technique may depend on instrument used and source of data. 
+
+## Add annotations for cycles
+
+```{r showannotations, echo=TRUE}
+CSS_Song2_Metre <- get_OSF_csv('4cdpr') # Annotations for cycles
+print(head(CSS_Song2_Metre))
+```
+
+Let's simplify this example (select only few columns).
+
+```{r simplify_example, echo=TRUE}
+CSS_Song2_Onset <- dplyr::select(CSS_Song2_Onset,
+                  Label.SD,SD,Clave,Bass,Guitar,Tres) 
+```
+
+In the second data frame (`CSS_Song2_Metre`), shown in Table 2, we have annotations, namely the cycle times, which are the manually-estimated times when the cycles start (containing all sub-divisions of the beat). For instance, here the first cycle starts at 5.037333, the second cycle at 8.601000) and so on. This is important information for some type of analyses and often we want to combine the automatically detected onset times and the annotated cycles. It is important to realise that the information about the cycles comes from an annotation of the music by an expert (or in some cases by several experts). To get an annotation such as this, software such _Sonic Visualiser_ can be used to tap with the perceived beats of the audio track to obtain the beat times and then the first beat of the cycle is manually labelled to the data. The sub-divisions are then inferred from the cycle beginnings. This annotation process requires expertise with the musical style in question as the same patterns of onsets could potentially give rise to multiple interpretations of the metre.
+
+## Combine onsets and annotations
+
+As the onsets and annotations are in different files, we first combine the onsets and annotations with `onsetsync`. Here we first add annotations about the cycles into the onset data and then we also add isochronous beat times to the data frame, since are useful reference points for future calculations. The metre annotations have already informed the allocation of onsets to beat positions; here we add more information from the metre annotations to the dataframe to allow further analysis options.
+
+```{r enrich1, echo=TRUE}
+# Add annotations about the cycle to the data frame
+CSS_Song2 <- add_annotation(df = CSS_Song2_Onset,
+                            annotation = CSS_Song2_Metre$Cycle,
+                            time = CSS_Song2_Metre$Time,
+                            reference = 'Label.SD')
+```
+
+## Add isochronous beat subdivisions based on annotation
+
+We add an isochronous reference subdivision of beat subdivisions based on annotated cycle start times. 
+
+```{r enrich2, echo=TRUE}
+# Add isochronous beats to the data frame
+CSS_Song2 <- add_isobeats(df = CSS_Song2, 
+                          instr = 'CycleTime', 
+                          beat = 'SD')
+print(head(CSS_Song2[,2:9]))
+```
+
+At this point we have the basic elements for most analyses. In the data frame `CSS_Song2` we have the onset data (coded under instrument names, here `Clave`, `Bass`, and `Tres`) and information about the beat cycles (`CycleTime` and `Cycle`), and we also have timing information for isochronous beat divisions (`Isochronous.SD.Time`). 
+
+These annotation-based virtual beat structures can be systematically off by a certain amount, so perhaps some it may be advantageous for some analyses to infer the timing information related to the beat structure from the existing onsets themselves and not rely on external reference. `add_isobeats` function can accomplish this if given the instruments from which it will calculate the mean onset time for the first beat of the cycle, which will then be used to set the isochronous beat timings for the rest of the beats within the cycle.
+
+## Add isochronous beat subdivisions based on mean onset times
+
+```{r enrich3, echo=TRUE}
+colnames(CSS_Song2)[9] <- 'Ann.Iso' # Rename
+# Add isochronous beats based on mean timing of guitar, tres, and clave
+
+CSS_Song2 <- add_isobeats(df = CSS_Song2, 
+                          instr = c('Guitar','Tres','Clave'), 
+                          beat = 'SD')
+# Show the newly calculated isochronous beat times 
+# from the second cycle onwards.
+print(head(CSS_Song2[17:22,c(2,6:10)]))
+```
+
+These operations allow many to create a number of variant reference points to be used in the calculation of synchrony.

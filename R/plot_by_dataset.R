@@ -8,6 +8,7 @@
 #' @param pcols Number of columns for multiple plots (default 1)
 #' @param box Do the graphics by boxplot
 #' @param colour colour for the boxplot
+#' @param colorpalette colourpalette for the boxplot
 #' @seealso \code{\link{plot_by_variable}}, \code{\link{plot_by_pair}}, \code{\link{plot_by_beat}}
 #' @return Graphic output
 #' @import ggplot2
@@ -20,7 +21,8 @@ plot_by_dataset <-
            data = NULL,
            pcols = 1,
            box = FALSE,
-           colour = 'lightblue') {
+           colour = 'lightblue',
+           colorpalette = 'Set2') {
     # T. Eerola, Durham University, IEMP project
     # 23/1/2018
     # needs work
@@ -45,7 +47,7 @@ plot_by_dataset <-
       ggplot2::ggplot(DF, ggplot2::aes(asynch, fill = data), colour = 'black') +
       ggplot2::geom_density(alpha = 1, show.legend = FALSE) +
       ggplot2::scale_color_brewer(name = "Dataset",
-                                  palette = 'Set1',
+                                  palette = colorpalette,
                                   type = "div") +
       ggplot2::facet_wrap( ~ data, pcols) +
       ggplot2::xlab(paste('Asynchrony (ms)')) +
@@ -67,7 +69,7 @@ plot_by_dataset <-
                   # ggplot2::scale_color_brewer(name = "Dataset",
         #                             palette = 'Set1',
         #                             type = "div") +
-        ggplot2::scale_fill_brewer(palette = "Set1") +
+        ggplot2::scale_fill_brewer(palette = colorpalette) +
         ggplot2::xlab('Performance') +
         ggplot2::ylab('Asynchrony (ms)') +
         ggplot2::coord_flip()+

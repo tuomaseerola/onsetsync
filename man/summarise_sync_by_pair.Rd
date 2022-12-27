@@ -17,7 +17,7 @@ summarise_sync_by_pair(df, bybeat = FALSE, adjust = "bonferroni")
 Statistics output (Mean, Standard deviation, T-stat, P value)
 }
 \description{
-This function calculates simple t-test of the asynchronies of instruments (whether it differs from zero)
+This function calculates simple t-test of the asynchronies of instruments (whether they differ from zero)
 }
 \seealso{
 \code{\link{sync_sample_paired}}, \code{\link{sync_execute_pairs}}

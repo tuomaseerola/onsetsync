@@ -10,7 +10,8 @@ plot_by_dataset(
   data = NULL,
   pcols = 1,
   box = FALSE,
-  colour = "lightblue"
+  colour = "lightblue",
+  colorpalette = "Set2"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ plot_by_dataset(
 \item{box}{Do the graphics by boxplot}
 
 \item{colour}{colour for the boxplot}
+
+\item{colorpalette}{colourpalette for the boxplot}
 }
 \value{
 Graphic output

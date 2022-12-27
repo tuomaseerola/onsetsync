@@ -28,6 +28,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+    <a class="dropdown-item" href="../articles/synthesise_onsets.html">Synthesise onsets</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -55,6 +56,9 @@
 <li>default option to set sampling 0 and bootstrapping to NULL in <code>sync_sample_paired</code> and related functions.</li>
 <li>removed warnings from missing observations from plotting section of <code>periodicity</code>
 </li>
+<li>Allow sampling to cope with different N between instrument pairs</li>
+<li>Added new function to calculate onset time difference relative to the mean of other onsets (<code>sync_sample_paired_relative.R</code>)</li>
+<li>Added new function to auralise onset times (<code>sync_sample_paired_relative.R</code>)</li>
 </ul></div>
 </div>
     <div class="section level2">

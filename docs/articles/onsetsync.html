@@ -54,6 +54,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+    <a class="dropdown-item" href="../articles/synthesise_onsets.html">Synthesise onsets</a>
   </div>
 </li>
 <li class="nav-item">
@@ -240,7 +241,7 @@ different beat sub-divisions, the mutual amount of comparable onsets for
 each pair often varies dramatically. Comparison of mean asynchronies
 across sub-divisions can be facilitated by taking random samples of the
 joint onsets. Here we choose a random 200 matching onsets and
-re-calculate the comparison of asynchrony with this subset 1000
+re-calculate the comparison of asynchrony with this subset 100
 times.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># set random seed</span></span>
@@ -252,9 +253,9 @@ times.</p>
 <span>                         n <span class="op">=</span> <span class="va">N</span>, </span>
 <span>                         bootn <span class="op">=</span> <span class="va">Bootstrap</span>,</span>
 <span>                         beat <span class="op">=</span> <span class="st">'SD'</span><span class="op">)</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span>, M <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>, SD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##          M       SD</span></span>
-<span><span class="co">## 1 16.26593 19.54912</span></span></code></pre>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span>, N<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, M <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>, SD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       N        M       SD</span></span>
+<span><span class="co">## 1 20000 16.26593 19.54912</span></span></code></pre>
 <p>There are other measures to summarise the asynchronies and visualise
 them.</p>
 </div>

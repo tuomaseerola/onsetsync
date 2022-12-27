@@ -35,3 +35,7 @@ reference:
   - matches("Asere_OU_2")
   - matches("DebBh_Drut")
   - matches("CSS_IEMP")
+- title: "Other functions"
+  desc: "Function to create a wave file from the onset data."
+  contents:
+  - starts_with("synthesise_")

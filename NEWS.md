@@ -6,6 +6,9 @@
 * default option to set sampling 0 and bootstrapping to NULL in `sync_sample_paired` and related functions. 
 * removed warnings from missing observations from plotting section of `periodicity`
 * Allow sampling to cope with different N between instrument pairs
+* Added new function to calculate onset time difference relative to the mean of other onsets (`sync_sample_paired_relative.R`)
+* Added new function to auralise onset times (`sync_sample_paired_relative.R`)
+
 
 # onsetsync 0.4.6
 

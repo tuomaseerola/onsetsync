@@ -1,0 +1,66 @@
+---
+title: "Synthesise onsets"
+output: rmarkdown::html_vignette
+description: >
+  Create audio files from the onset data.
+vignette: >
+  %\VignetteIndexEntry{Synthesise onsets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+To create an audio file of your onset data, you can call `synthesise_onsets` function.
+
+## Example data
+
+Load a Cuban salsa example. 
+
+```{r load, warning=FALSE,message=FALSE}
+library(onsetsync)
+library(tidyverse)
+data <- CSS_IEMP[[2]]                                                          # example
+```
+
+Let's take a 10 second example. To eliminate the first 5 seconds where the instruments are not playing, let's redefine the time to start from the first annotated cycle (Isochronous.SD.Time).
+
+```{r}
+data %>%
+  dplyr::filter(Isochronous.SD.Time > 5 & Isochronous.SD.Time < 15) %>%
+  dplyr::mutate(Guitar = Guitar - min(Isochronous.SD.Time,na.rm=T)) %>%
+  dplyr::mutate(Bass = Bass - min(Isochronous.SD.Time,na.rm=T)) -> data
+```
+
+## Synthesise two instruments
+
+Let's take two instruments and create their onsets as high-pitched sound (Guitar) and short noise burst (Bass).
+
+```{r createwave, echo=TRUE}
+inst <- c('Guitar','Bass')
+fs <- 22050
+w <- synthesise_onsets(data = data,
+                       instruments = inst, 
+                       sr = fs, 
+                       type =c('synth','noise'))
+```
+
+### Plot the signal
+
+This is downsampled for plotting in `ggplot2`.
+
+```{r, echo=TRUE,fig.width=7.5,fig.height=2.5}
+scaling <- 20
+ws <- signal::resample(w,fs,fs*scaling)
+tmp <- data.frame(Amplitude=ws,Time=seq(0,length(ws)-1))
+tmp$Time <- tmp$Time/fs*scaling
+ggplot2::ggplot(tmp,ggplot2::aes(x=Time,y=Amplitude))+
+  ggplot2::geom_line(color='blue')+
+  ggplot2::theme_linedraw()
+```
+
+Save as wave file using `seewave` library.
+
+```{r savefile, echo=TRUE, eval=FALSE}
+seewave::savewav(wave = w, f = fs, channel = 1, filename = 'example.wav')
+```
+
+Further options relate to sound generators and frequency.

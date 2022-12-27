@@ -25,8 +25,13 @@ sync_execute_pairs <- function(df = NULL,
 # T. Eerola, Durham University, IEMP project
 # 14/1/2018  
 
+
   if(is.null(bootn)==TRUE){
     bootn <- 1
+  }
+
+  if(n < bootn & bootn>1){
+    stop("More bootstraps (bootn) are specified than samples (n)!", call. = FALSE)
   }
   
   # Get all combinations

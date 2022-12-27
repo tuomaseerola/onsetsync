@@ -13,7 +13,7 @@ plot_by_beat(
   griddeviations = FALSE,
   boxplot = FALSE,
   colour = "lightblue",
-  colourpalette = "Set1",
+  colourpalette = "Set2",
   pointsize = 1
 )
 }

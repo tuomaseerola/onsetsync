@@ -26,7 +26,7 @@ plot_by_beat <-
            griddeviations = FALSE,
            boxplot = FALSE,
            colour = 'lightblue',
-           colourpalette = 'Set1',
+           colourpalette = 'Set2',
            pointsize = 1) {
     # T. Eerola, Durham University, IEMP project
     # 23/1/2018

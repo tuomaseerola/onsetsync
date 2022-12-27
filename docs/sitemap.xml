@@ -19,6 +19,9 @@
     <loc>https://github.com/tuomaseerola/onsetsync/articles/onsetsync.html</loc>
   </url>
   <url>
+    <loc>https://github.com/tuomaseerola/onsetsync/articles/synthesise_onsets.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/tuomaseerola/onsetsync/authors.html</loc>
   </url>
   <url>
@@ -113,5 +116,11 @@
   </url>
   <url>
     <loc>https://github.com/tuomaseerola/onsetsync/reference/sync_sample_paired.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/tuomaseerola/onsetsync/reference/sync_sample_paired_relative.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/tuomaseerola/onsetsync/reference/synthesise_onsets.html</loc>
   </url>
 </urlset>

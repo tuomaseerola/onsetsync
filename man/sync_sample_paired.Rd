@@ -6,10 +6,10 @@
 \usage{
 sync_sample_paired(
   df = NULL,
-  INSTR1 = NULL,
-  INSTR2 = NULL,
-  N = 100,
-  BNum = 1,
+  instr1 = NULL,
+  instr2 = NULL,
+  n = 0,
+  bootn = NULL,
   beat = NULL,
   verbose = FALSE
 )
@@ -17,15 +17,15 @@ sync_sample_paired(
 \arguments{
 \item{df}{data frame to be processed}
 
-\item{INSTR1}{Instrument 1 name to be processed}
+\item{instr1}{Instrument 1 name to be processed}
 
-\item{INSTR2}{Instrument 2 name to be processed}
+\item{instr2}{Instrument 2 name to be processed}
 
-\item{N}{Number of samples to be drawn from the pool of joint onsets. If 0, do not sample!}
+\item{n}{Number of samples to be drawn from the pool of joint onsets. If 0, do not sample (default)}
 
-\item{BNum}{How many bootstraps are drawn}
+\item{bootn}{How many bootstraps are drawn (default none, which is 1)}
 
-\item{beat}{Beat structure to be included}
+\item{beat}{Beat structure (subdivisions) to be included}
 
 \item{verbose}{Display no. of shared onsets (default FALSE)}
 }

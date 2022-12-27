@@ -4,16 +4,16 @@
 \alias{plot_timeline}
 \title{Plot onsets across time for instruments.}
 \usage{
-plot_timeline(data = NULL, instr = NULL, Ampl = NULL, Grouping = NULL)
+plot_timeline(data = NULL, instr = NULL, ampl = NULL, grouping = NULL)
 }
 \arguments{
 \item{data}{data frame to be processed}
 
 \item{instr}{Instrument name to be processed}
 
-\item{Ampl}{Amplitude of the onsets (optional)}
+\item{ampl}{Amplitude of the onsets (optional)}
 
-\item{Grouping}{Grouping factor (optional)}
+\item{grouping}{Grouping factor (optional)}
 }
 \value{
 Graphic output

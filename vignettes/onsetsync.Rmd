@@ -68,7 +68,7 @@ fig2 <- plot_by_pair(dn)  # plot
 print(fig2)  
 ```
 
-As we saw in the first figure, the instruments usually play widely different amounts of onsets in a piece, and these are bound to be at different beat sub-divisions, the mutual amount of comparable onsets for each pair often varies dramatically. Comparison of mean asynchronies across sub-divisions can be facilitated by taking random samples of the joint onsets. Here we choose a random 200 matching onsets and re-calculate the comparison of asynchrony with this subset 1000 times.
+As we saw in the first figure, the instruments usually play widely different amounts of onsets in a piece, and these are bound to be at different beat sub-divisions, the mutual amount of comparable onsets for each pair often varies dramatically. Comparison of mean asynchronies across sub-divisions can be facilitated by taking random samples of the joint onsets. Here we choose a random 200 matching onsets and re-calculate the comparison of asynchrony with this subset 100 times.
 
 ```{r paired1}
 set.seed(1234) # set random seed
@@ -80,7 +80,7 @@ d1 <- sync_sample_paired(df = CSS_Song2,
                          n = N, 
                          bootn = Bootstrap,
                          beat = 'SD')
-dplyr::summarise(data.frame(d1), M = mean(asynch*1000), SD = sd(asynch*1000))
+dplyr::summarise(data.frame(d1), N=n(), M = mean(asynch*1000), SD = sd(asynch*1000))
 ```
 
 There are other measures to summarise the asynchronies and visualise them. 

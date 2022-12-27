@@ -7,9 +7,9 @@
 sync_execute_pairs(
   df = NULL,
   instruments = NULL,
-  n_samp = 100,
-  bnum = 1,
-  beats = NULL
+  n = 0,
+  bootn = NULL,
+  beat = NULL
 )
 }
 \arguments{
@@ -17,11 +17,11 @@ sync_execute_pairs(
 
 \item{instruments}{Instrument names to be processed}
 
-\item{n_samp}{Number of samples to be drawn from the pool of joint onsets}
+\item{n}{Number of samples to be drawn from the pool of joint onsets}
 
-\item{bnum}{How many bootstraps are drawn}
+\item{bootn}{How many bootstraps are drawn (NULL default)}
 
-\item{beats}{Beat structure to be included}
+\item{beat}{Beat structure (subdivisions) to be included}
 }
 \value{
 Output contain asynchronies and beat levels

@@ -62,7 +62,9 @@ summarise_sync_by_pair <- function(df,
   
   if (bybeat == TRUE) {
     # warn if attempted for multiple instruments!
-    if(ncol(dn$asynch) > 1){
+    x <- dim(dn$asynch)
+    if(!is.null(x)){
+      print(ncol(dn$asynch))
       print('Warning: Apply bybeat option to 1 pair of instruments, not to multiple instruments')
       T2 <- NULL
     }

@@ -54,6 +54,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+    <a class="dropdown-item" href="../articles/analysis_example.html">Analysis Example</a>
     <a class="dropdown-item" href="../articles/synthesise_onsets.html">Synthesise onsets</a>
   </div>
 </li>
@@ -94,7 +95,7 @@
 <p>Load a Cuban salsa example.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">onsetsync</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">CSS_IEMP</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>                                                          <span class="co"># example</span></span></code></pre></div>
 <p>Let’s take a 10 second example. To eliminate the first 5 seconds
 where the instruments are not playing, let’s redefine the time to start

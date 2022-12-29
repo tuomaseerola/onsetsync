@@ -28,6 +28,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/adding_annotations.html">Adding Annotations</a>
+    <a class="dropdown-item" href="../articles/analysis_example.html">Analysis Example</a>
     <a class="dropdown-item" href="../articles/synthesise_onsets.html">Synthesise onsets</a>
   </div>
 </li>
@@ -51,14 +52,22 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.7" id="onsetsync-047">onsetsync 0.4.7<a class="anchor" aria-label="anchor" href="#onsetsync-047"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-4-7">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-7"></a></h3>
-<ul><li>all input parameters to lowercase letters and coordinated them across functions (<code>n</code> = number of samples, <code>bootn</code> = number of bootstraps, <code>beat</code> and not <code>beats</code>, etc.)</li>
+<h3 id="changes-to-parameters-0-4-7">Changes to parameters<a class="anchor" aria-label="anchor" href="#changes-to-parameters-0-4-7"></a></h3>
+<ul><li>Changed all input parameters to lowercase letters and coordinated them across functions (<code>n</code> = number of samples, <code>bootn</code> = number of bootstraps, <code>beat</code> and not <code>beats</code>, etc.)</li>
 <li>default option to set sampling 0 and bootstrapping to NULL in <code>sync_sample_paired</code> and related functions.</li>
 <li>removed warnings from missing observations from plotting section of <code>periodicity</code>
 </li>
-<li>Allow sampling to cope with different N between instrument pairs</li>
-<li>Added new function to calculate onset time difference relative to the mean of other onsets (<code>sync_sample_paired_relative.R</code>)</li>
-<li>Added new function to auralise onset times (<code>sync_sample_paired_relative.R</code>)</li>
+<li>Allow sampling to cope with different number of samples between instrument pairs</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-functions-0-4-7">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-4-7"></a></h3>
+<ul><li>Added new function to calculate onset time difference <em>relative</em> to the mean of other instrument onsets (see <a href="https://tuomaseerola.github.io/onsetsync/reference/sync_sample_paired_relative.html" class="external-link"><code>sync_sample_paired_relative.R</code></a>)</li>
+<li>Added new function to auralise onsets (see <a href="https://tuomaseerola.github.io/onsetsync/reference/synthesise_onsets.html" class="external-link"><code>synthesise_onsets.R</code></a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-documentation-0-4-7">New documentation<a class="anchor" aria-label="anchor" href="#new-documentation-0-4-7"></a></h3>
+<ul><li>Added article to documentation about synthesis (see <a href="https://tuomaseerola.github.io/onsetsync/articles/synthesise_onsets.html" class="external-link">synthesise_onsets</a>)</li>
+<li>Added article to documentation about adding annotations (see <a href="https://tuomaseerola.github.io/onsetsync/articles/adding_annotations.html" class="external-link">adding_annotations</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -3,9 +3,10 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   adding_annotations: adding_annotations.html
+  analysis_example: analysis_example.html
   onsetsync: onsetsync.html
   synthesise_onsets: synthesise_onsets.html
-last_built: 2022-12-27T18:24Z
+last_built: 2022-12-29T17:20Z
 urls:
   reference: https://github.com/tuomaseerola/onsetsync/reference
   article: https://github.com/tuomaseerola/onsetsync/articles

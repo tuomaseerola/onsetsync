@@ -1,14 +1,20 @@
 # onsetsync 0.4.7
 
-## Bug Fixes
+## Changes to parameters
 
-* all input parameters to lowercase letters and coordinated them across functions (`n` = number of samples, `bootn` = number of bootstraps, `beat` and not `beats`, etc.)
-* default option to set sampling 0 and bootstrapping to NULL in `sync_sample_paired` and related functions. 
+* Changed all input parameters to lowercase letters and coordinated them across functions (`n` = number of samples, `bootn` = number of bootstraps, `beat` and not `beats`, etc.)
+* default option to set sampling 0 and bootstrapping to NULL in `sync_sample_paired` and related functions.
 * removed warnings from missing observations from plotting section of `periodicity`
-* Allow sampling to cope with different N between instrument pairs
-* Added new function to calculate onset time difference relative to the mean of other onsets (`sync_sample_paired_relative.R`)
-* Added new function to auralise onset times (`sync_sample_paired_relative.R`)
+* Allow sampling to cope with different number of samples between instrument pairs
 
+## New functions
+
+* Added new function to calculate onset time difference _relative_ to the mean of other instrument onsets (see [`sync_sample_paired_relative.R`](https://tuomaseerola.github.io/onsetsync/reference/sync_sample_paired_relative.html))
+* Added new function to auralise onsets (see [`synthesise_onsets.R`](https://tuomaseerola.github.io/onsetsync/reference/synthesise_onsets.html))
+
+## New documentation
+* Added article to documentation about synthesis (see [synthesise_onsets](https://tuomaseerola.github.io/onsetsync/articles/synthesise_onsets.html))
+* Added article to documentation about adding annotations (see [adding_annotations](https://tuomaseerola.github.io/onsetsync/articles/adding_annotations.html))
 
 # onsetsync 0.4.6
 

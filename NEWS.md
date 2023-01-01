@@ -1,3 +1,7 @@
+# onsetsync 0.4.8
+
+Added "Analysis example" article to documentation.
+
 # onsetsync 0.4.7
 
 ## Changes to parameters

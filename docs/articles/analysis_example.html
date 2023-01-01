@@ -104,18 +104,18 @@ Clayton</a>. The sections and figures correspond to the manuscript.</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"tuomaseerola/onsetsync"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">## * checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/RtmpvKjQJd/remotes17f01d1025fc/tuomaseerola-onsetsync-ac220af/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">## * checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/RtmpzK9nZZ/remotes67620eca419/tuomaseerola-onsetsync-4c51f5d/DESCRIPTION’ ... OK</span></span>
 <span><span class="co">## * preparing ‘onsetsync’:</span></span>
 <span><span class="co">## * checking DESCRIPTION meta-information ... OK</span></span>
 <span><span class="co">## * checking for LF line-endings in source and make files and shell scripts</span></span>
 <span><span class="co">## * checking for empty or unneeded directories</span></span>
 <span><span class="co">## WARNING: Removing directory ‘onsetsync/Meta’ which should only occur in</span></span>
 <span><span class="co">##   an installed package</span></span>
-<span><span class="co">## * building ‘onsetsync_0.4.7.tar.gz’</span></span></code></pre>
+<span><span class="co">## * building ‘onsetsync_0.4.8.tar.gz’</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">onsetsync</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"onsetsync"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] '0.4.7'</span></span></code></pre>
+<pre><code><span><span class="co">## [1] '0.4.8'</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="read-data">Read data<a class="anchor" aria-label="anchor" href="#read-data"></a>
@@ -353,16 +353,7 @@ Clayton</a>. The sections and figures correspond to the manuscript.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_execute_pairs.html">sync_execute_pairs</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>, instruments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Guitar"</span>, <span class="st">"Tres"</span><span class="op">)</span>,beat <span class="op">=</span> <span class="st">"SD"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/summarise_sync_by_pair.html">summarise_sync_by_pair</a></span><span class="op">(</span><span class="va">dn</span>, bybeat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
-<span><span class="co">##   Subdivision     N     M    SD</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> 1              48  5.03  21.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> 2              34  9.98  29.6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> 3              56  9.28  32.7</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> 4              76 17.4   31.6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> 5              52 10.1   23.3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> 6              26  8.77  27.3</span></span>
-<span><span class="co">##    Subdivision  N         M       SD        T   pval</span></span>
+<pre><code><span><span class="co">##    Subdivision  N         M       SD        T   pval</span></span>
 <span><span class="co">## 1            1 48  5.034458 21.86708 1.595080 &gt;0.999</span></span>
 <span><span class="co">## 2            2 34  9.983588 29.59437 1.967057  0.922</span></span>
 <span><span class="co">## 3            3 56  9.276143 32.68776 2.123617  0.611</span></span>

@@ -60,7 +60,7 @@ Reading data from is easy either from CSV files in your computer or directly fro
 
 As an overview, we can visualise the onsets across the beat sub-divisions for each instrument and do this across the time. Note that time run vertically (from bottom to up) here.
 
-```{r synch2isochron,fig.width=7, fig.asp=.75}
+```{r synch2isochron,fig.width=7.4, fig.asp=.75}
 fig1 <- plot_by_beat(df = CSS_Song2, 
                      instr = c('Bass','Clave','Guitar','Tres'), 
                      beat = 'SD', 
@@ -73,7 +73,7 @@ print(fig1)
 
 To what degree are the pairs of instruments synchronised to each other? Let's visualise the synchrony of all pairings of the instruments in this example.
 
-```{r fig2,warning=FALSE,fig.width=7, fig.asp=.7}
+```{r fig2,warning=FALSE,fig.width=7.4, fig.asp=.7}
 inst <- c('Clave','Bass','Guitar','Tres')              # Define instruments 
 dn <- sync_execute_pairs(CSS_Song2, inst, beat = 'SD') # Calculate ansychr.
 fig2 <- plot_by_pair(dn)                               # Plot

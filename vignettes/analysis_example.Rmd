@@ -23,7 +23,7 @@ These analyses are the ones reported in paper titled "onsetsync: An R Package fo
 library(dplyr)
 library(ggplot2)
 library(cowplot)
-devtools::install_github("tuomaseerola/onsetsync")
+devtools::install_github("tuomaseerola/onsetsync", force = TRUE)
 library(onsetsync)
 packageVersion("onsetsync")
 ```

@@ -105,7 +105,7 @@ summarise_sync_by_pair <- function(df,
         M = mean(Asynchrony,na.rm=TRUE),
         SD = sd(Asynchrony,na.rm=TRUE)
       )
-    print(head(T2))
+    #print(head(T2))
     T2$T <- T$tval
     T2$pval <- T$pval
     ## Make the table look prettier

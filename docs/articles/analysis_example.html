@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">onsetsync</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,109 +87,424 @@
 
     
     
-<p>These analyses are the ones reported in …</p>
 <div class="section level2">
-<h2 id="load-raw-onsets-from-osf">Load raw onsets from OSF<a class="anchor" aria-label="anchor" href="#load-raw-onsets-from-osf"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
+<p>These analyses are the ones reported in paper titled “onsetsync: An R
+Package for Onset Synchrony Analysis” (submitted) by <a href="https://www.durham.ac.uk/staff/tuomas-eerola/" class="external-link">Tuomas Eerola</a>
+and <a href="https://www.durham.ac.uk/staff/martin-clayton/" class="external-link">Martin
+Clayton</a>. The sections and figures correspond to the manuscript.</p>
+<div class="section level3">
+<h3 id="load-libraries">Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/" class="external-link">cowplot</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"tuomaseerola/onsetsync"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## * checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/RtmpvKjQJd/remotes17f01d1025fc/tuomaseerola-onsetsync-ac220af/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">## * preparing ‘onsetsync’:</span></span>
+<span><span class="co">## * checking DESCRIPTION meta-information ... OK</span></span>
+<span><span class="co">## * checking for LF line-endings in source and make files and shell scripts</span></span>
+<span><span class="co">## * checking for empty or unneeded directories</span></span>
+<span><span class="co">## WARNING: Removing directory ‘onsetsync/Meta’ which should only occur in</span></span>
+<span><span class="co">##   an installed package</span></span>
+<span><span class="co">## * building ‘onsetsync_0.4.7.tar.gz’</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">onsetsync</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"onsetsync"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] '0.4.7'</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="read-data">Read data<a class="anchor" aria-label="anchor" href="#read-data"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"CSS_IEMP"</span>, package <span class="op">=</span> <span class="st">"onsetsync"</span><span class="op">)</span></span>
 <span><span class="va">CSS_Song2</span> <span class="op">&lt;-</span> <span class="va">CSS_IEMP</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">CSS_Song2</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="va">Piece</span>,<span class="va">SD</span>,<span class="va">Clave</span>,<span class="va">Section</span>,<span class="va">Clave</span>,<span class="va">Bass</span>,<span class="va">Guitar</span>,<span class="va">Tres</span>,<span class="va">Cycle</span>,<span class="va">Isochronous.SD.Time</span><span class="op">)</span> <span class="co"># delete previous</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">CSS_Song2</span><span class="op">)</span>,digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">CSS_Song2</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="va">Piece</span>,<span class="va">Section</span>,<span class="va">Clave</span>,<span class="va">Bass</span>,<span class="va">Guitar</span>,<span class="va">Tres</span>,<span class="va">SD</span>,<span class="va">Cycle</span>,<span class="va">Isochronous.SD.Time</span><span class="op">)</span> <span class="co"># delete previous</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">CSS_Song2</span><span class="op">)</span>,digits <span class="op">=</span> <span class="fl">2</span>,format <span class="op">=</span> <span class="kw">if</span><span class="op">(</span><span class="va">latex_format</span><span class="op">==</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span><span class="st">'latex'</span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span><span class="st">'markdown'</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="10%">
-<col width="4%">
-<col width="8%">
 <col width="11%">
+<col width="8%">
 <col width="7%">
 <col width="10%">
 <col width="7%">
+<col width="4%">
 <col width="8%">
 <col width="29%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Piece</th>
-<th align="right">SD</th>
-<th align="right">Clave</th>
 <th align="left">Section</th>
+<th align="right">Clave</th>
 <th align="right">Bass</th>
 <th align="right">Guitar</th>
 <th align="right">Tres</th>
+<th align="right">SD</th>
 <th align="right">Cycle</th>
 <th align="right">Isochronous.SD.Time</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Song_2</td>
-<td align="right">1</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1</td>
 <td align="right">1</td>
 <td align="right">5.04</td>
 </tr>
 <tr class="even">
 <td align="left">Song_2</td>
-<td align="right">2</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
+<td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">5.28</td>
 <td align="right">NA</td>
+<td align="right">2</td>
 <td align="right">1</td>
 <td align="right">5.26</td>
 </tr>
 <tr class="odd">
 <td align="left">Song_2</td>
-<td align="right">3</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
+<td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">5.48</td>
 <td align="right">NA</td>
+<td align="right">3</td>
 <td align="right">1</td>
 <td align="right">5.48</td>
 </tr>
 <tr class="even">
 <td align="left">Song_2</td>
-<td align="right">4</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
+<td align="right">NA</td>
 <td align="right">5.71</td>
 <td align="right">5.71</td>
 <td align="right">5.73</td>
+<td align="right">4</td>
 <td align="right">1</td>
 <td align="right">5.71</td>
 </tr>
 <tr class="odd">
 <td align="left">Song_2</td>
-<td align="right">5</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
+<td align="right">NA</td>
 <td align="right">5.93</td>
 <td align="right">5.94</td>
 <td align="right">5.92</td>
+<td align="right">5</td>
 <td align="right">1</td>
 <td align="right">5.93</td>
 </tr>
 <tr class="even">
 <td align="left">Song_2</td>
-<td align="right">6</td>
-<td align="right">NA</td>
 <td align="left">Son</td>
+<td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">6.15</td>
 <td align="right">6.14</td>
+<td align="right">6</td>
 <td align="right">1</td>
 <td align="right">6.15</td>
 </tr>
 </tbody>
 </table>
 </div>
-  </main>
+<div class="section level3">
+<h3 id="summarise-onsets">Summarise onsets<a class="anchor" aria-label="anchor" href="#summarise-onsets"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tab1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_onsets.html">summarise_onsets</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>, </span>
+<span>                         instr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Clave'</span>,<span class="st">'Bass'</span>,<span class="st">'Guitar'</span>,<span class="st">'Tres'</span>,<span class="st">'Isochronous.SD.Time'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab1</span>, digits <span class="op">=</span> <span class="fl">1</span>,format <span class="op">=</span> <span class="kw">if</span><span class="op">(</span><span class="va">latex_format</span><span class="op">==</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span><span class="st">'latex'</span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span><span class="st">'markdown'</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">N</th>
+<th align="right">Md</th>
+<th align="right">M</th>
+<th align="right">SD</th>
+<th align="right">Min</th>
+<th align="right">Max</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Clave</td>
+<td align="right">486</td>
+<td align="right">666.4</td>
+<td align="right">703.6</td>
+<td align="right">173.9</td>
+<td align="right">192.0</td>
+<td align="right">1558.1</td>
+</tr>
+<tr class="even">
+<td align="left">Bass</td>
+<td align="right">486</td>
+<td align="right">471.4</td>
+<td align="right">708.1</td>
+<td align="right">432.0</td>
+<td align="right">180.0</td>
+<td align="right">1985.2</td>
+</tr>
+<tr class="odd">
+<td align="left">Guitar</td>
+<td align="right">1401</td>
+<td align="right">223.6</td>
+<td align="right">244.5</td>
+<td align="right">91.4</td>
+<td align="right">175.1</td>
+<td align="right">1694.9</td>
+</tr>
+<tr class="even">
+<td align="left">Tres</td>
+<td align="right">906</td>
+<td align="right">245.0</td>
+<td align="right">371.4</td>
+<td align="right">234.6</td>
+<td align="right">147.1</td>
+<td align="right">1986.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Isochronous.SD.Time</td>
+<td align="right">1567</td>
+<td align="right">220.4</td>
+<td align="right">220.1</td>
+<td align="right">2.9</td>
+<td align="right">212.8</td>
+<td align="right">226.6</td>
+</tr>
+</tbody>
+</table>
+<div class="section level4">
+<h4 id="figure-1">Figure 1<a class="anchor" aria-label="anchor" href="#figure-1"></a>
+</h4>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot_by_beat.html">plot_by_beat</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>, </span>
+<span>                   instr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Bass'</span>,<span class="st">'Clave'</span>,<span class="st">'Guitar'</span>,<span class="st">'Tres'</span><span class="op">)</span>, </span>
+<span>                   beat <span class="op">=</span> <span class="st">'SD'</span>, </span>
+<span>                   virtual<span class="op">=</span><span class="st">'Isochronous.SD.Time'</span>,</span>
+<span>                   pcols<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="analysis-of-synchrony">Analysis of Synchrony<a class="anchor" aria-label="anchor" href="#analysis-of-synchrony"></a>
+</h2>
+<p>Begin with a diagnostic plot.</p>
+<div class="section level4">
+<h4 id="figure-2">Figure 2<a class="anchor" aria-label="anchor" href="#figure-2"></a>
+</h4>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot_by_beat.html">plot_by_beat</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>,</span>
+<span>                     instr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Guitar'</span>,<span class="st">'Tres'</span><span class="op">)</span>,</span>
+<span>                     beat <span class="op">=</span> <span class="st">'SD'</span>,</span>
+<span>                     virtual <span class="op">=</span> <span class="st">'Isochronous.SD.Time'</span>, </span>
+<span>                     griddeviations <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
+</div>
+<div class="section level3">
+<h3 id="synchrony-between-the-instruments">Synchrony between the instruments<a class="anchor" aria-label="anchor" href="#synchrony-between-the-instruments"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired.html">sync_sample_paired</a></span><span class="op">(</span><span class="va">CSS_Song2</span>, instr1 <span class="op">=</span> <span class="st">"Guitar"</span>, instr2 <span class="op">=</span> <span class="st">"Tres"</span>, beat <span class="op">=</span> <span class="st">"SD"</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span>, N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, Mean.ms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>, Sd.ms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     N  Mean.ms    Sd.ms</span></span>
+<span><span class="co">## 1 853 12.53126 26.74134</span></span></code></pre>
+<div class="section level4">
+<h4 id="figure-3">Figure 3<a class="anchor" aria-label="anchor" href="#figure-3"></a>
+</h4>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">inst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Clave'</span>,<span class="st">'Bass'</span>,<span class="st">'Guitar'</span>,<span class="st">'Tres'</span><span class="op">)</span> <span class="co"># Define instruments </span></span>
+<span><span class="va">dn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_execute_pairs.html">sync_execute_pairs</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="va">inst</span>,beat <span class="op">=</span> <span class="st">"SD"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot_by_pair.html">plot_by_pair</a></span><span class="op">(</span><span class="va">dn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+</div>
+<div class="section level4">
+<h4 id="plain-summaries-of-asynchrony">Plain summaries of asynchrony<a class="anchor" aria-label="anchor" href="#plain-summaries-of-asynchrony"></a>
+</h4>
+<p>Reporting of several measures of absolute asyncronies.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired.html">sync_sample_paired</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="st">'Clave'</span>,<span class="st">'Bass'</span>,beat <span class="op">=</span> <span class="st">'SD'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/summarise_sync.html">summarise_sync</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   Pairwise asynchronization Mean absolute asynchrony Mean pairwise asynchrony</span></span>
+<span><span class="co">## 1                  19.58636                  20.6644                 16.23288</span></span></code></pre>
+<p>Relative measure for two instruments vs other other instruments.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/sync_sample_paired_relative.html">sync_sample_paired_relative</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>,instr <span class="op">=</span> <span class="st">'Bass'</span>,instr_ref <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Guitar'</span>,<span class="st">'Bass'</span>,<span class="st">'Tres'</span>,<span class="st">'Clave'</span><span class="op">)</span>,beat <span class="op">=</span> <span class="st">'SD'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">`Mean pairwise asynchrony`</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -18.72675</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired_relative.html">sync_sample_paired_relative</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>,instr <span class="op">=</span> <span class="st">'Clave'</span>,instr_ref <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Guitar'</span>,<span class="st">'Bass'</span>,<span class="st">'Tres'</span>,<span class="st">'Clave'</span><span class="op">)</span>,beat <span class="op">=</span> <span class="st">'SD'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">`Mean pairwise asynchrony`</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.8796104</span></span></code></pre>
+</div>
+<div class="section level4">
+<h4 id="asynchrony-across-beat-subdivisions">Asynchrony across beat subdivisions<a class="anchor" aria-label="anchor" href="#asynchrony-across-beat-subdivisions"></a>
+</h4>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_execute_pairs.html">sync_execute_pairs</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">CSS_Song2</span>, instruments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Guitar"</span>, <span class="st">"Tres"</span><span class="op">)</span>,beat <span class="op">=</span> <span class="st">"SD"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/summarise_sync_by_pair.html">summarise_sync_by_pair</a></span><span class="op">(</span><span class="va">dn</span>, bybeat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">##   Subdivision     N     M    SD</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 1              48  5.03  21.9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 2              34  9.98  29.6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 3              56  9.28  32.7</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 4              76 17.4   31.6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 5              52 10.1   23.3</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 6              26  8.77  27.3</span></span>
+<span><span class="co">##    Subdivision  N         M       SD        T   pval</span></span>
+<span><span class="co">## 1            1 48  5.034458 21.86708 1.595080 &gt;0.999</span></span>
+<span><span class="co">## 2            2 34  9.983588 29.59437 1.967057  0.922</span></span>
+<span><span class="co">## 3            3 56  9.276143 32.68776 2.123617  0.611</span></span>
+<span><span class="co">## 4            4 76 17.359053 31.62904 4.784613 &lt;0.001</span></span>
+<span><span class="co">## 5            5 52 10.107481 23.25047 3.134821  0.046</span></span>
+<span><span class="co">## 6            6 26  8.765923 27.32327 1.635881 &gt;0.999</span></span>
+<span><span class="co">## 7            7 83  7.530265 25.72852 2.666456  0.148</span></span>
+<span><span class="co">## 8            8 70 14.508114 26.98793 4.497699 &lt;0.001</span></span>
+<span><span class="co">## 9            9 44 17.526227 18.85664 6.165245 &lt;0.001</span></span>
+<span><span class="co">## 10          10 41  5.288756 24.67663 1.372334 &gt;0.999</span></span>
+<span><span class="co">## 11          11 29 13.804897 25.34219 2.933513  0.106</span></span>
+<span><span class="co">## 12          12 70 19.511314 29.21971 5.586755 &lt;0.001</span></span>
+<span><span class="co">## 13          13 68  9.065206 20.76244 3.600425  0.010</span></span>
+<span><span class="co">## 14          14 17 14.309529 34.51096 1.709593 &gt;0.999</span></span>
+<span><span class="co">## 15          15 68  7.444000 21.43886 2.863249  0.089</span></span>
+<span><span class="co">## 16          16 71 24.721338 26.68690 7.805540 &lt;0.001</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="synchrony-across-several-performances">Synchrony across several performances<a class="anchor" aria-label="anchor" href="#synchrony-across-several-performances"></a>
+</h3>
+<p>Using the built-in corpus of Cuban Salsa and Son preformances
+(<code>CSS_IEMP</code>).</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corpus</span> <span class="op">&lt;-</span> <span class="fu">onsetsync</span><span class="fu">::</span><span class="va"><a href="../reference/CSS_IEMP.html">CSS_IEMP</a></span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired.html">sync_sample_paired</a></span><span class="op">(</span><span class="va">corpus</span>,<span class="st">'Guitar'</span>,<span class="st">'Tres'</span>,n<span class="op">=</span><span class="fl">0</span>,beat<span class="op">=</span><span class="st">'SD'</span><span class="op">)</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="va">D</span><span class="op">$</span><span class="va">asynch</span></span>
+<span><span class="va">D</span><span class="op">$</span><span class="va">asynch_abs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">D</span><span class="op">$</span><span class="va">asynch</span><span class="op">)</span><span class="op">*</span><span class="fl">1000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Mean asynchrony across all performances is'</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">D</span><span class="op">$</span><span class="va">asynch</span><span class="op">)</span><span class="op">*</span><span class="fl">1000</span>,<span class="fl">1</span><span class="op">)</span>,<span class="st">'ms'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Mean asynchrony across all performances is 17.3 ms"</span></span></code></pre>
+<div class="section level4">
+<h4 id="figure-4">Figure 4<a class="anchor" aria-label="anchor" href="#figure-4"></a>
+</h4>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot_by_dataset.html">plot_by_dataset</a></span><span class="op">(</span><span class="va">D</span>,<span class="st">'asynch_abs'</span>,<span class="st">'name'</span>, box <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">'Absolute Asynchrony (ms)'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="synchrony-with-other-variables">Synchrony with other variables<a class="anchor" aria-label="anchor" href="#synchrony-with-other-variables"></a>
+</h3>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CSS_Song2</span> <span class="op">&lt;-</span> <span class="va">CSS_Song2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Cycle</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tempo <span class="op">=</span> <span class="fl">240</span><span class="op">/</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">Isochronous.SD.Time</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">Isochronous.SD.Time</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired.html">sync_sample_paired</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="st">"Tres"</span>,<span class="st">"Guitar"</span>, beat <span class="op">=</span> <span class="st">'Tempo'</span><span class="op">)</span></span>
+<span><span class="va">d3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_sample_paired.html">sync_sample_paired</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="st">"Tres"</span>,<span class="st">"Guitar"</span>, beat <span class="op">=</span> <span class="st">'Isochronous.SD.Time'</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>asynch <span class="op">=</span> <span class="va">d2</span><span class="op">$</span><span class="va">asynch</span><span class="op">*</span><span class="fl">1000</span>, Tempo <span class="op">=</span> <span class="va">d2</span><span class="op">$</span><span class="va">beatL</span>, Time <span class="op">=</span> <span class="va">d3</span><span class="op">$</span><span class="va">beatL</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="figure-5">Figure 5<a class="anchor" aria-label="anchor" href="#figure-5"></a>
+</h4>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot_by_var_time.html">plot_by_var_time</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">tmp</span>,</span>
+<span>   var1 <span class="op">=</span> <span class="st">'Time'</span>,</span>
+<span>   var2 <span class="op">=</span> <span class="st">'asynch'</span>,</span>
+<span>   var3 <span class="op">=</span> <span class="st">'Tempo'</span>,</span>
+<span>   ylabel <span class="op">=</span> <span class="st">'Asynchrony (ms)'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-19-1.png" width="624"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="periodicity">Periodicity<a class="anchor" aria-label="anchor" href="#periodicity"></a>
+</h3>
+<div class="section level4">
+<h4 id="figure-5-1">Figure 5<a class="anchor" aria-label="anchor" href="#figure-5-1"></a>
+</h4>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">extract</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">CSS_Song2</span>, <span class="va">Guitar</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">Guitar</span> <span class="op">&lt;</span> <span class="fl">65</span><span class="op">)</span></span>
+<span><span class="va">extract</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">extract</span><span class="op">)</span> <span class="co"># drop grouping structure</span></span>
+<span><span class="va">fig10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gaussify_onsets.html">gaussify_onsets</a></span><span class="op">(</span><span class="va">extract</span><span class="op">$</span><span class="va">Guitar</span>, wlen <span class="op">=</span> <span class="fl">0.2</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">frq_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.10</span>,<span class="fl">0.50</span><span class="op">)</span></span>
+<span><span class="va">per1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">extract</span>,instr<span class="op">=</span><span class="st">'Guitar'</span>,freq_range<span class="op">=</span><span class="va">frq_range</span>,</span>
+<span>                    method <span class="op">=</span> <span class="st">'diff'</span>, title <span class="op">=</span> <span class="st">'Difference'</span><span class="op">)</span></span>
+<span><span class="va">per2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">extract</span>,instr<span class="op">=</span><span class="st">'Guitar'</span>,freq_range<span class="op">=</span><span class="va">frq_range</span>,</span>
+<span>                    method <span class="op">=</span> <span class="st">'acf'</span>,title <span class="op">=</span> <span class="st">'Autocorrelation'</span><span class="op">)</span></span>
+<span><span class="va">per3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">extract</span>,instr<span class="op">=</span><span class="st">'Guitar'</span>,freq_range<span class="op">=</span><span class="va">frq_range</span>,</span>
+<span>                    method <span class="op">=</span> <span class="st">'per'</span>,title <span class="op">=</span> <span class="st">'FFT'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wilkelab.org/cowplot/reference/align_plots.html" class="external-link">align_plots</a></span><span class="op">(</span><span class="va">fig10</span><span class="op">$</span><span class="va">fig</span>, align <span class="op">=</span> <span class="st">'v'</span>, axis <span class="op">=</span> <span class="st">'l'</span><span class="op">)</span></span>
+<span><span class="va">bottom_row</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">per1</span><span class="op">$</span><span class="va">Figure</span>, <span class="va">per3</span><span class="op">$</span><span class="va">Figure</span>, <span class="va">per2</span><span class="op">$</span><span class="va">Figure</span>, </span>
+<span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span><span class="op">)</span>, label_size <span class="op">=</span> <span class="fl">12</span>,nrow <span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">fig5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">bottom_row</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'A'</span>, <span class="st">''</span><span class="op">)</span>, </span>
+<span>                  label_size <span class="op">=</span> <span class="fl">12</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fig5</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-21-1.png" width="691.2"></p>
+</div>
+<div class="section level4">
+<h4 id="report-the-peak-periodicity">Report the peak periodicity<a class="anchor" aria-label="anchor" href="#report-the-peak-periodicity"></a>
+</h4>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">PM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_periodicity.html">summarise_periodicity</a></span><span class="op">(</span><span class="va">per3</span><span class="op">$</span><span class="va">Curve</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Period of'</span>,<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">PM</span><span class="op">$</span><span class="va">Per</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>,<span class="st">'ms'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Period of 217 ms"</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="../reference/period_to_BPM.html">period_to_BPM</a></span><span class="op">(</span><span class="va">PM</span><span class="op">$</span><span class="va">Per</span><span class="op">*</span><span class="fl">4</span><span class="op">)</span>,<span class="st">'BPM'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "69 BPM"</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="use-of-periodicity-analysis">Use of periodicity analysis<a class="anchor" aria-label="anchor" href="#use-of-periodicity-analysis"></a>
+</h3>
+<p>Take an excerpt from the example performance and apply periodicity
+analysis to four instruments.</p>
+<div class="section level4">
+<h4 id="figure-6">Figure 6<a class="anchor" aria-label="anchor" href="#figure-6"></a>
+</h4>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">excerpt</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">CSS_Song2</span>,<span class="va">Guitar</span><span class="op">&gt;</span><span class="fl">60</span> <span class="op">&amp;</span> <span class="va">Guitar</span> <span class="op">&lt;</span> <span class="fl">60</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">excerpt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">excerpt</span><span class="op">)</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">onsetsync</span><span class="fu">::</span><span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">excerpt</span>,instr <span class="op">=</span> <span class="st">"Guitar"</span>,</span>
+<span>                             freq_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,sampling_rate <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">onsetsync</span><span class="fu">::</span><span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">excerpt</span>,instr <span class="op">=</span> <span class="st">"Bass"</span>,</span>
+<span>                             freq_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,sampling_rate <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu">onsetsync</span><span class="fu">::</span><span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">excerpt</span>,instr <span class="op">=</span> <span class="st">"Tres"</span>,</span>
+<span>                             freq_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,sampling_rate <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu">onsetsync</span><span class="fu">::</span><span class="fu"><a href="../reference/periodicity.html">periodicity</a></span><span class="op">(</span><span class="va">excerpt</span>,instr <span class="op">=</span> <span class="st">"Clave"</span>,</span>
+<span>                             freq_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,sampling_rate <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">p1</span><span class="op">$</span><span class="va">Curve</span><span class="op">$</span><span class="va">Instrument</span> <span class="op">&lt;-</span> <span class="st">"Guitar"</span></span>
+<span><span class="va">p2</span><span class="op">$</span><span class="va">Curve</span><span class="op">$</span><span class="va">Instrument</span> <span class="op">&lt;-</span> <span class="st">"Bass"</span></span>
+<span><span class="va">p3</span><span class="op">$</span><span class="va">Curve</span><span class="op">$</span><span class="va">Instrument</span> <span class="op">&lt;-</span> <span class="st">"Tres"</span></span>
+<span><span class="va">p4</span><span class="op">$</span><span class="va">Curve</span><span class="op">$</span><span class="va">Instrument</span> <span class="op">&lt;-</span> <span class="st">"Clave"</span></span>
+<span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">p1</span><span class="op">$</span><span class="va">Curve</span>,<span class="va">p2</span><span class="op">$</span><span class="va">Curve</span>,<span class="va">p3</span><span class="op">$</span><span class="va">Curve</span>,<span class="va">p4</span><span class="op">$</span><span class="va">Curve</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Instrument</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Instrument</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fig6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Time</span>,y<span class="op">=</span><span class="va">Ampl</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">.</span><span class="op">~</span><span class="va">Instrument</span>,scales <span class="op">=</span> <span class="st">"free"</span>,nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span> <span class="co"># ,</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,by<span class="op">=</span><span class="fl">0.217</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html" class="external-link">number_format</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>,expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">'Period (s)'</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">'Amplitude'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fig6</span><span class="op">)</span></span></code></pre></div>
+<p><img src="analysis_example_files/figure-html/unnamed-chunk-24-1.png" width="710.4"></p>
+</div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

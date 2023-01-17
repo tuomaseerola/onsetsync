@@ -1,6 +1,6 @@
 # onsetsync 0.4.8
 
-Added "Analysis example" article to documentation.
+Added "Analysis example" article to documentation. Relates to the paper.
 
 # onsetsync 0.4.7
 

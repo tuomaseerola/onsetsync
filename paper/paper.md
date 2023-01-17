@@ -1,5 +1,4 @@
 ---
-# Example from https://joss.readthedocs.io/en/latest/submitting.html
 title: 'onsetsync: An R Package for Onset Synchrony Analysis'
 tags:
   - R
@@ -22,7 +21,7 @@ date: 17 January 2023
 year: 2023
 bibliography: paper.bib
 output: rticles::joss_article
-csl: /Users/tuomaseerola/Documents/computational/R/under_dev/onsetsync_DEV/JOSS/apa.csl
+csl: apa.csl
 citation_package: "default"
 keep_tex: TRUE
 journal: JOSS

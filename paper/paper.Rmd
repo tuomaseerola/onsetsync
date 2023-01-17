@@ -205,7 +205,7 @@ Table 3 shows the summary of the onsets, namely the number of onsets for each in
 
 As a broad overview, we can use the function `plot_by_beat` visualise the asynchrony relative to an equal division subdivision of the beats for each instrument across the time. This visualisation gives a summary about when the instruments are playing relative to the beat division and the sections of the song, shown in Figure 1. For example, in many genres different instruments contribute to specific subdivision of the beat. This is of course the case on Cuban Son, but maybe even more extreme in Malian Jembe music [@polak2010rhythmic] or more variable in Western jazz [@wesolowski2016timing].
 
-```{r synch2isochron,fig.width=7.0, fig.height=5.0,fig.cap='Onsets arranged for beat sub-divisions for four instruments across the whole piece.'}
+```{r figure1,fig.width=7.0, fig.height=5.0,fig.cap='Onsets arranged for beat sub-divisions for four instruments across the whole piece.'}
 fig1 <- plot_by_beat(df = CSS_Song2, 
                      instr = c('Bass','Clave','Guitar','Tres'), 
                      beat = 'SD', 
@@ -220,7 +220,7 @@ At first glance of Figure 1, it is easy to spot the distinctive clave pattern go
 
 Moving on to the analysis of synchrony, we can first explore how much the onsets deviate from the isochronous beats or from the mean onset times. Figure 2 shows an example of the former for two guitars, guitar and tres.
 
-```{r, fig.cap='Relative timing deviations from beat sub-divisions across the performance for guitar and tres.'}
+```{r figure2, fig.cap='Relative timing deviations from beat sub-divisions across the performance for guitar and tres.'}
 print(plot_by_beat(df = CSS_Song2,
   instr = c("Guitar","Tres"),
   beat = "SD",
@@ -245,7 +245,7 @@ This analysis indicates that on average, the tres plays 13 ms ahead of the guita
 
 To carry out the comparison for all possible pairings of the instruments is possible with `sync_execute_pairs` function and the results can be visualised with a related function (`plot_by_pair`).
 
-```{r,fig.cap='Asynchronies across multiple instrument pairs.'}
+```{r figure3,fig.cap='Asynchronies across multiple instrument pairs.'}
 inst <- c("Clave","Bass","Guitar","Tres")
 dn <- sync_execute_pairs(CSS_Song2, inst, beat = "SD")
 print(plot_by_pair(dn))
@@ -300,7 +300,7 @@ Calculation of asynchronies between parts depends on the number of comparable on
 
 So far our analysis has considered synchrony within a single performance. We can also take several performances, choose the instrument pairings, and carry out the desired comparison, provided that this is conceptually meaningful and technically feasible (similar types of onset and annotation data are available). For this, we load five Cuban Son and Salsa performances that come with the library and run the same analysis as was done in prior examples using `sync_sample_paired` function across the performances.
 
-```{r, fig.cap='Absolute asynchronies between guitar and tres in five performances within the CSS_IEMP dataset.'}
+```{r figure4, fig.cap='Absolute asynchronies between guitar and tres in five performances within the CSS_IEMP dataset.'}
 corpus <- onsetsync::CSS_IEMP
 D <- sync_sample_paired(corpus,"Guitar","Tres", beat="SD")
 D <- D$asynch
@@ -316,7 +316,7 @@ Figure 4 suggests that the asynchrony of 13 ms between tres and guitar we saw in
 
 It is relatively straightforward to explore whether synchrony is linked with another variable. For example, the precision of synchrony could change when the tempo of the performance is faster or slower. Or synchrony might be influenced by the dynamics or note density in a specific section. As an example, we illustrate synchrony across the time and tempo. As tempo is commonly defined by the beats per minute (BPM), we use the cycle information to convert the isochronous beat times to BPM.  
 
-```{r,fig.cap='Asynchrony between tres and guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).'}
+```{r figure5, fig.cap='Asynchrony between tres and guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).'}
 CSS_Song2 <- CSS_Song2 %>%
   group_by(Cycle) %>%
   mutate(Tempo = 240/(max(Isochronous.SD.Time) - 
@@ -363,7 +363,7 @@ fig6D <- periodicity(extract, instr="Guitar",
   freq_range=frq_range, method = "per",title = "FFT")
 ```
 
-```{r periodicityfigure,echo=FALSE,fig.cap='Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.'}
+```{r figure6, echo=FALSE, fig.cap='Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.'}
 
 library(cowplot)
 plots <- align_plots(fig6A$fig, align = 'v', axis = 'l')
@@ -382,7 +382,7 @@ print(paste('Period of',round(PM$Per*1000),'ms'))
 print(paste(period_to_BPM(PM$Per)/4,'BPM'))
 ```
 
-```{r fourperiodicies, echo=FALSE, fig.cap='Periodicity analysis of four selected instruments in the example song (Palo Alto). The grid lines indicate multiples of the period identified earlier as the underlying beat (217 ms).'}
+```{r figure7, echo=FALSE, fig.cap='Periodicity analysis of four selected instruments in the example song (Palo Alto). The grid lines indicate multiples of the period identified earlier as the underlying beat (217 ms).'}
 
 excerpt <- dplyr::filter(CSS_Song2,Guitar>60 & Guitar < 60*2)
 excerpt <- data.frame(excerpt)

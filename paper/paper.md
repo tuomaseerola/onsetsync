@@ -1,11 +1,12 @@
 ---
+# Example from https://joss.readthedocs.io/en/latest/submitting.html
 title: 'onsetsync: An R Package for Onset Synchrony Analysis'
 tags:
+  - R
   - music
   - entrainment
   - periodicity
   - synchrony
-  - R
 authors:
   - name: Tuomas Eerola
     orcid: 0000-0002-2896-929X
@@ -21,7 +22,7 @@ date: 17 January 2023
 year: 2023
 bibliography: paper.bib
 output: rticles::joss_article
-csl: apa.csl
+csl: /Users/tuomaseerola/Documents/computational/R/under_dev/onsetsync_DEV/JOSS/apa.csl
 citation_package: "default"
 keep_tex: TRUE
 journal: JOSS
@@ -170,6 +171,7 @@ The code example loads the onset data and annotations of metre of the son perfor
 
 
 
+
 ```r
 CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
   Piece, Section, Clave, Bass, Guitar, Tres, 
@@ -177,6 +179,7 @@ CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
 print(knitr::kable(head(CSS_Song2),digits = 2,
   caption = 'Onset data structure example.'))
 ```
+
 
 
 Table: Onset data structure example.
@@ -234,7 +237,7 @@ fig1 <- plot_by_beat(df = CSS_Song2,
 print(fig1)
 ```
 
-![Onsets arranged for beat sub-divisions for four instruments across the whole piece.](paper_files/figure-latex/synch2isochron-1.pdf) 
+![Onsets arranged for beat sub-divisions for four instruments across the whole piece.](paper_files/figure-latex/figure1-1.pdf) 
 
 At first glance of Figure 1, it is easy to spot the distinctive clave pattern going through the song (the beginning of the song is at the bottom of the graphs, and every cycle is cascaded on top of the previous cycle). Notice how the bass plays mainly on subdivisions 5, 7, 13, 15, except in the last minute when the pattern changes into playing subdivisions 3, 4, 7, 8, 15, 16. The guitar plays almost on every beat subdivision, and towards the end of the piece tres --  a cuban guitar with 6-strings tuned to 3 pitches -- plays a pattern of 3 subdivisions and a break. Overall, this six-minute piece does not contain a high amount of variation in the patterns of onsets across the subdivisions. We can see that the bass elaborates the beats during the last minute or so while the clave, guitar and tres keep playing their patterns throughout the piece.
 
@@ -251,7 +254,7 @@ print(plot_by_beat(df = CSS_Song2,
   griddeviations = TRUE))
 ```
 
-![Relative timing deviations from beat sub-divisions across the performance for guitar and tres.](paper_files/figure-latex/unnamed-chunk-2-1.pdf) 
+![Relative timing deviations from beat sub-divisions across the performance for guitar and tres.](paper_files/figure-latex/figure2-1.pdf) 
 
 Overall this suggests that these two instruments tend to play earlier when compared to the isochronous beat division of the cycle, although guitar is tightly aligned (<2%) with the reference beat on every fourth beat subdivisions (subdivisions of 1, 5, 9, and 13), which are also the salient metrical positions. Similar fluctuations across the beat subdivisions are not evident in tres, but the graph reveals that the tres tends to play a little earlier than guitar.
 
@@ -283,7 +286,7 @@ dn <- sync_execute_pairs(CSS_Song2, inst, beat = "SD")
 print(plot_by_pair(dn))
 ```
 
-![Asynchronies across multiple instrument pairs.](paper_files/figure-latex/unnamed-chunk-4-1.pdf) 
+![Asynchronies across multiple instrument pairs.](paper_files/figure-latex/figure3-1.pdf) 
 
 In Figure 1 we see how different pairs of instruments have different asynchrony relationships; the bass is consistently ahead of the guitar, and clave and guitar play behind tres, to pick some of the extreme examples from the visualisation. The vertical lines stand for median asynchrony and the violin plot shows the distribution of onset time differences. 
 
@@ -387,7 +390,7 @@ D$asynch_abs <- abs(D$asynch)*1000
 print(plot_by_dataset(D,"asynch_abs","name", box = TRUE))
 ```
 
-![Absolute asynchronies between guitar and tres in five performances within the CSS_IEMP dataset.](paper_files/figure-latex/unnamed-chunk-7-1.pdf) 
+![Absolute asynchronies between guitar and tres in five performances within the CSS_IEMP dataset.](paper_files/figure-latex/figure4-1.pdf) 
 
 We can create a simple violin plot of the combined data ignoring the beat sub-divisions (Figure 4). All further analyses and summaries are then also possible.
 
@@ -419,7 +422,7 @@ print(plot_by_var_time(df = tmp,
   ylabel = "Asynchrony (ms)"))
 ```
 
-![Asynchrony between tres and guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).](paper_files/figure-latex/unnamed-chunk-8-1.pdf) 
+![Asynchrony between tres and guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).](paper_files/figure-latex/figure5-1.pdf) 
 
 As Figure 5 shows, synchrony fluctuates across time but these fluctuations do not seem to be directly related to the underlying tempo changes, although the last minute and half is performed slightly slower ($\approx71$ BPM) and the guitar is approximately 20 ms ahead of tres.
 
@@ -449,7 +452,7 @@ fig6D <- periodicity(extract, instr="Guitar",
   freq_range=frq_range, method = "per",title = "FFT")
 ```
 
-![Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.](paper_files/figure-latex/periodicityfigure-1.pdf) 
+![Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.](paper_files/figure-latex/figure6-1.pdf) 
 
 From the estimated periodicity curves, we can obtain the peak period in milliseconds, and if we so wish, we convert this into beats per minute (BPM). For the latter convention, we make use of the fact that the guitar plays four times per four beats.
 
@@ -471,7 +474,7 @@ print(paste(period_to_BPM(PM$Per)/4,'BPM'))
 ## [1] "69 BPM"
 ```
 
-![Periodicity analysis of four selected instruments in the example song (Palo Alto). The grid lines indicate multiples of the period identified earlier as the underlying beat (217 ms).](paper_files/figure-latex/fourperiodicies-1.pdf) 
+![Periodicity analysis of four selected instruments in the example song (Palo Alto). The grid lines indicate multiples of the period identified earlier as the underlying beat (217 ms).](paper_files/figure-latex/figure7-1.pdf) 
 
 
 Being able to bring periodicity estimation of onset sequences into the analysis of asynchrony has many useful purposes. It can serve as a diagnostic into the periodic patterns performed by the instruments. This might be particularly useful if no annotation about the cycles and beat subdivisions is available and the analyst is trying to determine what are the periodicities exhibited by the different instruments. For instance, Figure 7 shows the periodicities of the selected four instruments in our salsa example. The analysis reveals that guitar and tres tend to play the fastest beat pulsation (0.22 s) while tres occasionally ventures into double (0.44 s) and four times the period (0.88 s). Bass shows three dominant periods, one at the fastest beat pulsation level (0.22), double of that period (0.44) and two uneven subdivisions of the underlying beat (0.35 s and 0.58 s). The clave's pattern includes a period of 0.66 secs, three times the fastest pulse, presumably thanks to its pattern at the start of the cycle (when it plays on subdivisions 1, 4 & 7).

@@ -1,11 +1,11 @@
 ---
 title: 'onsetsync: An R Package for Onset Synchrony Analysis'
 tags:
-  - R
   - music
   - entrainment
   - periodicity
   - synchrony
+  - R
 authors:
   - name: Tuomas Eerola
     orcid: 0000-0002-2896-929X
@@ -170,7 +170,6 @@ The code example loads the onset data and annotations of metre of the son perfor
 
 
 
-
 ```r
 CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
   Piece, Section, Clave, Bass, Guitar, Tres, 
@@ -178,7 +177,6 @@ CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
 print(knitr::kable(head(CSS_Song2),digits = 2,
   caption = 'Onset data structure example.'))
 ```
-
 
 
 Table: Onset data structure example.

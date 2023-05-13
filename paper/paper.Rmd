@@ -49,7 +49,7 @@ phrasing) and the number of datasets containing onset timing information has rec
 ## 1.1 Statement of need
 
 `onsetsync` is a R package for assessment of musical synchrony
-through note onsets. Data is ingested in the form of CSV files with individual instrument onset times are aligned with labelled beat positions; separate metre annotations comprising lists of time estimates for the downbeats are also used for some functions. The package includes functions for common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony between two performers, assessing the periodicity of the onsets, and visualising synchrony across metrical cycles, time, or another property. These functions make the analysis of onset corpora transparent and will allow more scholars to carry out investigations of entrainment in music.
+through note onsets. Data is ingested in the form of CSV files with individual instrument onset times aligned with labelled beat positions; separate metre annotations comprising lists of time estimates for the downbeats are also used for some functions. The package includes functions for common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony between two performers, assessing the periodicity of the onsets, and visualising synchrony across metrical cycles, time, or another property. These functions make the analysis of onset corpora transparent and will allow more scholars to carry out investigations of entrainment in music.
 
 ## 1.2 Onset datasets
 

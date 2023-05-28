@@ -99,4 +99,4 @@ There are other measures to summarise the asynchronies and visualise them.
 
 For more examples, see [Get started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
 
-Read the [community guidelines](CONTRIBUTING.md) for contributing to the package.
+Read the [community guidelines](CONTRIBUTING.md) for contributing to the package or asking questions.

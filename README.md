@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data
@@ -128,3 +129,5 @@ them.
 For more examples, see [Get
 started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
 
+Read the [community guidelines](CONTRIBUTING.md) for contributing to the
+package or asking questions.

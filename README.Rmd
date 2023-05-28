@@ -98,3 +98,5 @@ dplyr::summarise(data.frame(d1), N=n(), M = mean(asynch*1000), SD = sd(asynch*10
 There are other measures to summarise the asynchronies and visualise them. 
 
 For more examples, see [Get started](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
+
+Read the [community guidelines](CONTRIBUTING.md) for contributing to the package.

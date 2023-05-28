@@ -28,7 +28,7 @@ keep_tex: TRUE
 journal: JOSS
 ---
 
-# 1 Introduction
+# Summary
 
 Music performance relies on tight yet flexible timing coordination
 between performers. An important aspect of this interpersonal
@@ -46,16 +46,14 @@ number of common operations that need to be carried out in every dataset
 synchrony across other variables such as tempo, metrical hierarchy, or
 phrasing) and the number of datasets containing onset timing information has recently increased.
 
-## 1.1 Statement of need
+## Statement of need
 
 `onsetsync` is a R package for assessment of musical synchrony
 through note onsets. Data is ingested in the form of CSV files with individual instrument onset times aligned with labelled beat positions; separate metre annotations comprising lists of time estimates for the downbeats are also used for some functions. The package includes functions for common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony between two performers, assessing the periodicity of the onsets, and visualising synchrony across metrical cycles, time, or another property. These functions make the analysis of onset corpora transparent and will allow more scholars to carry out investigations of entrainment in music.
 
-## 1.2 Onset datasets
-
 `onsetsync` package comes with example performances from two traditions, Cuban Son and Salsa performances [@Poole_Tarsitani_Clayton_2022] and North Hindustani performances [@Clayton_Leante_Tarsitani_2021]. The examples are taken from the Interpersonal Entrainment in Music Performance (IEMP) project collection that has compiled small ensemble performance data from six traditions (North Indian ragas, Malian jembe, Tunisian stambeli, Uruguayan candombe, European string quartet, and Cuban son and salsa). These collections contain tens of hours annotated and verified onsets and are available from Open Science Framework (OSF). There are also noteworthy datasets containing audio and annotated contents of music relevant to assessing synchrony such as _Carnatic Music Rhythm Dataset_ [@srinivasamurthy2015particle], _Hindustani Music Rhythm Dataset_ [@srinivasamurthy2016generalized], _Arab-Andalusian (Maghreb) dataset_ [@sordo2014creating], _Scandinavian Fiddle Tunes with Accompanying Foot-Tapping_ [@lordelo2020adversarial] and _MAESTRO (MIDI and Audio Edited for Synchronous Tracks and Organisation)_ dataset which is an extensive collection (200+ hours) of professional piano performances [@hawthorne2018enabling]. Some datasets such as Chopin performances compiled by @goebl2010investigations facilitate study of the synchrony between the two hands of the pianist. 
 
-## 1.3 Terminology and measures of synchrony
+### Terminology and measures of synchrony
 
 Much of the research on synchrony in music has focused on
 _sensorimotor synchronization_ (SMS) or just synchronization, a

@@ -4,7 +4,7 @@ citEntry(
   entry    = "Manual",
   title    = "onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data",
   author   = personList(as.person("Tuomas Eerola"),as.person("Martin Clayton")),
-  year     = 2022,
+  year     = 2023,
   url      = "https://github.com/tuomaseerola/onsetsync",
   textVersion = "Eerola, T. & Clayton, M. (2022). onsetsync - Analysis and Visualisation of Synchronisation of Music Onset Data. https://github.com/tuomaseerola/onsetsync"
   )

@@ -24,7 +24,6 @@ CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
   Piece, Section, Clave, Bass, Guitar, Tres, 
   SD, Cycle, Isochronous.SD.Time)
 
-
 dn <- sync_execute_pairs(df = CSS_Song2,
   instruments = c("Guitar", "Tres"),
   beat = "SD")

@@ -37,15 +37,33 @@ fig2D <- periodicity(extract, instr="Guitar",
   freq_range=frq_range, method = "per",title = "FFT")
 ```
 
-```{r figure1, fig.width=7, fig.height=7, echo=FALSE, fig.cap='Figure 1. Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.'}
+```{r figure1, fig.width=7, fig.height=3, echo=FALSE, fig.cap='Figure 1. Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. '}
+print(fig2A$fig)
+```
 
-library(cowplot)
-plots <- align_plots(fig2A$fig, align = 'v', axis = 'l')
-bottom_row <- plot_grid(fig2B$Figure, fig2C$Figure, fig2D$Figure, 
-  labels = c('B', 'C', 'D'), label_size = 12,nrow =1)
-fig2 <- plot_grid(plots[[1]], bottom_row, labels = c('A', ''), 
-  label_size = 12, ncol = 1)
+
+```{r figure2, fig.width=7, fig.height=5, echo=FALSE, fig.cap='Figure 2. Periodicity analysis of a 5-second extract of guitar playing in Cuban son using difference in onset times as a primitive periodicity measure, the output from autocorrelation function, and the estimation of periodicity by FFT.'}
+
+fig2B$Curve$Instrument <- "Difference"
+fig2C$Curve$Instrument <- "Autocorrelation"
+fig2D$Curve$Instrument <- "FFT"
+
+df <- rbind(fig2B$Curve,fig2C$Curve,fig2D$Curve)
+df$Instrument<-factor(df$Instrument)
+
+fig2 <- ggplot(df,aes(x=Time,y=Ampl))+
+  geom_line(color='blue1')+
+  facet_wrap(.~Instrument,scales = "free_y",nrow = 2)+ # ,
+  theme_linedraw()+
+#  scale_y_continuous(expand = c(0.01,0.01))+
+  scale_x_continuous(breaks = seq(0,1,by=0.217/2),
+                     labels = scales::number_format(accuracy = 0.01),expand = c(0.01,0.01))+
+  xlab('Period (s)')+
+  ylab('Amplitude')
 print(fig2)
+
+
+
 ```
 
 From the estimated periodicity curves, we can obtain the peak period in milliseconds, and if we so wish, we convert this into beats per minute (BPM). For the latter convention, we make use of the fact that the guitar plays four times per four beats.

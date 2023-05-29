@@ -1,6 +1,14 @@
+# onsetsync 0.4.9
+
+* Added CONTRIBUTING.md to the repository
+
+* Added "Advanced Topics" and "Analysis of Periodicity" to documentation, which both relate to paper.
+
+* Added very simple unit tests to package to verify loading the data, calculating asynchrony, plotting figures, and estimating periodicity.
+
 # onsetsync 0.4.8
 
-Added "Analysis example" article to documentation. Relates to the paper.
+* Added "Analysis example" article to documentation. Relates to the paper.
 
 # onsetsync 0.4.7
 

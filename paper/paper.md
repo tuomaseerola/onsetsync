@@ -77,7 +77,7 @@ d_{i} = I_{1, i} - I_{2, i}
   asynchronies of any pair of instruments, which is
 
 \begin{equation}
-Sd = \sqrt\frac{\sum_{i=1}{(d_i-\bar{d})^2}}{n-1}
+SD = \sqrt\frac{\sum_{i=1}{(d_i-\bar{d})^2}}{n-1}
 \end{equation}
 
 *Groupwise asynchronization*: Root mean square (RMS) of the

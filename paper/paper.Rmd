@@ -28,14 +28,14 @@ keep_tex: TRUE
 journal: JOSS
 ---
 
-# 1 Introduction
+# Summary
 
 Music performance relies on tight yet flexible timing coordination
 between performers. An important aspect of this interpersonal
-entrainment is the synchronisation of musical events between performers,
+entrainment is the synchronization of musical events between performers,
 and this can be analysed from the note onsets obtained from recorded
 performances. Analysis of the asynchronies between onsets gives an
-insight into synchronisation between performers, and the extent to which
+insight into synchronization between performers, and the extent to which
 it is accurate (how close together the events are in time) and precise
 (how stable the relationship is). The synchrony between performers is
 influenced by various factors such as the genre of music, performer
@@ -46,31 +46,26 @@ number of common operations that need to be carried out in every dataset
 synchrony across other variables such as tempo, metrical hierarchy, or
 phrasing) and the number of datasets containing onset timing information has recently increased.
 
-## 1.1 Statement of need
+## Statement of need
 
 `onsetsync` is a R package for assessment of musical synchrony
 through note onsets. Data is ingested in the form of CSV files with individual instrument onset times aligned with labelled beat positions; separate metre annotations comprising lists of time estimates for the downbeats are also used for some functions. The package includes functions for common operations such as adding isochronous beats based on metrical structure, adding annotations, calculating classic measures of synchrony between two performers, assessing the periodicity of the onsets, and visualising synchrony across metrical cycles, time, or another property. These functions make the analysis of onset corpora transparent and will allow more scholars to carry out investigations of entrainment in music.
 
-## 1.2 Onset datasets
+`onsetsync` package comes with example performances from two traditions, Cuban Son and Salsa performances [@Poole_Tarsitani_Clayton_2022] and North Hindustani performances [@Clayton_Leante_Tarsitani_2021]. The examples are taken from the Interpersonal Entrainment in Music Performance (IEMP) project collection that has compiled small ensemble performance data from six traditions (North Indian ragas, Malian jembe, Tunisian stambeli, Uruguayan candombe, European string quartet, and Cuban son and salsa). These collections contain tens of hours annotated and verified onsets and are available from Open Science Framework (OSF). There are also noteworthy datasets containing audio and annotated contents of music relevant to assessing synchrony such as _Carnatic Music Rhythm Dataset_ [@srinivasamurthy2015particle], _Hindustani Music Rhythm Dataset_ [@srinivasamurthy2016generalized], _Arab-Andalusian (Maghreb) dataset_ [@sordo2014creating], _Scandinavian Fiddle Tunes with Accompanying Foot-Tapping_ [@lordelo2020adversarial] and _MAESTRO (MIDI and Audio Edited for Synchronous Tracks and Organisation)_ dataset which is an extensive collection (200+ hours) of professional piano performances [@hawthorne2018enabling]. Some datasets such as Chopin performances compiled by @goebl2010investigations facilitate study of the synchrony between the two hands of the pianist. 
 
-`onsetsync` package comes with example performances from two traditions, Cuban Son and Salsa performances [@Poole_Tarsitani_Clayton_2022] and North Hindustani performances [@Clayton_Leante_Tarsitani_2021]. The examples are taken from the Interpersonal Entrainment in Music Performance (IEMP) project collection that has compiled small ensemble performance data from six traditions (North Indian ragas, Malian jembe, Tunisian stambeli, Uruguayan candombe, European string quartet, and Cuban son and salsa). These collection contain tens of hours annotated and verified onsets and are available from Open Science Framework (OSF). There are also noteworthy datasets containing audio and annotated contents of music relevant to assessing synchrony such as _Carnatic Music Rhythm Dataset_ [@srinivasamurthy2015particle], _Hindustani Music Rhythm Dataset_ [@srinivasamurthy2016generalized], _Arab-Andalusian (Maghreb) dataset_ [@sordo2014creating], _Scandinavian Fiddle Tunes with Accompanying Foot-Tapping_ [@lordelo2020adversarial] and _MAESTRO (MIDI and Audio Edited for Synchronous Tracks and Organisation)_ dataset which is an extensive collection (200+ hours) of professional piano performances [@hawthorne2018enabling]. Some datasets such as Chopin performances compiled by [@goebl2010investigations] facilitate study of the synchrony between the two hands of the pianist. 
-
-## 1.3 Terminology and measures of synchrony
+### Terminology and measures of synchrony
 
 Much of the research on synchrony in music has focused on
 _sensorimotor synchronization_ (SMS) or just synchronization, a
-processes occurring within 100-2000 ms timescales, which has commonly
-been studied with tapping experiments [@repp2008sensorimotor, @repp2013sensorimotor] but also through analyses of music corpora, from string quartets [@wing2014optimal] to drum ensembles [@polak2016both] and to
-Indian instrumental music performances [@clayton_et_al_2018b]. Synchronisation analyses can also be applied to field observations
-such as the study of how walking drumming groups attempt to
-resist synchronisation to the beats of other drum groups during their
-walk across the city during a festival [@lucas2011inter].
+process occurring within 100-2000 ms timescales, which has commonly
+been studied with tapping experiments [@repp2008sensorimotor; @repp2013sensorimotor] but also through analyses of music corpora, from string quartets [@wing2014optimal] to drum ensembles [@polak2016both], and to
+Indian instrumental music performances [@clayton_et_al_2018b].
 
 A number of different measures of synchrony have been proposed. We
-follow the definitions from [@clayton2020, p. 161] who adopt and
-develop the measures defined by [@rasch1988timing, @rasch1979synchronization]:
+follow the definitions from @clayton2020 who adopt and
+develop the measures defined by Rasch [-@rasch1988timing; -@rasch1979synchronization]:
 
-Here we first define the onset time differences, $d$, where $I_{1, i}$ and $I_{2, i}$ refer to an onset at time point $i$ for instrument 1 and 2:
+Here we first define the onset time differences (or asynchronies), $d$, where $I_{1, i}$ and $I_{2, i}$ refer to an onset at time point $i$ for instrument 1 and 2:
 
 \begin{equation}
 d_{i} = I_{1, i} - I_{2, i}
@@ -82,55 +77,53 @@ d_{i} = I_{1, i} - I_{2, i}
   asynchronies of any pair of instruments, which is
 
 \begin{equation}
-Sd = \sqrt\frac{\sum{(d_i-\bar{d})^2}}{n-1}
+SD = \sqrt\frac{\sum_{i=1}{(d_i-\bar{d})^2}}{n-1}
 \end{equation}
 
 *Groupwise asynchronization*: Root mean square (RMS) of the
   pairwise asynchronizations calculated as
 
 \begin{equation}
-RMS = \sqrt{\Sigma_{i=1}^{T}{\Big(\frac{d_{1,i} -d_{2,i}}{T}\Big)^2}}
+RMS = \sqrt{\Sigma_{i=1}^{n}{\Big(\frac{d_{i}}{n}\Big)^2}}
 \end{equation}
+
+where $n$ is the number of onset time differences. 
 
 *Mean absolute asynchrony*: Mean of all unsigned asynchrony
   values which is 
 
 \begin{equation}
-\hat{|s|} = \frac{1}{n} \sum_{i=i}^{n} |d_{i}|
+\bar{|s|} = \frac{1}{n} \sum_{i=1}^{n} |d_{i}|
 \end{equation}
 
 **Accuracy measures** estimate how far one part is ahead of or behind
 the other(s):
 
 *Mean pairwise asynchrony*: mean difference in the onset values
-  of two instruments, i.e., the signed asynchrony values, as in
-  
-\begin{equation}
-\hat{s_p} = \frac{1}{n} \sum_{i=i}^{n} d_{i}
-\end{equation}
+  of two instruments, $\bar{d}$, i.e., the signed asynchrony values.
 
 *Mean relative asynchrony*: mean position of an instrument's
-  onsets relative to average position ($\hat{w}$) of the group, where the average position is
+  onsets relative to average position ($\bar{I}$) of the group, where the average position is
 
 \begin{equation}
-\hat{w} = \frac{w_{1} + w_{2} + \ldots + w_{n}}{n}
+\bar{I} = \frac{I_{1} + I_{2} + \ldots + I_{n}}{n}
 \end{equation}
 
-and the relative onset time $w$ is
+and the relative onset time $R$ is
 
 \begin{equation}
-v_n = w_n - \hat{w}
+R_i = I_i - \bar{I}
 \end{equation}
 
 and therefore mean relative asynchrony is
 
 \begin{equation}
-\hat{s_r} = \frac{1}{n} \sum_{i=i}^{n} v_{i}
+\bar{s} = \frac{1}{n} \sum_{i=1}^{n} R_{i}
 \end{equation}
 
-These methods are based on asynchronies between onsets occurring at the same beat positions; other methods exist for assessing synchrony such as utilising circular statistics [@berens2009circstat], recurrence quantification analysis [@wallot2018analyzing], or calculating the synchrony of spike trains [@kreuz2007measuring]. `onsetsync` is focussed on measures of asynchrony relying on onsets between instruments at the same beat positions, which is usually the relevant approach in music sense.
+These methods are based on asynchronies between onsets occurring at the same beat positions; other methods exist for assessing synchrony such as utilising circular statistics [@berens2009circstat], recurrence quantification analysis [@wallot2018analyzing], or calculating the synchrony of spike trains [@kreuz2007measuring]. 
 
-## 1.4 Availability
+## Availability and functionality
 
 ```{r secret_load, eval=TRUE, echo=FALSE}
 # LOADS THIS SECRECTLY FROM THE LOCAL FOLDER
@@ -144,13 +137,9 @@ ver <- packageVersion('onsetsync')
 library(devtools)
 devtools::install_github("tuomaseerola/onsetsync")
 library(onsetsync)
-print(packageVersion('onsetsync'))
 ```
 
-In order to be able to build the carry out such comparisons, `onsetsync` has several auxiliary functions. There are functions that help assessing relative timings, to associate onsets with beat subdivisions and cycles in music structure, and to select and compare the instruments. The library has seven categories of functions; (1) input/output, (2)
-annotation, (3) visualisation, (4) synchrony, (5) periodicity, (6)
-summary, and (7) dataset functions (see Table 1). The functions are named to be easily associated with the categories.
-
+To carry out such comparisons, `onsetsync` has several auxiliary functions. There are functions that help assessing relative timings, to associate onsets with beat subdivisions and cycles in music structure, and to select and compare the instruments. The library has seven categories of functions summarised in Table 1.
 
 | Category      | Examples                                             |
 |---------------|------------------------------------------------------|
@@ -164,13 +153,13 @@ summary, and (7) dataset functions (see Table 1). The functions are named to be 
 
 Table: Function categories and example functions or datasets.
 
-In the next sections we will demonstrate the analysis processes related to asynchrony between several performers. It is also worth pointing out that the library is not dedicated to extraction of onsets from audio as that can be done in other packages (e.g. [Librosa](https://librosa.org), [Essentia](https://essentia.upf.edu), or [MIR toolbox for Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox), or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known onset detection algorithms. Here we take it as granted that the onsets have been extracted already, someone has carried out a quality check, assigned relevant onsets to beat positions and saved them in csv files. For solid overviews on computational onset extraction from audio, see [@schluter2014improved] and [@bock2016madmom], and for a full workflow of how to combine onset detection and annotation of the musical information, see [@Clayton2020emr].
+In the next sections we will demonstrate the analysis processes related to asynchrony between several performers. It is also worth pointing out that the library is not dedicated to extraction of onsets from audio as that can be done in other packages (e.g. [Librosa](https://librosa.org), [Essentia](https://essentia.upf.edu), [MIR toolbox for Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox), or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known onset detection algorithms). Here we take it as granted that the onsets have been extracted already, someone has carried out a quality check, assigned relevant onsets to beat positions and saved them in csv files. For solid overviews on computational onset extraction from audio, see @schluter2014improved or @bock2016madmom, and for a full workflow of how to combine onset detection and annotation of the musical information, see @Clayton2020emr.
 
-## 1.5 Onset representation
+### Onset representation
 
 Here we will take one Cuban Son performance that has been included in the library. This song, _Palo Santo_, has been performed by seven performers using the following combination of instruments: bass, guitar, tres, and trumpet, and five percussion instruments, clave, bongo, bell, cajon, and conga (the instrumentation varies slightly between songs and sections within songs). The full data including other Cuban salsa and son performances is available from an open access repository at _Open Science Framework_ (OSF) and has been annotated and processed as part of the [Interpersonal Entrainment in Music Performance](https://musicscience.net/projects/timing/iemp/) project, available at [https://osf.io/sfxa2/](https://osf.io/sfxa2/). 
 
-The code example loads the onset data and annotations of metre of the son performance. The library comes with a set of five Cuban salsa and son (CSS) performances and this is the second example from the IEMP `CSS_IEMP` mini-corpus. The second line of the code selects the nine columns of interest for the analysis; three first are meta-data, followed by four instruments (selected to aid legibility of the tables and charts), and two timing related columns are included at the end.
+The code example loads the onset data and annotations of metre of the son performance. The library comes with a set of five Cuban salsa and son (CSS) performances and this is the second example from the IEMP `CSS_IEMP` mini-corpus. The second line of the code selects the nine columns of interest for the analysis; the first two columns are meta-data, followed by four instruments, and three timing related columns are included at the end.
 
 ```{r, results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 library(dplyr)
@@ -187,25 +176,14 @@ print(knitr::kable(head(CSS_Song2),digits = 2,
 
 Table 2 shows a portion of the onset data structure, just 6 rows out of 1568 rows in the data containing 3286 onsets. The first two columns are
 *meta-data*, referring to the piece and section. The next four columns represent the onset times in seconds (rounded to two decimals for convenience) of four selected instruments, `Clave`, `Bass`, `Guitar` and `Tres`. The onset times for the instruments are available in seconds (with precision of 6 digits, although we prefer to use milliseconds (ms) in the analyses of synchrony to avoid reporting
-unnecessarily many digits. The last three columns refer to information about the relative time: `SD` represents the beat subdivision within the cycle. In this music there are 16 subdivisions per cycle (which can be felt as 4 beats \(\times\) 4 subdivisions). `Cycle` refers to a running number of the beat cycles (each will have 16 beats in this music). `Isochronous.SD.Time` is an evenly temporally spaced time point for each beat subdivision (calculated by dividing each cycle duration by 16) that can act as temporal reference grid. The beat subdivisions and cycles are manually annotated and can be integrated to the data frame with a specific function (`add_annotation`) if given separately. Also a reference timing (`Isochronous.SD.Time`) has been provided for the cycles but it can also be estimated from the cycles and beat subdivisions using a function (`add_isobeats`) in the library. Information about cycles and beat subdivisions is generally based on manual annotation, and originates separately from the automatically extracted onsets; the two are combined to produce tables with onsets assigned to beat positions. It is also possible to read the csv files directly from OSF using `get_OSF_csv` function to allow transparent and reproducible analysis workflows with published datasets.
+unnecessarily many digits). The last three columns refer to information about the relative time: `SD` represents the beat subdivision within the cycle. In this music there are 16 subdivisions per cycle (which can be felt as 4 beats \(\times\) 4 subdivisions). `Cycle` refers to a running number of the beat cycles (each will have 16 beats in this music). `Isochronous.SD.Time` is an evenly temporally spaced time point for each beat subdivision (calculated by dividing each cycle duration by 16) that can act as temporal reference grid. The beat subdivisions and cycles are manually annotated and can be integrated to the data frame with a specific function (`add_annotation`) if given separately. Also a reference timing (`Isochronous.SD.Time`) has been provided for the cycles but it can also be estimated from the cycles and beat subdivisions using a function (`add_isobeats`) in the library. Information about cycles and beat subdivisions is generally based on manual annotation, and originates separately from the automatically extracted onsets; the two are combined to produce tables with onsets assigned to beat positions. This explains why the first row of the table has no onsets but it contains annotation information (Cycle 1 and beat sub-division 1). It is also possible to read the csv files directly from OSF using `get_OSF_csv` function to allow transparent and reproducible analysis workflows with published datasets.
 
-## 1.6 Onset summaries
+### Onset summaries
 
-Let's explore the overall structure of the onsets in the example piece. 
-
-```{r summarise,message=FALSE,warning=FALSE,results='asis'}
-tab1 <- summarise_onsets(df = CSS_Song2, 
-  instr = c('Clave','Bass','Guitar','Tres','Isochronous.SD.Time'))
-print(knitr::kable(tab1,digits = 1,
-  caption = 'Summary of onsets in the example data 
-  (Md, M, Min, and Max in ms).'))
-```
-
-Table 3 shows the summary of the onsets, namely the number of onsets for each instrument, the descriptive statistics referring to time difference of successive onsets ($d$) within each instrument. We have provided the isochronous beat subdivisions as a reference, which shows how many beats there are and what the is the average duration of the beats (220 ms) in this performance lasting approximately 5 minutes and 45 seconds.
-
-As a broad overview, we can use the function `plot_by_beat` visualise the asynchrony relative to an equal division subdivision of the beats for each instrument across the time. This visualisation gives a summary about when the instruments are playing relative to the beat division and the sections of the song, shown in Figure 1. For example, in many genres different instruments contribute to specific subdivision of the beat. This is of course the case on Cuban Son, but maybe even more extreme in Malian Jembe music [@polak2010rhythmic] or more variable in Western jazz [@wesolowski2016timing].
+Let's explore the overall structure of the onsets in the example piece using the function `plot_by_beat` to visualise the asynchrony relative to an equal division subdivision of the beats for each instrument across the time. This visualisation gives a summary about when the instruments are playing relative to the beat division and the sections of the song, shown in Figure 1.
 
 ```{r figure1,fig.width=7.0, fig.height=5.0,fig.cap='Onsets arranged for beat sub-divisions for four instruments across the whole piece.'}
+library(dplyr)
 fig1 <- plot_by_beat(df = CSS_Song2, 
                      instr = c('Bass','Clave','Guitar','Tres'), 
                      beat = 'SD', 
@@ -214,9 +192,9 @@ fig1 <- plot_by_beat(df = CSS_Song2,
 print(fig1)
 ```
 
-At first glance of Figure 1, it is easy to spot the distinctive clave pattern going through the song (the beginning of the song is at the bottom of the graphs, and every cycle is cascaded on top of the previous cycle). Notice how the bass plays mainly on subdivisions 5, 7, 13, 15, except in the last minute when the pattern changes into playing subdivisions 3, 4, 7, 8, 15, 16. The guitar plays almost on every beat subdivision, and towards the end of the piece tres --  a cuban guitar with 6-strings tuned to 3 pitches -- plays a pattern of 3 subdivisions and a break. Overall, this six-minute piece does not contain a high amount of variation in the patterns of onsets across the subdivisions. We can see that the bass elaborates the beats during the last minute or so while the clave, guitar and tres keep playing their patterns throughout the piece.
+At first glance of Figure 1, it is easy to spot the distinctive clave pattern going through the song (the beginning of the song is at the bottom of the graphs, and every cycle is cascaded on top of the previous cycle). Notice how the bass plays mainly on subdivisions 5, 7, 13, 15, except in the last minute when the pattern changes into playing subdivisions 3, 4, 7, 8, 15, 16. The guitar plays almost on every beat subdivision, and towards the end of the piece the tres --  a cuban guitar with 6-strings tuned to 3 pitches -- plays a pattern of 3 subdivisions and a break.
 
-# 2 Analysis of synchrony
+# Analysis of synchrony
 
 Moving on to the analysis of synchrony, we can first explore how much the onsets deviate from the isochronous beats or from the mean onset times. Figure 2 shows an example of the former for two guitars, guitar and tres.
 
@@ -228,9 +206,9 @@ print(plot_by_beat(df = CSS_Song2,
   griddeviations = TRUE))
 ```
 
-Overall this suggests that these two instruments tend to play earlier when compared to the isochronous beat division of the cycle, although guitar is tightly aligned (<2%) with the reference beat on every fourth beat subdivisions (subdivisions of 1, 5, 9, and 13), which are also the salient metrical positions. Similar fluctuations across the beat subdivisions are not evident in tres, but the graph reveals that the tres tends to play a little earlier than guitar.
+Overall this suggests that these two instruments tend to play earlier when compared to the isochronous beat division of the cycle, although the guitar is tightly aligned (<2%) with the reference beat on every fourth beat subdivisions (subdivisions of 1, 5, 9, and 13), which are also the salient metrical positions. Similar fluctuations across the beat subdivisions are not evident in the tres, but the graph reveals that the tres tends to play a little earlier than guitar.
 
-## 2.1 Synchrony between the instruments
+## Synchrony between the instruments
 
 Let's determine the overall synchrony between specific instruments. Here we continue the analysis guitar and tres and calculate the asynchrony between them. 
 
@@ -251,7 +229,7 @@ dn <- sync_execute_pairs(CSS_Song2, inst, beat = "SD")
 print(plot_by_pair(dn))
 ```
 
-In Figure 1 we see how different pairs of instruments have different asynchrony relationships; the bass is consistently ahead of the guitar, and clave and guitar play behind tres, to pick some of the extreme examples from the visualisation. The vertical lines stand for median asynchrony and the violin plot shows the distribution of onset time differences. 
+In Figure 3 we see how different pairs of instruments have different asynchrony relationships; the bass is consistently ahead of the guitar, and clave and guitar play behind tres, to pick some of the extreme examples from the visualisation. The vertical lines stand for median asynchrony and the violin plot shows the distribution of onset time differences. 
 
 We can calculate the classic measures of synchronization once the pairing has been done. Here are these measures calculated for the synchrony between bass and clave.
 
@@ -260,7 +238,7 @@ d <- sync_sample_paired(CSS_Song2,"Clave","Bass", beat = "SD")
 print(t(summarise_sync(d)))
 ```
 
-The output suggests that at least in this piece, these two instruments tend to have the synchronization precision around 20 ms, depending on the method of calculation. Pairwise asynchronisation is the standard deviation of the signed asynchrony; this tends to be highly correlated with the mean absolute asynchrony. The Mean pairwise asynchrony measure shows that on average, the clave plays 16 ms after the bass. 
+The output suggests that at least in this piece, these two instruments tend to have the synchronization precision around 20 ms, depending on the method of calculation. Pairwise asynchronization is the standard deviation of the signed asynchrony; this tends to be highly correlated with the mean absolute asynchrony. The Mean pairwise asynchrony measure shows that on average, the clave plays 16 ms after the bass. 
 
 We can also calculate the relative asynchrony by comparing the onset times to the mean of the other instruments that we define. Here we compare the asynchrony of bass and clave to the mean of the rhythm section as defined by four instruments, guitar, bass, tres, and clave.
 
@@ -276,150 +254,13 @@ dl <- sync_sample_paired_relative(df = CSS_Song2,
 print(dl$`Mean pairwise asynchrony`)
 ```
 
-The relative measure (mean relative asynchrony) shows that bass is ahead (ie. -19 ms) of the mean of other instruments whereas clave is almost exactly in synchrony with the other instruments (<1 ms late). In different types of performances, musical pieces, instruments, and genres, the magnitude of these differences is highly variable [@clayton2020].
+The relative measure (mean relative asynchrony) shows that bass is ahead (i.e. -19 ms) of the mean of other instruments whereas clave is almost exactly in synchrony with the other instruments (<1 ms late). In different types of performances, musical pieces, instruments, and genres, the magnitude of these differences is highly variable [@clayton2020].
 
-## 2.2 Synchrony between the instruments across beat subdivisions
+It is also possible to [calculate synchrony between instruments across beat sub-divisions](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html), [assess synchrony across multiple performances](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html), and [estimate and visualise synchrony with other variables](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html). The library also comes with functionality to [analyse the periodicity of the onsets](https://tuomaseerola.github.io/onsetsync/articles/analysisis_of_periodicity.html) and [synthesising the onsets](https://tuomaseerola.github.io/onsetsync/articles/synthesise_onsets.html). 
 
-In the first visualisation we already observed that asynchronies varied across beat subdivision (shown with respect to the equal subdivision) in the example with tres and guitar. Here we continue the analysis of the guitar and tres and calculate the asynchrony between them across the beat subdivisions. The summary of the differences in milliseconds is contained in the output. This output reports the asynchrony between the instruments across the subdivisions and the \emph{t-test} provides an index of whether the mean differences are significantly different from zero. In other words, the summary shows in which beat subdivisions the two musicians are performing asynchronously in a consistent manner.
+# Conclusions
 
-
-```{r stats,results='asis'}
-dn <- sync_execute_pairs(df = CSS_Song2,
-  instruments = c("Guitar", "Tres"),
-  beat = "SD")
-print(knitr::kable(summarise_sync_by_pair(dn, bybeat = TRUE),
-  digits = 2,caption = 'Asynchrony between tres and guitar 
-  across beat sub-divisions.'))
-```
-
-The output of Table 4 suggests that about half of the asynchronies in the subdivisions are statistically significant (and this includes a correction for multiple comparisons using the Bonferroni adjustment). Asynchronies over 10 ms tend to be statistically significant and these fall into beat subdivisions 4, 8, 9, 12, 13, and 16. Here we are using t-test as an arbitrary indicator of the differences since the assumption for the independence of the observations is not met since the two instruments are temporally not independent.
-
-Calculation of asynchronies between parts depends on the number of comparable onsets (points at which both are playing on the same beat subdivision). This will be relatively high in music with a homophonic texture, and low in an interlocking or hocketing pattern where the musicians are playing on alternating beats. In Cuban salsa and son, some instruments play on most subdivisions (as with the guitar and tres in this piece) while others are relatively sparse and may only coincide a few times per cycle. In this piece the clave plays on subdivisions 1, 4, 7, 11, 13 while the bass starts off playing on subdivisions 4, 5, 7, 13, 15; thus they coincide on subdivisions 4, 7 and 13 on most cycles and these subdivisions are the points at which we can calculate asynchronies. In sum, the number of joint onsets (onset occurring around the same beat) for each pair of instrument varies greatly. To keep the mean and standard deviations comparable, we can randomly sample an equal number of joint onsets for both instruments.
-
-## 2.3 Synchrony across multiple performances
-
-So far our analysis has considered synchrony within a single performance. We can also take several performances, choose the instrument pairings, and carry out the desired comparison, provided that this is conceptually meaningful and technically feasible (similar types of onset and annotation data are available). For this, we load five Cuban Son and Salsa performances that come with the library and run the same analysis as was done in prior examples using `sync_sample_paired` function across the performances.
-
-```{r figure4, fig.cap='Absolute asynchronies between guitar and tres in five performances within the CSS_IEMP dataset.'}
-corpus <- onsetsync::CSS_IEMP
-D <- sync_sample_paired(corpus,"Guitar","Tres", beat="SD")
-D <- D$asynch
-D$asynch_abs <- abs(D$asynch)*1000
-print(plot_by_dataset(D,"asynch_abs","name", box = TRUE))
-```
-
-We can create a simple violin plot of the combined data ignoring the beat sub-divisions (Figure 4). All further analyses and summaries are then also possible.
-
-Figure 4 suggests that the asynchrony of 13 ms between tres and guitar we saw in the analysis of \emph{Palo Alto} is largely in line with the overall asynchrony between the same instruments in the other instruments (overall mean asynchrony in all 5 pieces is 17 ms) although our example piece (\emph{Palo Santo}) shows the tightest synchrony in these examples.
-
-## 2.4 Synchrony with other variables
-
-It is relatively straightforward to explore whether synchrony is linked with another variable. For example, the precision of synchrony could change when the tempo of the performance is faster or slower. Or synchrony might be influenced by the dynamics or note density in a specific section. As an example, we illustrate synchrony across the time and tempo. As tempo is commonly defined by the beats per minute (BPM), we use the cycle information to convert the isochronous beat times to BPM.  
-
-```{r figure5, fig.cap='Asynchrony between tres and guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).'}
-CSS_Song2 <- CSS_Song2 %>%
-  group_by(Cycle) %>%
-  mutate(Tempo = 240/(max(Isochronous.SD.Time) - 
-                        min(Isochronous.SD.Time))) %>%
-  ungroup()
-
-d2 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", 
-                         beat = "Tempo")
-d3 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", 
-                         beat = "Isochronous.SD.Time")
-tmp <- data.frame(asynch = d2$asynch*1000, 
-                  Tempo = d2$beatL, 
-                  Time = d3$beatL)
-print(plot_by_var_time(df = tmp,
-  var1 = "Time",
-  var2 = "asynch",
-  var3 = "Tempo",
-  ylabel = "Asynchrony (ms)"))
-```
-
-As Figure 5 shows, synchrony fluctuates across time but these fluctuations do not seem to be directly related to the underlying tempo changes, although the last minute and half is performed slightly slower ($\approx71$ BPM) and the guitar is approximately 20 ms ahead of tres.
-
-# 3 Analysis of periodicity
-
-We now explore the periodic nature of the instrument onset times without reference to the metrical structure. Functions described in this part may in fact be particularly useful in other musical genres which do not exhibit a clear metrical structure; nonetheless they are illustrated here using the example used in the previous analyses.
-
-Let's take the guitar onsets in the first example (\texttt{CSS\_Song2}) and define an extract of 5 seconds starting from 1 minute mark. We know from the previous analyses that guitar keeps a fairly steady beat, separated by about 0.25 seconds while leaving out some beats.
-
-```{r}
-extract <- dplyr::filter(CSS_Song2, Guitar >= 60 & Guitar < 65)
-fig6A <- gaussify_onsets(extract$Guitar, wlen = 0.2, plot = TRUE)
-```
-
-
-For the periodicity analyses, we want to transform the discrete onsets to continuous time representation with an uniform sampling rate. This is done with the \texttt{gaussify\_onsets} function. This makes the comparisons of the models easier and allows us to handle time more explicitly. From this new continuous representation, we can estimate the periodicity of the guitar strokes by using different methods; Here we demonstrate (a) a simple time difference method, (b) method based on autocorrelation, and (c) fast fourier transform. We constrain the frequency a range of 0.05 to 0.50 seconds. After the extraction of periodicity with \texttt{periodicity} function, we will plot the estimated frequency curves (Figure 6). 
-
-```{r}
-frq_range <- c(0.05,0.50)
-fig6B <- periodicity(extract, instr = "Guitar", 
-  freq_range=frq_range, method = "diff", title = "Difference")
-fig6C <- periodicity(extract, instr="Guitar", 
-  freq_range=frq_range, method = "acf",title = "Autocorrelation")
-fig6D <- periodicity(extract, instr="Guitar", 
-  freq_range=frq_range, method = "per",title = "FFT")
-```
-
-```{r figure6, echo=FALSE, fig.cap='Periodicity analysis of a 5-second extract of guitar playing in Cuban son. Panel A shows the onsets (red) and the conversion into gaussian distributions (blue) for a continuous representation. Panel B displays the difference in onset times as a primitive periodicity measure, Panel C shows the output from autocorrelation function, and Panel D shows the estimation of periodicity by FFT.'}
-
-library(cowplot)
-plots <- align_plots(fig6A$fig, align = 'v', axis = 'l')
-bottom_row <- plot_grid(fig6B$Figure, fig6C$Figure, fig6D$Figure, 
-  labels = c('B', 'C', 'D'), label_size = 12,nrow =1)
-fig6 <- plot_grid(plots[[1]], bottom_row, labels = c('A', ''), 
-  label_size = 12, ncol = 1)
-print(fig6)
-```
-
-From the estimated periodicity curves, we can obtain the peak period in milliseconds, and if we so wish, we convert this into beats per minute (BPM). For the latter convention, we make use of the fact that the guitar plays four times per four beats.
-
-```{r}
-PM <- summarise_periodicity(fig6D$Curve)
-print(paste('Period of',round(PM$Per*1000),'ms'))
-print(paste(period_to_BPM(PM$Per)/4,'BPM'))
-```
-
-```{r figure7, echo=FALSE, fig.cap='Periodicity analysis of four selected instruments in the example song (Palo Alto). The grid lines indicate multiples of the period identified earlier as the underlying beat (217 ms).'}
-
-excerpt <- dplyr::filter(CSS_Song2,Guitar>60 & Guitar < 60*2)
-excerpt <- data.frame(excerpt)
-p1 <- onsetsync::periodicity(excerpt,instr = "Guitar",
-                             freq_range = c(0,1),sampling_rate = 100)
-p2 <- onsetsync::periodicity(excerpt,instr = "Bass",
-                             freq_range = c(0,1),sampling_rate = 100)
-p3 <- onsetsync::periodicity(excerpt,instr = "Tres",
-                             freq_range = c(0,1),sampling_rate = 100)
-p4 <- onsetsync::periodicity(excerpt,instr = "Clave",
-                             freq_range = c(0,1),sampling_rate = 100)
-p1$Curve$Instrument <- "Guitar"
-p2$Curve$Instrument <- "Bass"
-p3$Curve$Instrument <- "Tres"
-p4$Curve$Instrument <- "Clave"
-df <- rbind(p1$Curve,p2$Curve,p3$Curve,p4$Curve)
-df$Instrument<-factor(df$Instrument)
-
-fig6 <- ggplot(df,aes(x=Time,y=Ampl))+
-  geom_line(color='blue')+
-  facet_wrap(.~Instrument,scales = "free",nrow = 2)+ # ,
-  theme_linedraw()+
-  scale_y_continuous(expand = c(0.01,0.01))+
-  scale_x_continuous(breaks = seq(0,1,by=0.217/2),
-                     labels = scales::number_format(accuracy = 0.01),expand = c(0.01,0.01))+
-  xlab('Period (s)')+
-  ylab('Amplitude')
-print(fig6)
-
-```
-
-
-Being able to bring periodicity estimation of onset sequences into the analysis of asynchrony has many useful purposes. It can serve as a diagnostic into the periodic patterns performed by the instruments. This might be particularly useful if no annotation about the cycles and beat subdivisions is available and the analyst is trying to determine what are the periodicities exhibited by the different instruments. For instance, Figure 7 shows the periodicities of the selected four instruments in our salsa example. The analysis reveals that guitar and tres tend to play the fastest beat pulsation (0.22 s) while tres occasionally ventures into double (0.44 s) and four times the period (0.88 s). Bass shows three dominant periods, one at the fastest beat pulsation level (0.22), double of that period (0.44) and two uneven subdivisions of the underlying beat (0.35 s and 0.58 s). The clave's pattern includes a period of 0.66 secs, three times the fastest pulse, presumably thanks to its pattern at the start of the cycle (when it plays on subdivisions 1, 4 & 7).
-
-# 4 Conclusions
-
-`onsetsync` provides representations, visualisations and calculations of key measures relating to onset structures in music. The library does not take a stance on how the onset times have been estimated, but assumes that onset times are mapped onto beat positions, and that metre annotations are available. The strengths of the library are in being able to read onset data and annotations directly from OSF and to define and redefine the object of synchrony analysis (e.g., between all instruments or specific instruments, or annotated beat sub-division and specific instruments, or the mean onsets of the instruments and specific instruments) and help the user to calculate classic measures of synchrony between instruments. The visualisations are designed to facilitate the selection and exploration of the data that would be otherwise challenging. Some analysis options are provided to calculate the periodicity of the onsets. Future needs for development lie in creating a specific corpus format that would be open to many uses, to test the framework with other datasets, and to incorporate other analytical options such as circular statistics, granger causality or cross-recurrence analyses.
+`onsetsync` provides representations, visualisations and calculations of key measures relating to onset structures in music. The library does not take a stance on how the onset times have been estimated, but assumes that onset times are mapped onto beat positions, and that metre annotations are available. Future needs for development lie in creating a specific corpus format that would be open to many uses, to test the framework with other datasets, and to incorporate other analytical options such as circular statistics, Granger causality or cross-recurrence analyses.
 
 We hope scholars and students of music, music information retrieval and psychology can pursue topics related to synchrony in music with a transparent workflow assisted by the library and capitalise on existing datasets that are compatible with the library. Eventually we hope that tools such as these will allow a larger number of people to create and utilise open datasets related to musical behaviours, helping the topic become data-driven, empirical and collaborative.
 

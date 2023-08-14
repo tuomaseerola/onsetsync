@@ -1,8 +1,11 @@
 Package: onsetsync
 Title: Analysis and Visualisation of Synchronisation of Music Onset Data
-Version: 0.4.8
+Version: 0.4.9
 Authors@R: person("Tuomas", "Eerola", email = "tuomas.eerola@durham.ac.uk", role = c("aut", "cre"))
-Description: This package help to calculate and visualise onset data. The emphasis is on comparing onsets between performers in the same ensemble, in other words, how well the performers synchronise to each other. There are also some routines to estimate to periodicity of the onsets.
+Description: Helps to calculate and visualise onset data. The emphasis is on 
+    comparing onsets between performers in the same ensemble, in other words,
+    how well the performers synchronise to each other. There are also some
+    routines to estimate to periodicity of the onsets.
 Depends: 
 	R (>= 3.3.2),
 License: MIT + file LICENSE
@@ -19,7 +22,7 @@ Imports:
     magrittr,
     scales,
     seewave,
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     rmarkdown,

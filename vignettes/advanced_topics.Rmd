@@ -1,0 +1,84 @@
+---
+title: "Advanced topics"
+output: rmarkdown::html_vignette
+description: >
+  Synchrony across sub-beats or pieces.
+vignette: >
+  %\VignetteIndexEntry{Advanced topics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Advanced topics
+
+## Synchrony between the instruments across beat subdivisions
+
+In the first visualisation we already observed that asynchronies varied across beat subdivision (shown with respect to the equal subdivision) in the example with the tres and the guitar. Here we continue the analysis of the guitar and the tres and calculate the asynchrony between them across the beat subdivisions. The summary of the differences in milliseconds is contained in the output. This output reports the asynchrony between the instruments across the subdivisions and the \emph{t-test} provides an index of whether the mean differences are significantly different from zero. In other words, the summary shows in which beat subdivisions the two musicians are performing asynchronously in a consistent manner.
+
+
+```{r stats,results='asis',warning=FALSE,message=FALSE}
+library(onsetsync)
+library(ggplot2)
+library(dplyr)
+CSS_Song2 <- dplyr::select(onsetsync::CSS_IEMP[[2]],
+  Piece, Section, Clave, Bass, Guitar, Tres, 
+  SD, Cycle, Isochronous.SD.Time)
+
+dn <- sync_execute_pairs(df = CSS_Song2,
+  instruments = c("Guitar", "Tres"),
+  beat = "SD")
+print(knitr::kable(summarise_sync_by_pair(dn, bybeat = TRUE),
+  digits = 2,caption = 'Asynchrony between tres and guitar 
+  across beat sub-divisions.'))
+```
+
+The output of Table 1 suggests that about half of the asynchronies in the subdivisions are statistically significant (and this includes a correction for multiple comparisons using the Bonferroni adjustment). Asynchronies over 10 ms tend to be statistically significant and these fall into beat subdivisions 4, 8, 9, 12, 13, and 16. Here we are using t-test as an arbitrary indicator of the differences since the assumption for the independence of the observations is not met since the two instruments are temporally not independent.
+
+Calculation of asynchronies between parts depends on the number of comparable onsets (points at which both are playing on the same beat subdivision). This will be relatively high in music with a homophonic texture, and low in an interlocking or hocketing pattern where the musicians are playing on alternating beats. In Cuban salsa and son, some instruments play on most subdivisions (as with the guitar and the tres in this piece) while others are relatively sparse and may only coincide a few times per cycle. In this piece the clave plays on subdivisions 1, 4, 7, 11, 13 while the bass starts off playing on subdivisions 4, 5, 7, 13, 15; thus they coincide on subdivisions 4, 7 and 13 on most cycles and these subdivisions are the points at which we can calculate asynchronies. In sum, the number of joint onsets (onset occurring around the same beat) for each pair of instrument varies greatly. To keep the mean and standard deviations comparable, we can randomly sample an equal number of joint onsets for both instruments.
+
+## Synchrony across multiple performances
+
+So far our analysis has considered synchrony within a single performance. We can also take several performances, choose the instrument pairings, and carry out the desired comparison, provided that this is conceptually meaningful and technically feasible (similar types of onset and annotation data are available). For this, we load five Cuban Son and Salsa performances that come with the library and run the same analysis as was done in prior examples using `sync_sample_paired` function across the performances.
+
+```{r figure1, fig.width=7, fig.height=7, fig.cap='Figure 1. Absolute asynchronies between the guitar and the tres in five performances within the CSS_IEMP dataset.'}
+corpus <- onsetsync::CSS_IEMP
+D <- sync_sample_paired(corpus,"Guitar","Tres", beat="SD")
+D <- D$asynch
+D$asynch_abs <- abs(D$asynch)*1000
+print(plot_by_dataset(D,"asynch_abs","name", box = TRUE))
+```
+
+We can create a simple violin plot of the combined data ignoring the beat sub-divisions (Figure 1). All further analyses and summaries are then also possible.
+
+Figure 1 suggests that the asynchrony of 13 ms between the tres and the guitar we saw in the analysis of \emph{Palo Alto} is largely in line with the overall asynchrony between the same instruments in the other instruments (overall mean asynchrony in all 5 pieces is 17 ms) although our example piece (\emph{Palo Santo}) shows the tightest synchrony in these examples.
+
+
+## Synchrony with other variables
+
+It is relatively straightforward to explore whether synchrony is linked with another variable. For example, the precision of synchrony could change when the tempo of the performance is faster or slower. Or synchrony might be influenced by the dynamics or note density in a specific section. As an example, we illustrate synchrony across the time and tempo. As tempo is commonly defined by the beats per minute (BPM), we use the cycle information to convert the isochronous beat times to BPM.  
+
+```{r figure2, fig.width=7, fig.height=7, fig.cap='Figure 2. Asynchrony between the tres and the guitar (Y-axis) across time (X-axis) and tempo (illustrated with marker colors).'}
+CSS_Song2 <- CSS_Song2 %>%
+  group_by(Cycle) %>%
+  mutate(Tempo = 240/(max(Isochronous.SD.Time) - 
+                        min(Isochronous.SD.Time))) %>%
+  ungroup()
+
+d2 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", 
+                         beat = "Tempo")
+d3 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", 
+                         beat = "Isochronous.SD.Time")
+tmp <- data.frame(asynch = d2$asynch*1000, 
+                  Tempo = d2$beatL, 
+                  Time = d3$beatL)
+print(plot_by_var_time(df = tmp,
+  var1 = "Time",
+  var2 = "asynch",
+  var3 = "Tempo",
+  ylabel = "Asynchrony (ms)"))
+```
+
+As Figure 2 shows, synchrony fluctuates across time but these fluctuations do not seem to be directly related to the underlying tempo changes, although the last minute and half is performed slightly slower ($\approx71$ BPM) and the guitar is approximately 20 ms ahead of the tres. 
+
+[Back to Documentation](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html)
+

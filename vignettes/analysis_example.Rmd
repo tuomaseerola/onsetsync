@@ -22,7 +22,6 @@ These analyses are the ones reported in paper titled "onsetsync: An R Package fo
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 library(ggplot2)
-library(cowplot)
 devtools::install_github("tuomaseerola/onsetsync")
 library(onsetsync)
 packageVersion("onsetsync")
@@ -169,114 +168,11 @@ if(save_figures==TRUE){
 ```{r,fig.height = 3,fig.width = 6.5}
 CSS_Song2 <- CSS_Song2 %>%
   group_by(Cycle) %>%
-  mutate(Tempo = 240/(max(Isochronous.SD.Time) - min(Isochronous.SD.Time)))
+  mutate(Tempo = 240/(max(Isochronous.SD.Time) - min(Isochronous.SD.Time))) %>%
+  ungroup()
 
 d2 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", beat = 'Tempo')
 d3 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", beat = 'Isochronous.SD.Time')
 tmp <- data.frame(asynch = d2$asynch*1000, Tempo = d2$beatL, Time = d3$beatL)
-```
-
-### Figure 5
-
-```{r,fig.height = 3,fig.width = 6.5}
-print(plot_by_var_time(df = tmp,
-   var1 = 'Time',
-   var2 = 'asynch',
-   var3 = 'Tempo',
-   ylabel = 'Asynchrony (ms)'))
-```
-
-```{r, echo=FALSE}
-if(save_figures==TRUE){
-  fig5 <- plot_by_var_time(df = tmp,
-                         var1 = 'Time',
-                         var2 = 'asynch',
-                         var3 = 'Tempo',
-                         ylabel = 'Asynchrony (ms)')
-
-ggsave(filename = 'sync_across_time.pdf',fig5, height = 3,width = 6.5)
-}
-```
-
-## Periodicity
-
-### Figure 5
-
-```{r,fig.height = 4.8, fig.width = 7.2}
-extract <- dplyr::filter(CSS_Song2, Guitar >= 60 & Guitar < 65)
-extract <- ungroup(extract) # drop grouping structure
-fig10 <- gaussify_onsets(extract$Guitar, wlen = 0.2, plot = TRUE)
-
-frq_range <- c(0.10,0.50)
-per1 <- periodicity(extract,instr='Guitar',freq_range=frq_range,
-                    method = 'diff', title = 'Difference')
-per2 <- periodicity(extract,instr='Guitar',freq_range=frq_range,
-                    method = 'acf',title = 'Autocorrelation')
-per3 <- periodicity(extract,instr='Guitar',freq_range=frq_range,
-                    method = 'per',title = 'FFT')
-
-plots <- align_plots(fig10$fig, align = 'v', axis = 'l')
-bottom_row <- plot_grid(per1$Figure, per3$Figure, per2$Figure, 
-                        labels = c('B', 'C', 'D'), label_size = 12,nrow =1)
-fig5 <- plot_grid(plots[[1]], bottom_row, labels = c('A', ''), 
-                  label_size = 12, ncol = 1)
-print(fig5)
-```
-
-```{r, echo=FALSE}
-if(save_figures==TRUE){
-  ggsave(filename = 'figure5.pdf',G1,height = 4,width = 6)
-}
-```
-
-### Report the peak periodicity
-
-```{r}
-PM <- summarise_periodicity(per3$Curve)
-print(paste('Period of',round(PM$Per*1000),'ms'))
-
-print(paste(period_to_BPM(PM$Per*4),'BPM'))
-```
-
-## Use of periodicity analysis
-
-Take an excerpt from the example performance and apply periodicity analysis to four instruments.
-
-### Figure 6
-
-```{r, fig.height=4.8, fig.width=7.4}
-excerpt <- dplyr::filter(CSS_Song2,Guitar>60 & Guitar < 60*2)
-excerpt <- data.frame(excerpt)
-p1 <- onsetsync::periodicity(excerpt,instr = "Guitar",
-                             freq_range = c(0,1),sampling_rate = 100)
-p2 <- onsetsync::periodicity(excerpt,instr = "Bass",
-                             freq_range = c(0,1),sampling_rate = 100)
-p3 <- onsetsync::periodicity(excerpt,instr = "Tres",
-                             freq_range = c(0,1),sampling_rate = 100)
-p4 <- onsetsync::periodicity(excerpt,instr = "Clave",
-                             freq_range = c(0,1),sampling_rate = 100)
-p1$Curve$Instrument <- "Guitar"
-p2$Curve$Instrument <- "Bass"
-p3$Curve$Instrument <- "Tres"
-p4$Curve$Instrument <- "Clave"
-df<-rbind(p1$Curve,p2$Curve,p3$Curve,p4$Curve)
-df$Instrument<-factor(df$Instrument)
-
-fig6 <- ggplot(df,aes(x=Time,y=Ampl))+
-  geom_line(color='blue')+
-  facet_wrap(.~Instrument,scales = "free",nrow = 2)+ # ,
-  theme_linedraw()+
-  scale_y_continuous(expand = c(0.01,0.01))+
-  scale_x_continuous(breaks = seq(0,1,by=0.217/2),
-                     labels = scales::number_format(accuracy = 0.01),expand = c(0.01,0.01))+
-  xlab('Period (s)')+
-  ylab('Amplitude')
-print(fig6)
-```
-
-```{r, echo=FALSE}
-if(save_figures==TRUE){
-  ggsave(filename='figure6.pdf', g1, height = 5, width = 8)
-}
 ```
 

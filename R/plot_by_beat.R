@@ -32,18 +32,18 @@ plot_by_beat <-
     # 23/1/2018
     # needs work
     
-#### DEBUG ----------------------------------------
-   # print('debugging')
-   # df <- asere
-   # instr <- c('Bass','Clave')
-   # beat <- 'SD'
-   # virtual <- 'Virtual.SD'
-   # pcols <- 2
-   # griddeviations = FALSE
-   # boxplot = FALSE
-   # colour = 'lightblue'
-
-#### FOR EACH INSTRUMENT, CALCULATE DEVIATION AND CREATE MATRIX -------------------
+    #### DEBUG ----------------------------------------
+    # print('debugging')
+    # df <- asere
+    # instr <- c('Bass','Clave')
+    # beat <- 'SD'
+    # virtual <- 'Virtual.SD'
+    # pcols <- 2
+    # griddeviations = FALSE
+    # boxplot = FALSE
+    # colour = 'lightblue'
+    
+    #### FOR EACH INSTRUMENT, CALCULATE DEVIATION AND CREATE MATRIX -------------------
     
     VSD <- group_by <- beatF <- summarise <- VSDR <- name <- label <- NULL
     
@@ -53,7 +53,7 @@ plot_by_beat <-
     s <- NULL
     #print(instr)
     for (k in 1:length(instr)) {
-    #  print(instr[k])
+      #  print(instr[k])
       tmp <- dplyr::select(df, c(instr[k], dplyr::all_of(beat), dplyr::all_of(virtual)))
       #  head(tmp)
       colnames(tmp) <- c('instr', 'beat', 'virtual')
@@ -65,12 +65,12 @@ plot_by_beat <-
       DF <- rbind(DF, tmp)
       # extra labelling
       tmp$beatF <- factor(tmp$beat)
-    #  print(str(tmp))
-#      s <- dplyr::summarise(dplyr::group_by(tmp, beatF), M = mean(VSDR * 100, na.rm = TRUE))
+      #  print(str(tmp))
+      #      s <- dplyr::summarise(dplyr::group_by(tmp, beatF), M = mean(VSDR * 100, na.rm = TRUE))
       s <- tmp %>%
         group_by(beatF) %>%
         summarise(M = mean(VSDR, na.rm = TRUE)*100)
-
+      
       s$Time <- min(DF$instr, na.rm = TRUE)
       s$name <- unique(tmp$name)
       S <- rbind(S, s)
@@ -92,8 +92,8 @@ plot_by_beat <-
         ggplot2::geom_point(size = pointsize, na.rm = TRUE,show.legend = FALSE,alpha=0.85) + # colour='black'
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instrument",
-                           palette = colourpalette,
-                           type = "div") +
+                                    palette = colourpalette,
+                                    type = "div") +
         ggplot2::facet_wrap( ~ name, ncol = pcols) +
         ggplot2::xlab(paste('Beat (', beat, ')', sep = '')) +
         ggplot2::scale_y_time()+
@@ -107,7 +107,8 @@ plot_by_beat <-
     
     ## PLOT with metrical grid deviations
     if (griddeviations == TRUE) {
-      S$label <- paste(round(S$M, digits = 0), '%', sep = '')
+#      S$label <- paste(round(S$M, digits = 0), '%', sep = '')
+      S$label <- paste0(ifelse(S$M >= 0, "+", ""), round(S$M, digits = 0), "%")
       S$beat <- as.integer(S$beatF)
       
       
@@ -119,8 +120,8 @@ plot_by_beat <-
         ggplot2::geom_point(size = pointsize, na.rm = TRUE,show.legend = FALSE,alpha=0.85) +
         ggplot2::scale_x_continuous(breaks = seq(1, max(DF$beat))) +
         ggplot2::scale_color_brewer(name = "Instr.",
-                           palette = colourpalette,
-                           type = "div") + 
+                                    palette = colourpalette,
+                                    type = "div") + 
         ggplot2::facet_wrap( ~ name, ncol = pcols) +
         ggplot2::xlab(paste('Beat (', beat, ')', sep = '')) +
         ggplot2::ylab('Time (s)') +
@@ -130,16 +131,17 @@ plot_by_beat <-
           data    = S,
           mapping = ggplot2::aes(x = beat, y = 5, label = label),
           hjust   = 0.5,
-          size = 4.0,
+          size = 2.0,
           angle = 0,
+          label.padding = ggplot2::unit(0.125, "lines"),
           fill = 'white',
           color = "black",
-          vjust   = -1
+          vjust   = 0.5
         )
       if(colourpalette=='Greys'){
         g1$layers[[1]]$aes_params$colour <-  "gray20"
       }
-    #  g1
+      #  g1
       
     }
     

@@ -107,7 +107,8 @@ plot_by_beat <-
     
     ## PLOT with metrical grid deviations
     if (griddeviations == TRUE) {
-      S$label <- paste(round(S$M, digits = 0), '%', sep = '')
+      S$label <- paste0(ifelse(S$M >= 0, "+", ""), round(S$M, digits = 0), "%")
+#      S$label <- paste(round(S$M, digits = 0), '%', sep = '')
       S$beat <- as.integer(S$beatF)
       
       
@@ -130,11 +131,12 @@ plot_by_beat <-
           data    = S,
           mapping = ggplot2::aes(x = beat, y = 5, label = label),
           hjust   = 0.5,
-          size = 4.0,
+          size = 2.0,
           angle = 0,
           fill = 'white',
+          label.padding = 0.15,
           color = "black",
-          vjust   = -1
+          vjust   = 0.5
         )
       if(colourpalette=='Greys'){
         g1$layers[[1]]$aes_params$colour <-  "gray20"

@@ -26,7 +26,7 @@ entering the following commands into R:
 
 ``` r
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("tuomaseerola/onsetsync")
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.8'
+#> [1] '0.4.9'
 ```
 
 ### Reading in data

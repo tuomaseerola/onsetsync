@@ -1,3 +1,7 @@
+# onsetsync 0.5.0
+
+* Revised `plot_by_beat` function for font size and position when `griddeviation` is used.
+
 # onsetsync 0.4.9
 
 * Added CONTRIBUTING.md to the repository

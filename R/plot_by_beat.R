@@ -135,7 +135,6 @@ plot_by_beat <-
           angle = 0,
           label.padding = ggplot2::unit(0.125, "lines"),
           fill = 'white',
-          label.padding = 0.15,
           color = "black",
           vjust   = 0.5
         )

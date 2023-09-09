@@ -126,8 +126,8 @@ These methods are based on asynchronies between onsets occurring at the same bea
 ## Availability and functionality
 
 ```{r secret_load, eval=TRUE, echo=FALSE}
-# LOADS THIS SECRECTLY FROM THE LOCAL FOLDER
-library(onsetsync)
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
+#library(onsetsync)
 ver <- packageVersion('onsetsync')
 ```
 
@@ -135,7 +135,7 @@ ver <- packageVersion('onsetsync')
 
 ```{r availability,eval=FALSE}
 library(devtools)
-devtools::install_github("tuomaseerola/onsetsync")
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE")
 library(onsetsync)
 ```
 

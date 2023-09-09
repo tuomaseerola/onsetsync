@@ -77,7 +77,7 @@ d_{i} = I_{1, i} - I_{2, i}
   asynchronies of any pair of instruments, which is
 
 \begin{equation}
-Sd = \sqrt\frac{\sum_{i=1}{(d_i-\bar{d})^2}}{n-1}
+SD = \sqrt\frac{\sum_{i=1}{(d_i-\bar{d})^2}}{n-1}
 \end{equation}
 
 *Groupwise asynchronization*: Root mean square (RMS) of the
@@ -220,11 +220,11 @@ print(plot_by_beat(df = CSS_Song2,
 
 ![Relative timing deviations from beat sub-divisions across the performance for guitar and tres.](paper_files/figure-latex/figure2-1.pdf) 
 
-Overall this suggests that these two instruments tend to play earlier when compared to the isochronous beat division of the cycle, although the guitar is tightly aligned (<2%) with the reference beat on every fourth beat subdivisions (subdivisions of 1, 5, 9, and 13), which are also the salient metrical positions. Similar fluctuations across the beat subdivisions are not evident in the tres, but the graph reveals that the tres tends to play a little earlier than guitar.
+Overall this suggests that these two instruments tend to play earlier when compared to the isochronous beat division of the cycle, although the guitar is tightly aligned (<2%) with the reference beat on every fourth beat subdivisions (subdivisions of 1, 5, 9, and 13), which are also the salient metrical positions. Similar fluctuations across the beat subdivisions are not evident in the tres, but the graph reveals that the tres tends to play a little earlier than the guitar.
 
 ## Synchrony between the instruments
 
-Let's determine the overall synchrony between specific instruments. Here we continue the analysis guitar and tres and calculate the asynchrony between them. 
+Let's determine the overall synchrony between specific instruments. Here we continue the analysis of the guitar and the tres and calculate the asynchrony between them. 
 
 
 ```r
@@ -239,7 +239,7 @@ dplyr::summarise(data.frame(d1),
 ## 1 853 12.53126 26.74134
 ```
 
-This analysis indicates that on average, the tres plays 13 ms ahead of the guitar, with a standard deviation of 27 ms. When one is comparing instruments that have radically different number of joint onsets (such as clave and bass in this example), it is possible to make the comparisons between the pairs of instruments easier by specifying a sample of onsets that will be taken from each instrument for the analysis. It also possible to establish the confidence intervals by bootstrapping the asynchrony calculations.
+This analysis indicates that on average, the tres plays 13 ms ahead of the guitar, with a standard deviation of 27 ms. When one is comparing instruments that have radically different number of joint onsets (such as the clave and the bass in this example), it is possible to make the comparisons between the pairs of instruments easier by specifying a sample of onsets that will be taken from each instrument for the analysis. It also possible to establish the confidence intervals by bootstrapping the asynchrony calculations.
 
 To carry out the comparison for all possible pairings of the instruments is possible with `sync_execute_pairs` function and the results can be visualised with a related function (`plot_by_pair`).
 
@@ -252,9 +252,9 @@ print(plot_by_pair(dn))
 
 ![Asynchronies across multiple instrument pairs.](paper_files/figure-latex/figure3-1.pdf) 
 
-In Figure 3 we see how different pairs of instruments have different asynchrony relationships; the bass is consistently ahead of the guitar, and clave and guitar play behind tres, to pick some of the extreme examples from the visualisation. The vertical lines stand for median asynchrony and the violin plot shows the distribution of onset time differences. 
+In Figure 3 we see how different pairs of instruments have different asynchrony relationships; the bass is consistently ahead of the guitar, and the clave and the guitar play behind the tres, to pick some of the extreme examples from the visualisation. The vertical lines stand for median asynchrony and the violin plot shows the distribution of onset time differences.
 
-We can calculate the classic measures of synchronization once the pairing has been done. Here are these measures calculated for the synchrony between bass and clave.
+We can calculate the classic measures of synchronization once the pairing has been done. Here are these measures calculated for the synchrony between the bass and the clave.
 
 
 ```r
@@ -271,7 +271,7 @@ print(t(summarise_sync(d)))
 
 The output suggests that at least in this piece, these two instruments tend to have the synchronization precision around 20 ms, depending on the method of calculation. Pairwise asynchronization is the standard deviation of the signed asynchrony; this tends to be highly correlated with the mean absolute asynchrony. The Mean pairwise asynchrony measure shows that on average, the clave plays 16 ms after the bass. 
 
-We can also calculate the relative asynchrony by comparing the onset times to the mean of the other instruments that we define. Here we compare the asynchrony of bass and clave to the mean of the rhythm section as defined by four instruments, guitar, bass, tres, and clave.
+We can also calculate the relative asynchrony by comparing the onset times to the mean of the other instruments that we define. Here we compare the asynchrony of the bass and the clave to the mean of the rhythm section as defined by the mean onset times of the four instruments.
 
 
 ```r
@@ -296,7 +296,7 @@ print(dl$`Mean pairwise asynchrony`)
 ## [1] 0.8796104
 ```
 
-The relative measure (mean relative asynchrony) shows that bass is ahead (i.e. -19 ms) of the mean of other instruments whereas clave is almost exactly in synchrony with the other instruments (<1 ms late). In different types of performances, musical pieces, instruments, and genres, the magnitude of these differences is highly variable [@clayton2020].
+The relative measure (mean relative asynchrony) shows that the bass is ahead (i.e. -19 ms) of the mean of other the instruments whereas the clave is almost exactly in synchrony with the other instruments (<1 ms late). In different types of performances, musical pieces, instruments, and genres, the magnitude of these differences is highly variable [@clayton2020].
 
 It is also possible to [calculate synchrony between instruments across beat sub-divisions](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html), [assess synchrony across multiple performances](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html), and [estimate and visualise synchrony with other variables](https://tuomaseerola.github.io/onsetsync/articles/advanced_topics.html). The library also comes with functionality to [analyse the periodicity of the onsets](https://tuomaseerola.github.io/onsetsync/articles/analysisis_of_periodicity.html) and [synthesising the onsets](https://tuomaseerola.github.io/onsetsync/articles/synthesise_onsets.html). 
 

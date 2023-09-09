@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.6.24)  14 AUG 2023 19:52
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.5)  9 SEP 2023 18:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
 LaTeX2e <2023-06-01> patch level 1
-L3 programming layer <2023-06-16>
+L3 programming layer <2023-08-29>
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -273,7 +273,7 @@ File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2023-05-16 v7.00y Hypertext links for LaTeX
+Package: hyperref 2023-07-08 v7.01b Hypertext links for LaTeX
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
@@ -299,7 +299,7 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 ) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 ) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2023-05-16 v2.51 Cross-referencing by name of section
+Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
@@ -313,13 +313,13 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 \Hy@linkcounter=\count286
 \Hy@pagecounter=\count287
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2023-05-16 v7.00y Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count288
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2023-05-16 v7.00y Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Hyper figures OFF on input line 4167.
 Package hyperref Info: Link nesting OFF on input line 4172.
@@ -360,7 +360,7 @@ package with kernel methods
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2023-05-16 v7.00y Hyperref driver for XeTeX
+File: hxetex.def 2023-07-08 v7.01b Hyperref driver for XeTeX
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
@@ -384,9 +384,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 Package hyperref Info: Option `colorlinks' set `true' on input line 12.
 Package hyperref Info: Option `breaklinks' set `true' on input line 12.
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2023/03/12 v3.6j Customizing captions (AR)
+Package: caption 2023/07/31 v3.6n Customizing captions (AR)
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2023/03/12 v2.4 caption3 kernel (AR)
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@tempdima=\dimen260
 \captionmargin=\dimen261
 \caption@leftmargin=\dimen262
@@ -731,7 +731,7 @@ Package biblatex Info: XeTeX detected.
 (biblatex)             Assuming input encoding 'utf8'.
 Package biblatex Info: Document encoding is UTF8 ....
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2023-06-16 L3 programming layer (loader) 
+Package: expl3 2023-08-29 L3 programming layer (loader) 
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
 \g__graphics_track_int=\count441
@@ -741,11 +741,11 @@ File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
 \g__pdf_backend_link_int=\count444
 ))
 Package biblatex Info: ... and expl3
-(biblatex)             2023-06-16 L3 programming layer (loader) 
+(biblatex)             2023-08-29 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2023-02-02 L3 Experimental document command parser
+Package: xparse 2023-08-29 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
 )) (/Users/tuomaseerola/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
@@ -1063,6 +1063,30 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
+Overfull \hbox (48.41139pt too wide) in paragraph at lines 456--456
+[]\TU/lmtt/m/n/10 ## -- R CMD build -----------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (1276.91139pt too wide) in paragraph at lines 457--457
+[]\TU/lmtt/m/n/10 ##      checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’ ...  v  checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’[] 
+ []
+
+
+Overfull \hbox (90.41139pt too wide) in paragraph at lines 459--459
+[]\TU/lmtt/m/n/10 ##      checking DESCRIPTION meta-information ...  v  checking DESCRIPTION meta-information[] 
+ []
+
+
+Overfull \hbox (27.41139pt too wide) in paragraph at lines 460--460
+[]\TU/lmtt/m/n/10 ##   -  checking for LF line-endings in source and make files and shell scripts[] 
+ []
+
+
+Overfull \hbox (27.41139pt too wide) in paragraph at lines 462--462
+[]\TU/lmtt/m/n/10 ##      WARNING: Removing directory ‘onsetsync/Meta’ which should only occur in[] 
+ []
+
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1073,42 +1097,42 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-Overfull \hbox (6.09764pt too wide) in paragraph at lines 572--573
+Overfull \hbox (6.09764pt too wide) in paragraph at lines 591--592
  []\TU/lmr/m/n/10 Isochronous.SD.Time
  []
 
 
-Overfull \hbox (6.09764pt too wide) in paragraph at lines 594--595
+Overfull \hbox (6.09764pt too wide) in paragraph at lines 613--614
  []\TU/lmr/m/n/10 Isochronous.SD.Time
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 598--598
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 617--617
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 599--599
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 618--618
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 600--600
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 619--619
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 601--601
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 620--620
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 602--602
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 621--621
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 603--603
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 622--622
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
@@ -1124,8 +1148,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 [4]
 File: paper_files/figure-latex/figure1-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/figure1-1.pdf>
-File: paper_files/figure-latex/figure2-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/figure2-1.pdf>
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1136,6 +1158,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [5]
+File: paper_files/figure-latex/figure2-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/figure2-1.pdf>
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1190,7 +1214,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 [10] (./paper.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
-L3 programming layer <2023-06-16>
+L3 programming layer <2023-08-29>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 914C143778E05CA40CEC935045EB2361;1716.
@@ -1199,11 +1223,11 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36931 strings out of 478375
- 754667 string characters out of 5839372
- 1874400 words of memory out of 5000000
- 56795 multiletter control sequences out of 15000+600000
- 520251 words of font info for 81 fonts, out of 8000000 for 9000
+ 36950 strings out of 477590
+ 755587 string characters out of 5817425
+ 1942438 words of memory out of 5000000
+ 57599 multiletter control sequences out of 15000+600000
+ 564933 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,13n,87p,1194b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 

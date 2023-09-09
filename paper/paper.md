@@ -126,13 +126,31 @@ These methods are based on asynchronies between onsets occurring at the same bea
 ## Availability and functionality
 
 
+```
+## Downloading GitHub repo tuomaseerola/onsetsync@R1
+```
 
-`onsetsync` is available at Github and can be loaded and installed using the code below. The current version is 0.4.8.
+```
+## 
+## -- R CMD build -----------------------------------------------------------------
+##      checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’ ...  v  checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’
+##   -  preparing ‘onsetsync’:
+##      checking DESCRIPTION meta-information ...  v  checking DESCRIPTION meta-information
+##   -  checking for LF line-endings in source and make files and shell scripts
+##   -  checking for empty or unneeded directories
+##      WARNING: Removing directory ‘onsetsync/Meta’ which should only occur in
+##      an installed package
+##   -  building ‘onsetsync_0.5.0.tar.gz’
+##      
+## 
+```
+
+`onsetsync` is available at Github and can be loaded and installed using the code below. The current version is 0.5.0.
 
 
 ```r
 library(devtools)
-devtools::install_github("tuomaseerola/onsetsync")
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
 library(onsetsync)
 ```
 

@@ -125,18 +125,17 @@ These methods are based on asynchronies between onsets occurring at the same bea
 
 ## Availability and functionality
 
-```{r secret_load, eval=TRUE, echo=FALSE}
-# LOADS THIS SECRECTLY FROM THE LOCAL FOLDER
-devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
+```{r secret_load, eval=TRUE, echo=FALSE,message=FALSE,warning=FALSE}
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE,quiet=TRUE)
 library(onsetsync)
 ver <- packageVersion('onsetsync')
 ```
 
 `onsetsync` is available at Github and can be loaded and installed using the code below. The current version is `r ver`.
 
-```{r availability,eval=FALSE}
+```{r availability,eval=FALSE,message=FALSE,warning=FALSE}
 library(devtools)
-devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
+devtools::install_github("tuomaseerola/onsetsync")
 library(onsetsync)
 ```
 

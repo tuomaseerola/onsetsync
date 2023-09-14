@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.5)  9 SEP 2023 18:38
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.5)  14 SEP 2023 08:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1063,30 +1063,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Overfull \hbox (48.41139pt too wide) in paragraph at lines 456--456
-[]\TU/lmtt/m/n/10 ## -- R CMD build -----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (1276.91139pt too wide) in paragraph at lines 457--457
-[]\TU/lmtt/m/n/10 ##      checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’ ...  v  checking for file ‘/private/var/folders/b0/vtr2rd_96119zlr64t5hvlgr0000gp/T/Rtmp8vZ9i2/remotesf1c234ff2303/tuomaseerola-onsetsync-ccc97fc/DESCRIPTION’[] 
- []
-
-
-Overfull \hbox (90.41139pt too wide) in paragraph at lines 459--459
-[]\TU/lmtt/m/n/10 ##      checking DESCRIPTION meta-information ...  v  checking DESCRIPTION meta-information[] 
- []
-
-
-Overfull \hbox (27.41139pt too wide) in paragraph at lines 460--460
-[]\TU/lmtt/m/n/10 ##   -  checking for LF line-endings in source and make files and shell scripts[] 
- []
-
-
-Overfull \hbox (27.41139pt too wide) in paragraph at lines 462--462
-[]\TU/lmtt/m/n/10 ##      WARNING: Removing directory ‘onsetsync/Meta’ which should only occur in[] 
- []
-
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1097,42 +1073,42 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-Overfull \hbox (6.09764pt too wide) in paragraph at lines 591--592
+Overfull \hbox (6.09764pt too wide) in paragraph at lines 572--573
  []\TU/lmr/m/n/10 Isochronous.SD.Time
  []
 
 
-Overfull \hbox (6.09764pt too wide) in paragraph at lines 613--614
+Overfull \hbox (6.09764pt too wide) in paragraph at lines 594--595
  []\TU/lmr/m/n/10 Isochronous.SD.Time
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 617--617
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 598--598
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 618--618
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 599--599
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 619--619
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 600--600
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 620--620
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 601--601
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 621--621
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 602--602
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
 
-Overfull \hbox (3.17294pt too wide) in paragraph at lines 622--622
+Overfull \hbox (3.17294pt too wide) in paragraph at lines 603--603
 []|\TU/lmr/m/n/10 Song_2|  
  []
 
@@ -1148,6 +1124,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 [4]
 File: paper_files/figure-latex/figure1-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/figure1-1.pdf>
+File: paper_files/figure-latex/figure2-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/figure2-1.pdf>
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1158,8 +1136,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [5]
-File: paper_files/figure-latex/figure2-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/figure2-1.pdf>
 File: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.2/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1225,7 +1201,7 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 Here is how much of TeX's memory you used:
  36950 strings out of 477590
  755587 string characters out of 5817425
- 1942438 words of memory out of 5000000
+ 1940438 words of memory out of 5000000
  57599 multiletter control sequences out of 15000+600000
  564933 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191

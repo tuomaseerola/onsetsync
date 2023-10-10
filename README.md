@@ -36,7 +36,7 @@ library(onsetsync)
 library(dplyr)
 library(ggplot2)
 packageVersion("onsetsync")
-#> [1] '0.4.9'
+#> [1] '0.5.1'
 ```
 
 ### Reading in data

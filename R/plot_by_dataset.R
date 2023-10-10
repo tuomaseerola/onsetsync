@@ -2,13 +2,13 @@
 #'
 #' This function plots the calculated asynchronies of instruments and labels these by instruments.
 #'
-#' @param df data frame to be processed
-#' @param asynchronies Variable name where the asynchronies are
-#' @param data Variable name where the beats are
+#' @param df data frame to be processed (required)
+#' @param asynchronies Variable name where the asynchronies are (required)
+#' @param data Variable name where the beats are (required)
 #' @param pcols Number of columns for multiple plots (default 1)
-#' @param box Do the graphics by boxplot
-#' @param colour colour for the boxplot
-#' @param colorpalette colourpalette for the boxplot
+#' @param box Do the graphics by boxplot (optional)
+#' @param colour colour for the boxplot (optional)
+#' @param colorpalette colourpalette for the boxplot (optional)
 #' @seealso \code{\link{plot_by_variable}}, \code{\link{plot_by_pair}}, \code{\link{plot_by_beat}}
 #' @return Graphic output
 #' @import ggplot2
@@ -24,11 +24,25 @@ plot_by_dataset <-
            colour = 'lightblue',
            colorpalette = 'Set2') {
     # T. Eerola, Durham University, IEMP project
+    # 23/1/2018
+    # needs work
+    
+    # for testing
+    # df<-asere
+    # instr<-c('Bass','Tres','Bell')
+    # beat<-'SD'
+    # virtual<-'Virtual.SD'
+    # pcols<-2
+    # box<-TRUE
+    # griddeviations<-FALSE
+    #print(data)
+    #print(asynchronies)
     asynch <- n <- NULL
     
     DF <- dplyr::select(df, asynchronies, data)
     colnames(DF) <- c('asynch', 'data')
-
+#    print(head(DF))
+    
     g1 <-
       ggplot2::ggplot(DF, ggplot2::aes(asynch, fill = data), colour = 'black') +
       ggplot2::geom_density(alpha = 1, show.legend = FALSE) +

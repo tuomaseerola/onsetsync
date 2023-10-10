@@ -2,29 +2,32 @@
 % Please edit documentation in R/add_isobeats.R
 \name{add_isobeats}
 \alias{add_isobeats}
-\title{Add isochronous beats to the file}
+\title{Add isochronous times or mean onset times to the data frame}
 \usage{
-add_isobeats(
-  df = NULL,
-  instr = NULL,
-  beat = NULL,
-  beatlabel = "Isochronous.SD.Time"
-)
+add_isobeats(df = NULL, instr = NULL, beat = NULL, beatlabel = "Iso.Time")
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed, where the minimal requirements are:
+(1) a reference time OR two or more instruments (instr input) and (2)
+beat sub-division (beat input)}
 
-\item{instr}{variable which contains the instruments}
+\item{instr}{required element that specifies how the reference time is constructed:
+if given two or more instruments, will create timings based on mean onset times of the instruments.
+if given one input as an argument, this is assumed to be an external cycle time and
+the reference time is then inferred from beat sub-divisions, cycles and mean onset times 
+of the first beat. Required input.}
 
-\item{beat}{variable which contains the beats}
+\item{beat}{Beat sub-divisions (required)}
 
-\item{beatlabel}{variable which labels the newly created beats}
+\item{beatlabel}{variable which labels the newly created beats (optional)}
 }
 \value{
-dataframe with added column of isochronous beats and cycle numbers
+dataframe with added column of isochronous beats ("Iso.Time") OR mean onset times ("Mean.Time")
 }
 \description{
-Add isochronous beats to a onset datafame based on beat levels and average onset of the 1st beat
+Given one instrument, this is the reference time which adds isochronous beats to a
+onset dataframe based on beat levels and average onset of the 1st beat.
+Given two or instruments, the mean onset time is added as a reference time.
 }
 \seealso{
 \code{\link{add_annotation}}

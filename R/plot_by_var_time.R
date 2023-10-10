@@ -4,15 +4,15 @@
 #' calculated asynchronies of instruments across time and
 #' another variable.
 #'
-#' @param df data frame to be processed
-#' @param var1 Variable 1 (Time)
-#' @param var2 Variable 2
+#' @param df data frame to be processed (required)
+#' @param var1 Variable 1 (Time)  (required)
+#' @param var2 Variable 2 (required)
 #' @param var3 Variable 3 (optional)
-#' @param colour Colour option
-#' @param smoothline_colour Colour option
-#' @param xlabel label for X axis
-#' @param ylabel label for Y axis
-#' @param zlabel label for Z axis
+#' @param colour Colour option (optional)
+#' @param smoothline_colour Colour option (optional)
+#' @param xlabel label for X axis (optional)
+#' @param ylabel label for Y axis (optional)
+#' @param zlabel label for Z axis (optional)
 #' @return Graphic output
 #' @seealso \code{\link{sync_sample_paired}} for synchronies between
 #' instruments, \code{\link{plot_by_beat}} for plotting.

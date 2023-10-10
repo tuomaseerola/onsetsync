@@ -7,7 +7,7 @@
 summarise_sync(df = NULL)
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 }
 \value{
 Integer output

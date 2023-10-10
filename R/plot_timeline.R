@@ -2,8 +2,8 @@
 #'
 #' This function plots the calculated asynchronies of instruments and labels these by instruments.
 #'
-#' @param data data frame to be processed
-#' @param instr Instrument name to be processed
+#' @param data data frame to be processed (required)
+#' @param instr Instrument name to be processed (required)
 #' @param ampl Amplitude of the onsets (optional)
 #' @param grouping Grouping factor (optional)
 #' @seealso \code{\link{plot_by_variable}}

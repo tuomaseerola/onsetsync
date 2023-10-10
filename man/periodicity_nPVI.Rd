@@ -7,9 +7,9 @@
 periodicity_nPVI(df = NULL, instr = NULL)
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{instr}{Instrument to be processed}
+\item{instr}{Instrument to be processed (required)}
 }
 \value{
 integer value

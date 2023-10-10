@@ -2,8 +2,8 @@
 #'
 #' Converts period in seconds to BPM
 #'
-#' @param period data frame to be processed
-#' @param beats_per_minute baseline assumption of how many beats there are in min.
+#' @param period data frame to be processed (required)
+#' @param beats_per_minute baseline assumption of how many beats there are in minute (default 60)
 #' @seealso \code{\link{summarise_periodicity}},\code{\link{periodicity}}
 #' @return Numeric output
 #' @export

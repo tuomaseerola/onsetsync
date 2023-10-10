@@ -1,3 +1,11 @@
+# onsetsync 0.5.1
+
+* Revised `plot_by_beat` function and made the documentation more explicit on required input parameters and the minimal data frame representation.
+
+* Clarified `add_isobeats.R` function to create either mean onset time from the given 2 or more instruments or if the instrument input is just one (reference time for cycles), then the function calculates the beat sub-divisions based on the external reference time (annotation). The output column is either `Mean.Time` or `Iso.Time` (for latter case).
+
+* added `minimal_representation` article/vignette.
+
 # onsetsync 0.5.0
 
 * Revised `plot_by_beat` function for font size and position when `griddeviation` is used.

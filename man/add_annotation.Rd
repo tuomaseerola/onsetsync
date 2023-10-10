@@ -7,7 +7,7 @@
 add_annotation(df = NULL, annotation = NULL, time = NULL, reference = NULL)
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
 \item{annotation}{Annotation (cycle starts) to be added}
 

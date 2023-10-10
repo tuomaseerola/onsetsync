@@ -2,11 +2,11 @@
 #'
 #' This is a conversion function that turns onsets into sampled time-series.
 #'
-#' @param data Data frame to be processed with discrete time points (onsets)
+#' @param data Data frame to be processed with discrete time points (required)
 #' @param sr Sampling rate (default 500 Hz)
 #' @param wlen Window length of percentage of the sr (default 4)
-#' @param plot If a plot is needed
-#' @param time Time samples to be included in the output
+#' @param plot If a plot is needed (optional)
+#' @param time Time samples to be included in the output (optional)
 #' @return Output contain vector of onset times
 #' @import signal
 #' @import ggplot2

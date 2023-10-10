@@ -18,7 +18,10 @@ plot_by_beat(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed, where the minimal requirements are:
+(1) two or more instruments (`instr`), (2) beat sub-division (`beat`), and
+(3) reference timing (`virtual`), which can be either isochronous OR mean times, 
+possibly created by [add_isobeat()]. See vignette("minimal-representation", package = "onsetsync").}
 
 \item{instr}{Instrument name to be processed}
 
@@ -26,15 +29,16 @@ plot_by_beat(
 
 \item{virtual}{Variable name where the virtual beats are}
 
-\item{pcols}{Number of columns for multiple plots}
+\item{pcols}{Number of columns for multiple plots (optional)}
 
-\item{griddeviations}{Add deviation from the virtual beats in}
+\item{griddeviations}{Add deviation from the virtual beats  (optional)}
 
-\item{boxplot}{Do the graphics by boxplot}
+\item{boxplot}{Do the graphics by boxplot  (optional)}
 
-\item{colour}{colour for the boxplot}
+\item{colour}{colour for the boxplot  (optional)}
 
-\item{colourpalette}{colors for dots in the timeline, use 'grey' for bw}
+\item{colourpalette}{colors for dots in the timeline, use 'grey' for bw
+(optional)}
 
 \item{pointsize}{size of the dots (defaults 1)}
 }
@@ -42,5 +46,6 @@ plot_by_beat(
 Graphic output
 }
 \description{
-This function plots the calculated asynchronies of instruments and labels these by instruments.
+This function plots the calculated asynchronies of instruments and labels
+these by instruments.
 }

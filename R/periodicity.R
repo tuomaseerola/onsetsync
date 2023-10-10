@@ -2,14 +2,14 @@
 #'
 #' This function plots the calculated asynchronies of instruments and labels these by instruments.
 #'
-#' @param df data frame to be processed
-#' @param instr Instrument name to be processed
+#' @param df data frame to be processed  (required)
+#' @param instr Instrument name to be processed  (required)
 #' @param method Periodicity analysis method: per (default), diff, acf, or fft
-#' @param sampling_rate Sampling rate (Hz)
-#' @param freq_range Frequency range to be included in the periodicity analysis (in seconds)
-#' @param resolution Resolution for some of the analyses (in seconds)
-#' @param colour Line colour for plotting 
-#' @param title Title for plotting
+#' @param sampling_rate Sampling rate (Hz), default 500 Hz
+#' @param freq_range Frequency range to be included in the periodicity analysis (in seconds), default 0 to 2
+#' @param resolution Resolution for some of the analyses (in seconds), default 0.01
+#' @param colour Line colour for plotting (optional)
+#' @param title Title for plotting (optional)
 #' @seealso \code{\link{summarise_periodicity}}
 #' @return Graphic output
 #' @export

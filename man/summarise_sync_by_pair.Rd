@@ -7,7 +7,8 @@
 summarise_sync_by_pair(df, bybeat = FALSE, adjust = "bonferroni")
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed, where the minimal requirements are:
+(1) two or more instruments (`instr`) and (2) beat sub-division (`beat`)}
 
 \item{bybeat}{logical value whether beat information is used}
 

@@ -31,7 +31,7 @@ packageVersion("onsetsync")
 ```
 ### Reading in data
 
-Read onsets of one Cuban Son performance titled _Palo Santo_ from _IEMP_ dataset at [https://osf.io/sfxa2/](https://osf.io/sfxa2/). This song has the onsets and the annotations about the metric cycles already extracted and defined and **comes with the package**.
+Read onsets of one Cuban Son performance titled _Palo Santo_ from _IEMP_ dataset at [https://osf.io/sfxa2/](https://osf.io/sfxa2/). This song has the onsets and the annotations about the metric cycles already extracted and defined and *comes with the package*.
 
 Go and <A HREF="https://osf.io/z9uxs/" target="_blank">listen to the song at OSF</A>.
 
@@ -42,7 +42,7 @@ CSS_Song2 <- dplyr::select(CSS_Song2,Label.SD,SD,Clave,Bass,Guitar,Tres,
 print(knitr::kable(head(CSS_Song2),format = "simple",digits = 2))
 ```
 
-Reading data from is easy either from CSV files in your computer or directly from OSF using `get_OSF_csv` function. 
+Reading data from is easy either from CSV files in your computer (using `read.csv` function) or directly from OSF using `get_OSF_csv` function that comes with the library. 
 
 ### Visualise onsets structures
 

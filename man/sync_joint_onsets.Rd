@@ -7,11 +7,11 @@
 sync_joint_onsets(df = NULL, instr1 = NULL, instr2 = NULL)
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{instr1}{Instrument 1 name to be processed}
+\item{instr1}{Instrument 1 name to be processed (required)}
 
-\item{instr2}{Instrument 2 name to be processed}
+\item{instr2}{Instrument 2 name to be processed (required)}
 }
 \value{
 List containing asynchronies and beat structures

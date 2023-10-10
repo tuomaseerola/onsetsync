@@ -4,12 +4,12 @@
 #' summarises the time difference between successive onsets
 #' across instruments.
 #'
-#' @param df data frame to be processed
-#' @param instr Instrument names to be processed
-#' @param filter_lower Lower limit for onset differences to be summarised
-#' @param filter_upper Upper limit for onset differences to be summarised
-#' @param binw bin width for histogram
-#' @param plot Option for plotting (FALSE default)
+#' @param df data frame to be processed (required)
+#' @param instr Instrument names to be processed  (required)
+#' @param filter_lower Lower limit for onset differences to be summarised (default 0)
+#' @param filter_upper Upper limit for onset differences to be summarised (default 2)
+#' @param binw bin width for histogram (default 0.25)
+#' @param plot Option for plotting (defaul FALSE)
 #' @return Output contain summarises of the onset differences
 #' @import ggplot2
 #' @import tidyr

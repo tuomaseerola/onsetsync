@@ -2,7 +2,8 @@
 #'
 #' This function calculates simple t-test of the asynchronies of instruments (whether they differ from zero)
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed, where the minimal requirements are:
+#' (1) two or more instruments (`instr`) and (2) beat sub-division (`beat`)
 #' @param bybeat logical value whether beat information is used
 #' @param adjust Adjust p values with Bonferroni correction (default)
 #' @seealso \code{\link{sync_sample_paired}}, \code{\link{sync_execute_pairs}}

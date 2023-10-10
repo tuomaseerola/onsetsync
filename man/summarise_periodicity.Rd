@@ -7,7 +7,7 @@
 summarise_periodicity(data = NULL, method = "max")
 }
 \arguments{
-\item{data}{data frame to be processed}
+\item{data}{data frame to be processed (required)}
 
 \item{method}{method of choosing the peaks (max default, or first)}
 }

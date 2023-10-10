@@ -15,19 +15,19 @@ plot_by_dataset(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{asynchronies}{Variable name where the asynchronies are}
+\item{asynchronies}{Variable name where the asynchronies are (required)}
 
-\item{data}{Variable name where the beats are}
+\item{data}{Variable name where the beats are (required)}
 
 \item{pcols}{Number of columns for multiple plots (default 1)}
 
-\item{box}{Do the graphics by boxplot}
+\item{box}{Do the graphics by boxplot (optional)}
 
-\item{colour}{colour for the boxplot}
+\item{colour}{colour for the boxplot (optional)}
 
-\item{colorpalette}{colourpalette for the boxplot}
+\item{colorpalette}{colourpalette for the boxplot (optional)}
 }
 \value{
 Graphic output

@@ -2,9 +2,9 @@
 #'
 #' taken N samples of two instruments (where they both have onsets)
 #'
-#' @param df data frame to be processed
-#' @param instr1 Instrument 1 name to be processed
-#' @param instr2 Instrument 2 name to be processed
+#' @param df data frame to be processed (required)
+#' @param instr1 Instrument 1 name to be processed (required)
+#' @param instr2 Instrument 2 name to be processed (required)
 #' @param n Number of samples to be drawn from the pool of joint onsets. If 0, do not sample (default)
 #' @param bootn How many bootstraps are drawn (default none, which is 1)
 #' @param beat Beat structure (subdivisions) to be included

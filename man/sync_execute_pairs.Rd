@@ -13,18 +13,19 @@ sync_execute_pairs(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed, where the minimal requirements is
+two or more instruments (instruments)}
 
-\item{instruments}{Instrument names to be processed}
+\item{instruments}{Two of more instruments (required)}
 
-\item{n}{Number of samples to be drawn from the pool of joint onsets}
+\item{n}{Number of samples to be drawn from the pool of joint onsets (default 0)}
 
-\item{bootn}{How many bootstraps are drawn (NULL default)}
+\item{bootn}{How many bootstraps are drawn (default=NULL)}
 
-\item{beat}{Beat structure (subdivisions) to be included}
+\item{beat}{Beat structure (subdivisions) to be included (default=NULL)}
 }
 \value{
-Output contain asynchronies and beat levels
+Output containing asynchronies and beat levels
 }
 \description{
 \code{sync_execute_pairs} is a meta-function that

@@ -16,21 +16,21 @@ periodicity(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed  (required)}
 
-\item{instr}{Instrument name to be processed}
+\item{instr}{Instrument name to be processed  (required)}
 
 \item{method}{Periodicity analysis method: per (default), diff, acf, or fft}
 
-\item{sampling_rate}{Sampling rate (Hz)}
+\item{sampling_rate}{Sampling rate (Hz), default 500 Hz}
 
-\item{freq_range}{Frequency range to be included in the periodicity analysis (in seconds)}
+\item{freq_range}{Frequency range to be included in the periodicity analysis (in seconds), default 0 to 2}
 
-\item{resolution}{Resolution for some of the analyses (in seconds)}
+\item{resolution}{Resolution for some of the analyses (in seconds), default 0.01}
 
-\item{colour}{Line colour for plotting}
+\item{colour}{Line colour for plotting (optional)}
 
-\item{title}{Title for plotting}
+\item{title}{Title for plotting (optional)}
 }
 \value{
 Graphic output

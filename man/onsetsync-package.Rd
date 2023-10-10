@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-This package help to calculate and visualise onset data. The emphasis is on comparing onsets between performers in the same ensemble, in other words, how well the performers synchronise to each other. There are also some routines to estimate to periodicity of the onsets.
+Helps to calculate and visualise onset data. The emphasis is on comparing onsets between performers in the same ensemble, in other words, how well the performers synchronise to each other. There are also some routines to estimate to periodicity of the onsets.
 }
 \author{
 \strong{Maintainer}: Tuomas Eerola \email{tuomas.eerola@durham.ac.uk}

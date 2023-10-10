@@ -14,17 +14,17 @@ summarise_onsets(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{instr}{Instrument names to be processed}
+\item{instr}{Instrument names to be processed  (required)}
 
-\item{filter_lower}{Lower limit for onset differences to be summarised}
+\item{filter_lower}{Lower limit for onset differences to be summarised (default 0)}
 
-\item{filter_upper}{Upper limit for onset differences to be summarised}
+\item{filter_upper}{Upper limit for onset differences to be summarised (default 2)}
 
-\item{binw}{bin width for histogram}
+\item{binw}{bin width for histogram (default 0.25)}
 
-\item{plot}{Option for plotting (FALSE default)}
+\item{plot}{Option for plotting (defaul FALSE)}
 }
 \value{
 Output contain summarises of the onset differences

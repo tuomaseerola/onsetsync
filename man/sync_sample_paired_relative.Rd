@@ -12,13 +12,13 @@ sync_sample_paired_relative(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{instr}{Instrument name to be processed}
+\item{instr}{Instrument name to be processed (required)}
 
-\item{instr_ref}{Instrument reference names to be processed}
+\item{instr_ref}{Instrument reference names or reference timing to be processed (required)}
 
-\item{beat}{Beat structure (subdivisions) to be included}
+\item{beat}{Beat structure (subdivisions) to be included (required)}
 }
 \value{
 difference in ms

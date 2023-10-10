@@ -2,8 +2,8 @@
 #'
 #' Take the specified instruments and create wave file with sounds where the onsets are
 #'
-#' @param data data frame to be processed
-#' @param instruments Instruments names to be included
+#' @param data data frame to be processed (required)
+#' @param instruments Instruments names to be included (required)
 #' @param sr sampling rate (default 22050)
 #' @param dur duration of sounds (default 30 ms)
 #' @param type type of sounds (default noise, try click or synth from seewave)

@@ -26,7 +26,7 @@ entering the following commands into R:
 
 ``` r
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
+devtools::install_github("tuomaseerola/onsetsync",force = TRUE)
 ```
 
 ## Usage

@@ -7,7 +7,7 @@
 plot_by_variable(df, meta = "empty", xlab = "Tempo")
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
 \item{meta}{Variable information (Pair of instrument names, for instance)}
 

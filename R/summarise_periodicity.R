@@ -2,7 +2,7 @@
 #'
 #' This function plots the calculated asynchronies of instruments and labels these by instruments.
 #'
-#' @param data data frame to be processed
+#' @param data data frame to be processed (required)
 #' @param method method of choosing the peaks (max default, or first)
 #' @return Graphic output
 #' @seealso \code{\link{periodicity}}

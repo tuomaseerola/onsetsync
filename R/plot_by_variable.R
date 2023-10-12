@@ -4,7 +4,7 @@
 #' calculated asynchronies of instruments across
 #' another variable.
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed (required)
 #' @param meta Variable information (Pair of instrument names, for instance)
 #' @param xlab label for X axis
 #' @return Graphic output

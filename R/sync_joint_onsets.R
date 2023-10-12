@@ -2,9 +2,9 @@
 #'
 #' Calculate the number of joint onsets for two instruments
 #'
-#' @param df data frame to be processed
-#' @param instr1 Instrument 1 name to be processed
-#' @param instr2 Instrument 2 name to be processed
+#' @param df data frame to be processed (required)
+#' @param instr1 Instrument 1 name to be processed (required)
+#' @param instr2 Instrument 2 name to be processed (required)
 #' @seealso \code{\link{sync_execute_pairs}}
 #' @return List containing asynchronies and beat structures
 #' @export

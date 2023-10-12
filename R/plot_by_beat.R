@@ -1,16 +1,21 @@
 #' Plot synchronies by beat structures
 #'
-#' This function plots the calculated asynchronies of instruments and labels these by instruments.
+#' This function plots the calculated asynchronies of instruments and labels
+#' these by instruments.
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed, where the minimal requirements are:
+#' (1) two or more instruments (`instr`), (2) beat sub-division (`beat`), and
+#' (3) reference timing (`virtual`), which can be either isochronous OR mean times, 
+#' possibly created by [add_isobeat()]. See vignette("minimal-representation", package = "onsetsync").
 #' @param instr Instrument name to be processed
 #' @param beat Variable name where the beats are
 #' @param virtual Variable name where the virtual beats are
-#' @param pcols Number of columns for multiple plots 
-#' @param griddeviations Add deviation from the virtual beats in 
-#' @param boxplot Do the graphics by boxplot
-#' @param colour colour for the boxplot
+#' @param pcols Number of columns for multiple plots (optional)
+#' @param griddeviations Add deviation from the virtual beats  (optional)
+#' @param boxplot Do the graphics by boxplot  (optional)
+#' @param colour colour for the boxplot  (optional)
 #' @param colourpalette colors for dots in the timeline, use 'grey' for bw
+#'   (optional)
 #' @param pointsize size of the dots (defaults 1)
 #' @return Graphic output
 #' @import ggplot2
@@ -57,10 +62,11 @@ plot_by_beat <-
       tmp <- dplyr::select(df, c(instr[k], dplyr::all_of(beat), dplyr::all_of(virtual)))
       #  head(tmp)
       colnames(tmp) <- c('instr', 'beat', 'virtual')
+      IBI<-median(diff(tmp$virtual))
       tmp <-
         dplyr::mutate(tmp, VSD = instr - virtual)  # absolute time difference
       tmp <-
-        dplyr::mutate(tmp, VSDR = VSD / (virtual - dplyr::lag(virtual)))  # proportion of interbeat
+        dplyr::mutate(tmp, VSDR = VSD / (virtual - dplyr::lag(virtual,default = IBI)))  # proportion of interbeat
       tmp$name <- instr[k]
       DF <- rbind(DF, tmp)
       # extra labelling
@@ -79,8 +85,8 @@ plot_by_beat <-
     DF$name <- factor(DF$name) # TURN names INTO A FACTOR
     S$name <- factor(S$name) # TURN names INTO A FACTOR
     
-    DF <- tidyr::drop_na(DF)
-    
+    #DF <- tidyr::drop_na(DF) # Do not drop NAs
+    #print(DF)
     ## PLOT
     if (griddeviations == FALSE) {
       #  print('false...')
@@ -96,8 +102,8 @@ plot_by_beat <-
                                     type = "div") +
         ggplot2::facet_wrap( ~ name, ncol = pcols) +
         ggplot2::xlab(paste('Beat (', beat, ')', sep = '')) +
-        ggplot2::scale_y_time()+
-        ggplot2::ylab('Time (s)') +
+        ggplot2::scale_y_time() +
+        ggplot2::ylab('Time (HH:MM:SS)') +
         ggplot2::theme_linedraw()
       g1
       if(colourpalette=='Greys'){

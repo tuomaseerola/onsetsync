@@ -7,7 +7,7 @@
 plot_by_pair(df = NULL, bybeat = FALSE, reference = 0, colourpalette = "Set2")
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
 \item{bybeat}{Optional (FALSE by default) which adds the beats to the plot}
 

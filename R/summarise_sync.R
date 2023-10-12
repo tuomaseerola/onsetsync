@@ -2,7 +2,7 @@
 #'
 #' This function summarises the calculated asynchronies.
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed (required)
 #' @return Integer output
 #' @import tidyr
 #' @import magrittr

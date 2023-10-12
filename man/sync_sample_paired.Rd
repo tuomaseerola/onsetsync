@@ -15,11 +15,11 @@ sync_sample_paired(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{instr1}{Instrument 1 name to be processed}
+\item{instr1}{Instrument 1 name to be processed (required)}
 
-\item{instr2}{Instrument 2 name to be processed}
+\item{instr2}{Instrument 2 name to be processed (required)}
 
 \item{n}{Number of samples to be drawn from the pool of joint onsets. If 0, do not sample (default)}
 

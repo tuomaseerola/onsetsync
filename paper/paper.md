@@ -127,7 +127,7 @@ These methods are based on asynchronies between onsets occurring at the same bea
 
 
 
-`onsetsync` is available at Github and can be loaded and installed using the code below. The current version is 0.4.8.
+`onsetsync` is available at Github and can be loaded and installed using the code below. The current version is 0.5.0.
 
 
 ```r

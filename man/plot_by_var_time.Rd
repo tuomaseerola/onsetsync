@@ -17,23 +17,23 @@ plot_by_var_time(
 )
 }
 \arguments{
-\item{df}{data frame to be processed}
+\item{df}{data frame to be processed (required)}
 
-\item{var1}{Variable 1 (Time)}
+\item{var1}{Variable 1 (Time)  (required)}
 
-\item{var2}{Variable 2}
+\item{var2}{Variable 2 (required)}
 
 \item{var3}{Variable 3 (optional)}
 
-\item{colour}{Colour option}
+\item{colour}{Colour option (optional)}
 
-\item{smoothline_colour}{Colour option}
+\item{smoothline_colour}{Colour option (optional)}
 
-\item{xlabel}{label for X axis}
+\item{xlabel}{label for X axis (optional)}
 
-\item{ylabel}{label for Y axis}
+\item{ylabel}{label for Y axis (optional)}
 
-\item{zlabel}{label for Z axis}
+\item{zlabel}{label for Z axis (optional)}
 }
 \value{
 Graphic output

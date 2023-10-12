@@ -7,9 +7,9 @@
 period_to_BPM(period = NULL, beats_per_minute = 60)
 }
 \arguments{
-\item{period}{data frame to be processed}
+\item{period}{data frame to be processed (required)}
 
-\item{beats_per_minute}{baseline assumption of how many beats there are in min.}
+\item{beats_per_minute}{baseline assumption of how many beats there are in minute (default 60)}
 }
 \value{
 Numeric output

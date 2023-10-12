@@ -1,0 +1,76 @@
+---
+title: "Minimal representation"
+output: rmarkdown::html_vignette
+description: >
+  What is the minimal representation required for functions.
+vignette: >
+  %\VignetteIndexEntry{Minimal representation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+What is the minimal amount of representation for the common functions? It depends on the function and the purpose of the analysis, but here we document three minimal cases: One with just pair of onsets, the same with a reference time (mean onset time), and an example with an external timing of the cycles.
+
+## Minimal example: Onsets of two instruments and a beat sub-division
+
+We assume the minimal case will be two instruments playing together. Here we create 8 joint onsets tapping in isochrony around twice a second with a random variation. We also assume that there is a beat division representing common time (4 beats/cycle), although the existence of the beat sub-division (`SD`) does not need to reflect any particular cycle, it could also be just a sequence of numbers.
+
+```{r create-minimal1, warning=FALSE,message=FALSE,results='asis'}
+library(onsetsync)
+set.seed(12345) # to create the same random variation every time
+ex <- data.frame(SD = rep(1:4,2), 
+                 instr1 = rep(0:7/2)+runif(8,min = -0.02,max=0.02), 
+                 instr2 = rep(0:7/2) + runif(8,min = -0.02,max=0.02)
+                 )
+print(knitr::kable(ex))
+```
+
+Here we have two instruments (`instr1` and `instr2`) and a simple beat sub-division (`SD`). Note that beat sub-division do not need to be specific, it could be a column of numbers (you could create such a column with `ex$SD <- 1:nrow(ex)` if you only have onsets, nothing else). For the basic analysis of synchrony, this is already sufficient for the calculation of asynchronies.
+
+```{r analyse-minimal}
+d <- sync_sample_paired(ex,'instr1','instr2', beat = 'SD')
+print(paste('Mean absolute asynchrony:', round(mean(abs(d$asynch*1000)),0),'ms'))
+```
+
+## Minimal example with a reference time
+
+Let's add a **reference time** for a minimal representation that is required for plotting. Here we create a reference time which is the mean of the instrument onsets using `add_isobeats()` function.
+
+```{r add-minimal,results='asis'}
+ex1 <- add_isobeats(ex, instr = c("instr1","instr2"), beat = "SD")
+print(knitr::kable(head(ex1,4)))
+```
+
+This representation (_two instruments_, _beat sub-divisions_, and _a reference timing_) is the minimal representation for many plotting functions (e.g., `plot_by_beat()`). The explicit reference time (`Mean.Time`) is used in plotting.
+
+```{r graph-minimal,warning=FALSE,message=FALSE,fig.width=6}
+library(dplyr)
+library(ggplot2)
+g1 <- plot_by_beat(ex1, instr = c("instr1","instr2"), beat = "SD",virtual = 'Mean.Time')
+g1
+```
+
+## Minimal example with an external reference time (annotations of cycles)
+
+Sometimes you might have independent information (through annotations) about the timing of the sub-divisions and how they relate to cycles. Let's create this scenario and add `Cycle` information and timing (`CycleTime`). 
+
+```{r create-minimal2, results='asis'}
+ex2 <- cbind(ex, Cycle = c(rep(1,4),rep(2,4)), CycleTime=NA) # add cycle
+ex2$CycleTime[seq(1, 8, by = 4)] <- seq(0, 2, by = 2) # add cycle time for beginnings
+ex2 <- rbind(ex2,data.frame(Cycle = 3, SD = 1, # add beginning of the 3rd cycle
+                            instr1 = 4, instr2 = 4, CycleTime = 4)) 
+print(knitr::kable(ex2))
+```
+
+Now we add the timing of the onsets across beat sub-divisions (`SD`) based on this external `CycleTime`. The outcome of the `add_isobeats()` will now be called `Iso.Time`, although you can rename it with `beatlabel` option.
+
+```{r add-minimal2, results='asis'}
+ex2 <- add_isobeats(ex2, instr = "CycleTime", beat = "SD")
+print(knitr::kable(head(ex2,4)))
+```
+
+```{r graph-minimal2,warning=FALSE,message=FALSE,fig.width=6}
+g2 <- plot_by_beat(ex2, instr = c("instr1","instr2"), beat = "SD", virtual = 'Iso.Time')
+g2
+```
+

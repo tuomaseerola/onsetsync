@@ -2,7 +2,7 @@
 #'
 #' This function plots the calculated asynchronies of instrument pairs.
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed (required)
 #' @param bybeat Optional (FALSE by default) which adds the beats to the plot
 #' @param reference Optional (0 by default) which adds the reference line to the plot
 #' @param colourpalette Optional colour palette, Default 'PuOr' (Purple to Orange)

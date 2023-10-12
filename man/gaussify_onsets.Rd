@@ -7,15 +7,15 @@
 gaussify_onsets(data = NULL, sr = 500, wlen = 0.04, plot = FALSE, time = TRUE)
 }
 \arguments{
-\item{data}{Data frame to be processed with discrete time points (onsets)}
+\item{data}{Data frame to be processed with discrete time points (required)}
 
 \item{sr}{Sampling rate (default 500 Hz)}
 
 \item{wlen}{Window length of percentage of the sr (default 4)}
 
-\item{plot}{If a plot is needed}
+\item{plot}{If a plot is needed (optional)}
 
-\item{time}{Time samples to be included in the output}
+\item{time}{Time samples to be included in the output (optional)}
 }
 \value{
 Output contain vector of onset times

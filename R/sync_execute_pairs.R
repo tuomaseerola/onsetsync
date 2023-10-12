@@ -5,12 +5,13 @@
 #' instruments. One can specify the same options as in
 #' \code{sync_sample_paired}.
 #'
-#' @param df data frame to be processed
-#' @param instruments Instrument names to be processed
-#' @param n Number of samples to be drawn from the pool of joint onsets
-#' @param bootn How many bootstraps are drawn (NULL default)
-#' @param beat Beat structure (subdivisions) to be included
-#' @return Output contain asynchronies and beat levels
+#' @param df data frame to be processed, where the minimal requirements is
+#' two or more instruments (instruments)
+#' @param instruments Two of more instruments (required)
+#' @param n Number of samples to be drawn from the pool of joint onsets (default 0)
+#' @param bootn How many bootstraps are drawn (default=NULL)
+#' @param beat Beat structure (subdivisions) to be included (default=NULL)
+#' @return Output containing asynchronies and beat levels
 #' @seealso \code{\link{sync_sample_paired}}
 #' @import ggplot2
 #' @import tidyr

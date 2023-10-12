@@ -14,9 +14,9 @@ synthesise_onsets(
 )
 }
 \arguments{
-\item{data}{data frame to be processed}
+\item{data}{data frame to be processed (required)}
 
-\item{instruments}{Instruments names to be included}
+\item{instruments}{Instruments names to be included (required)}
 
 \item{sr}{sampling rate (default 22050)}
 

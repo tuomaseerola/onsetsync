@@ -2,7 +2,7 @@
 #'
 #' This function adds cycle start times from annotations to onsets
 #'
-#' @param df data frame to be processed
+#' @param df data frame to be processed (required)
 #' @param annotation Annotation (cycle starts) to be added
 #' @param time Annotated times of the cycle starts to be added
 #' @param reference The target column (Label.SD) for cycles in IEMP data

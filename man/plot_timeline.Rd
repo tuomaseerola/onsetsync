@@ -7,9 +7,9 @@
 plot_timeline(data = NULL, instr = NULL, ampl = NULL, grouping = NULL)
 }
 \arguments{
-\item{data}{data frame to be processed}
+\item{data}{data frame to be processed (required)}
 
-\item{instr}{Instrument name to be processed}
+\item{instr}{Instrument name to be processed (required)}
 
 \item{ampl}{Amplitude of the onsets (optional)}
 

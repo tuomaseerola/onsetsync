@@ -10,8 +10,8 @@
 #' whether the prosody of different languages is also reflected in music. There is 
 #' a clear difference between a sample of works by French and English composers.
 #' 
-#' @param df data frame to be processed
-#' @param instr Instrument to be processed
+#' @param df data frame to be processed (required)
+#' @param instr Instrument to be processed (required)
 #' @return integer value
 #' @export
 #' @import tidyr

@@ -19,10 +19,17 @@ These analyses are the ones reported in paper titled "onsetsync: An R Package fo
 
 ## Load libraries
 
-```{r,warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE,eval=FALSE}
 library(dplyr)
 library(ggplot2)
 devtools::install_github("tuomaseerola/onsetsync")
+library(onsetsync)
+packageVersion("onsetsync")
+```
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+library(dplyr)
+library(ggplot2)
 library(onsetsync)
 packageVersion("onsetsync")
 ```
@@ -174,5 +181,7 @@ CSS_Song2 <- CSS_Song2 %>%
 d2 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", beat = 'Tempo')
 d3 <- sync_sample_paired(CSS_Song2,"Tres","Guitar", beat = 'Isochronous.SD.Time')
 tmp <- data.frame(asynch = d2$asynch*1000, Tempo = d2$beatL, Time = d3$beatL)
+fig<-plot_by_var_time(tmp,var1 = "Time", var2="asynch",var3="Tempo",ylabel='Synchrony (ms)')
+print(fig)
 ```
 

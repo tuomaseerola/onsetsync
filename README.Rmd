@@ -30,7 +30,7 @@ entering the following commands into R:
 
 ```{r,eval=FALSE}
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("tuomaseerola/onsetsync")
+devtools::install_github("tuomaseerola/onsetsync@R1",force = TRUE)
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ CSS_Song2 <- dplyr::select(CSS_Song2,Label.SD,SD,Clave,Bass,Guitar,Tres,
 print(knitr::kable(head(CSS_Song2),format = "simple",digits = 2))
 ```
 
-Reading data from is easy either from CSV files in your computer or directly from OSF using `get_OSF_csv` function. 
+Reading data from is easy either from CSV files in your computer or directly from OSF using `get_OSF_csv` function.
 
 ### Visualise onsets structures
 

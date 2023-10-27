@@ -127,7 +127,7 @@ These methods are based on asynchronies between onsets occurring at the same bea
 
 
 
-`onsetsync` is available at Github and can be loaded and installed using the code below. The current version is 0.5.0.
+`onsetsync` is available on GitHub and can be loaded and installed using the code below. The current version is 0.5.0.
 
 
 ```r
@@ -136,7 +136,7 @@ devtools::install_github("tuomaseerola/onsetsync")
 library(onsetsync)
 ```
 
-To carry out such comparisons, `onsetsync` has several auxiliary functions. There are functions that help assessing relative timings, to associate onsets with beat subdivisions and cycles in music structure, and to select and compare the instruments. The library has seven categories of functions summarised in Table 1.
+To carry out such comparisons, `onsetsync` has several auxiliary functions. There are functions that help assess relative timings, to associate onsets with beat subdivisions and cycles in music structure, and to select and compare the instruments. The library has seven categories of functions summarised in Table 1.
 
 | Category      | Examples                                             |
 |---------------|------------------------------------------------------|
@@ -150,13 +150,13 @@ To carry out such comparisons, `onsetsync` has several auxiliary functions. Ther
 
 Table: Function categories and example functions or datasets.
 
-In the next sections we will demonstrate the analysis processes related to asynchrony between several performers. It is also worth pointing out that the library is not dedicated to extraction of onsets from audio as that can be done in other packages (e.g. [Librosa](https://librosa.org), [Essentia](https://essentia.upf.edu), [MIR toolbox for Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox), or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known onset detection algorithms). Here we take it as granted that the onsets have been extracted already, someone has carried out a quality check, assigned relevant onsets to beat positions and saved them in csv files. For solid overviews on computational onset extraction from audio, see @schluter2014improved or @bock2016madmom, and for a full workflow of how to combine onset detection and annotation of the musical information, see @Clayton2020emr.
+In the next sections, we will demonstrate the analysis processes related to asynchrony between several performers. It is also worth pointing out that the library is not dedicated to extraction of onsets from audio as that can be done in other packages (e.g. [Librosa](https://librosa.org), [Essentia](https://essentia.upf.edu), [MIR toolbox for Matlab](https://www.jyu.fi/hytk/fi/laitokset/mutku/en/research/materials/mirtoolbox), or [Sonic Visualiser](https://www.sonicvisualiser.org) using well-known onset detection algorithms). Here we take it for granted that the onsets have been extracted already, someone has carried out a quality check, assigned relevant onsets to beat positions and saved them in csv files. For solid overviews on computational onset extraction from audio, see @schluter2014improved or @bock2016madmom, and for a full workflow of how to combine onset detection and annotation of the musical information, see @Clayton2020emr.
 
 ### Onset representation
 
 Here we will take one Cuban Son performance that has been included in the library. This song, _Palo Santo_, has been performed by seven performers using the following combination of instruments: bass, guitar, tres, and trumpet, and five percussion instruments, clave, bongo, bell, cajon, and conga (the instrumentation varies slightly between songs and sections within songs). The full data including other Cuban salsa and son performances is available from an open access repository at _Open Science Framework_ (OSF) and has been annotated and processed as part of the [Interpersonal Entrainment in Music Performance](https://musicscience.net/projects/timing/iemp/) project, available at [https://osf.io/sfxa2/](https://osf.io/sfxa2/). 
 
-The code example loads the onset data and annotations of metre of the son performance. The library comes with a set of five Cuban salsa and son (CSS) performances and this is the second example from the IEMP `CSS_IEMP` mini-corpus. The second line of the code selects the nine columns of interest for the analysis; the first two columns are meta-data, followed by four instruments, and three timing related columns are included at the end.
+The code example loads the onset data and annotations of metre of the son performance. The library comes with a set of five Cuban salsa and son (CSS) performances and this is the second example from the IEMP `CSS_IEMP` mini-corpus. The second line of the code selects the nine columns of interest for the analysis; the first two columns are meta-data, followed by four instruments, and three timing-related columns are included at the end.
 
 
 
@@ -183,12 +183,12 @@ Table: Onset data structure example.
 |Song_2 |Son     |    NA|   NA|   6.15| 6.14|  6|     1|                6.15|
 
 Table 2 shows a portion of the onset data structure, just 6 rows out of 1568 rows in the data containing 3286 onsets. The first two columns are
-*meta-data*, referring to the piece and section. The next four columns represent the onset times in seconds (rounded to two decimals for convenience) of four selected instruments, `Clave`, `Bass`, `Guitar` and `Tres`. The onset times for the instruments are available in seconds (with precision of 6 digits, although we prefer to use milliseconds (ms) in the analyses of synchrony to avoid reporting
-unnecessarily many digits). The last three columns refer to information about the relative time: `SD` represents the beat subdivision within the cycle. In this music there are 16 subdivisions per cycle (which can be felt as 4 beats \(\times\) 4 subdivisions). `Cycle` refers to a running number of the beat cycles (each will have 16 beats in this music). `Isochronous.SD.Time` is an evenly temporally spaced time point for each beat subdivision (calculated by dividing each cycle duration by 16) that can act as temporal reference grid. The beat subdivisions and cycles are manually annotated and can be integrated to the data frame with a specific function (`add_annotation`) if given separately. Also a reference timing (`Isochronous.SD.Time`) has been provided for the cycles but it can also be estimated from the cycles and beat subdivisions using a function (`add_isobeats`) in the library. Information about cycles and beat subdivisions is generally based on manual annotation, and originates separately from the automatically extracted onsets; the two are combined to produce tables with onsets assigned to beat positions. This explains why the first row of the table has no onsets but it contains annotation information (Cycle 1 and beat sub-division 1). It is also possible to read the csv files directly from OSF using `get_OSF_csv` function to allow transparent and reproducible analysis workflows with published datasets.
+*meta-data*, referring to the piece and section. The next four columns represent the onset times in seconds (rounded to two decimals for convenience) of four selected instruments, `Clave`, `Bass`, `Guitar` and `Tres`. The onset times for the instruments are available in seconds (with the precision of 6 digits, although we prefer to use milliseconds (ms) in the analyses of synchrony to avoid reporting
+unnecessarily many digits). The last three columns refer to information about the relative time: `SD` represents the beat subdivision within the cycle. In this music, there are 16 subdivisions per cycle (which can be felt as 4 beats \(\times\) 4 subdivisions). `Cycle` refers to a running number of the beat cycles (each will have 16 beats in this music). `Isochronous.SD.Time` is an evenly temporally spaced time point for each beat subdivision (calculated by dividing each cycle duration by 16) that can act as a temporal reference grid. The beat subdivisions and cycles are manually annotated and can be integrated to the data frame with a specific function (`add_annotation`) if given separately. Also, a reference timing (`Isochronous.SD.Time`) has been provided for the cycles but it can also be estimated from the cycles and beat subdivisions using a function (`add_isobeats`) in the library. Information about cycles and beat subdivisions is generally based on manual annotation, and originates separately from the automatically extracted onsets; the two are combined to produce tables with onsets assigned to beat positions. This explains why the first row of the table has no onsets but it contains annotation information (Cycle 1 and beat sub-division 1). It is also possible to read the csv files directly from OSF using `get_OSF_csv` function to allow transparent and reproducible analysis workflows with published datasets.
 
 ### Onset summaries
 
-Let's explore the overall structure of the onsets in the example piece using the function `plot_by_beat` to visualise the asynchrony relative to an equal division subdivision of the beats for each instrument across the time. This visualisation gives a summary about when the instruments are playing relative to the beat division and the sections of the song, shown in Figure 1.
+Let's explore the overall structure of the onsets in the example piece using the function `plot_by_beat` to visualise the asynchrony relative to an equal division subdivision of the beats for each instrument across the time. This visualisation gives a summary of when the instruments are playing relative to the beat division and the sections of the song, shown in Figure 1.
 
 
 ```r
@@ -203,7 +203,7 @@ print(fig1)
 
 ![Onsets arranged for beat sub-divisions for four instruments across the whole piece.](paper_files/figure-latex/figure1-1.pdf) 
 
-At first glance of Figure 1, it is easy to spot the distinctive clave pattern going through the song (the beginning of the song is at the bottom of the graphs, and every cycle is cascaded on top of the previous cycle). Notice how the bass plays mainly on subdivisions 5, 7, 13, 15, except in the last minute when the pattern changes into playing subdivisions 3, 4, 7, 8, 15, 16. The guitar plays almost on every beat subdivision, and towards the end of the piece the tres --  a cuban guitar with 6-strings tuned to 3 pitches -- plays a pattern of 3 subdivisions and a break.
+At first glance at Figure 1, it is easy to spot the distinctive clave pattern going through the song (the beginning of the song is at the bottom of the graphs, and every cycle is cascaded on top of the previous cycle). Notice how the bass plays mainly on subdivisions 5, 7, 13, 15, except in the last minute when the pattern changes into playing subdivisions 3, 4, 7, 8, 15, 16. The guitar plays almost on every beat subdivision, and towards the end of the piece, the tres --  a cuban guitar with 6-strings tuned to 3 pitches -- plays a pattern of 3 subdivisions and a break.
 
 # Analysis of synchrony
 
@@ -239,7 +239,7 @@ dplyr::summarise(data.frame(d1),
 ## 1 853 12.53126 26.74134
 ```
 
-This analysis indicates that on average, the tres plays 13 ms ahead of the guitar, with a standard deviation of 27 ms. When one is comparing instruments that have radically different number of joint onsets (such as the clave and the bass in this example), it is possible to make the comparisons between the pairs of instruments easier by specifying a sample of onsets that will be taken from each instrument for the analysis. It also possible to establish the confidence intervals by bootstrapping the asynchrony calculations.
+This analysis indicates that on average, the tres plays 13 ms ahead of the guitar, with a standard deviation of 27 ms. When one is comparing instruments that have radically different numbers of joint onsets (such as the clave and the bass in this example), it is possible to make the comparisons between the pairs of instruments easier by specifying a sample of onsets that will be taken from each instrument for the analysis. It also possible to establish the confidence intervals by bootstrapping the asynchrony calculations.
 
 To carry out the comparison for all possible pairings of the instruments is possible with `sync_execute_pairs` function and the results can be visualised with a related function (`plot_by_pair`).
 
@@ -302,9 +302,9 @@ It is also possible to [calculate synchrony between instruments across beat sub-
 
 # Conclusions
 
-`onsetsync` provides representations, visualisations and calculations of key measures relating to onset structures in music. The library does not take a stance on how the onset times have been estimated, but assumes that onset times are mapped onto beat positions, and that metre annotations are available. Future needs for development lie in creating a specific corpus format that would be open to many uses, to test the framework with other datasets, and to incorporate other analytical options such as circular statistics, Granger causality or cross-recurrence analyses.
+`onsetsync` provides representations, visualisations and calculations of key measures relating to onset structures in music. The library does not take a stance on how the onset times have been estimated but assumes that onset times are mapped onto beat positions and that metre annotations are available. Future development needs lie in creating a specific corpus format that would be open to many uses, testing the framework with other datasets, and incorporating other analytical options such as circular statistics, Granger causality or cross-recurrence analyses.
 
-We hope scholars and students of music, music information retrieval and psychology can pursue topics related to synchrony in music with a transparent workflow assisted by the library and capitalise on existing datasets that are compatible with the library. Eventually we hope that tools such as these will allow a larger number of people to create and utilise open datasets related to musical behaviours, helping the topic become data-driven, empirical and collaborative.
+We hope scholars and students of music, music information retrieval and psychology can pursue topics related to synchrony in music with a transparent workflow assisted by the library and capitalise on existing datasets that are compatible with the library. Eventually, we hope that tools such as these will allow a larger number of people to create and utilise open datasets related to musical behaviours, helping the topic become data-driven, empirical and collaborative.
 
 # Acknowledgements
 

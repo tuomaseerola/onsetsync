@@ -8,6 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
+[![DOI](https://zenodo.org/badge/117457615.svg)](https://zenodo.org/doi/10.5281/zenodo.10050345)
 
 `onsetsync` is a R package for musical assessing synchrony between
 onsets in music. There are functions for common operations such as

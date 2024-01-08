@@ -8,7 +8,7 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.05395/status.svg)](https://doi.org/10.21105/joss.05395)
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 [![DOI](https://zenodo.org/badge/117457615.svg)](https://zenodo.org/doi/10.5281/zenodo.10050345)
 
@@ -20,7 +20,7 @@ performers, and assessing periodicity of the onsets, and visualising
 synchrony across cycles, time, or another property.
 
 For documentation, see [Quick
-Guide](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html).
+Guide](https://tuomaseerola.github.io/onsetsync/articles/onsetsync.html) or article in [JOSS (Journal of Open Source Software)](https://doi.org/10.21105/joss.05395).
 
 ## Installation
 

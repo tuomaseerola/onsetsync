@@ -8,7 +8,7 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.05395/status.svg)](https://doi.org/10.21105/joss.05395)
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+experimental](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 [![DOI](https://zenodo.org/badge/117457615.svg)](https://zenodo.org/doi/10.5281/zenodo.10050345)
 
